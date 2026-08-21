@@ -2116,57 +2116,45 @@
         document.getElementById('modalAdmin').classList.remove('attivo');
     }
 
-    async function salvaAuto() {
-        const id = document.getElementById('editId').value;
-        const marca = document.getElementById('editMarca').value;
-        const modello = document.getElementById('editModello').value.trim();
-        const anno = parseInt(document.getElementById('editAnno').value);
-        const prezzo = parseInt(document.getElementById('editPrezzo').value);
-        const km = parseInt(document.getElementById('editKm').value);
-        const alimentazione = document.getElementById('editAlimentazione').value;
-        const cambio = document.getElementById('editCambio').value;
+   async function salvaAuto() {
+    const id = document.getElementById('editId').value;
+    const marca = document.getElementById('editMarca').value;
+    const modello = document.getElementById('editModello').value.trim();
+    const anno = parseInt(document.getElementById('editAnno').value);
+    const prezzo = parseInt(document.getElementById('editPrezzo').value);
+    const km = parseInt(document.getElementById('editKm').value);
+    const alimentazione = document.getElementById('editAlimentazione').value;
+    const cambio = document.getElementById('editCambio').value;
 
-        if (!marca || !modello || !anno || !prezzo || !km) {
-            alert('Compila tutti i campi correttamente.');
-            return;
-        }
-
-        const veicolo = { marca, modello, anno, prezzo, km, alimentazione, cambio };
-
-        try {
-            if (id) {
-                const idx = auto.findIndex(a => a.id === parseInt(id));
-                if (idx !== -1) auto[idx] = { ...auto[idx], ...veicolo };
-            } else {
-                const newId = auto.length > 0 ? Math.max(...auto.map(a => a.id)) + 1 : 1;
-                auto.push({ ...veicolo, id: newId });
-            }
-            await salvaDati();
-            autoFiltrate = [...auto];
-            renderLista(autoFiltrate);
-            aggiornaConteggio();
-            chiudiModale();
-            mostraToast('✅ Veicolo salvato!', `${marca} ${modello} è stato aggiunto al listino.`);
-        } catch (error) {
-            alert('Errore: ' + error.message);
-        }
+    if (!marca || !modello || !anno || !prezzo || !km) {
+        alert('Compila tutti i campi correttamente.');
+        return;
     }
 
-    async function eliminaAuto(id) {
-        if (!isAdmin) return;
-        if (!confirm('Sei sicuro di voler eliminare questo veicolo?')) return;
-        try {
-            auto = auto.filter(a => a.id !== id);
-            await salvaDati();
-            autoFiltrate = [...auto];
-            renderLista(autoFiltrate);
-            aggiornaConteggio();
-            if (document.getElementById('dettaglio').classList.contains('attivo')) tornaLista();
-            mostraToast('🗑️ Veicolo eliminato', 'Il veicolo è stato rimosso dal listino.');
-        } catch (error) {
-            alert('Errore: ' + error.message);
+    const veicolo = { marca, modello, anno, prezzo, km, alimentazione, cambio };
+
+    try {
+        if (id) {
+            const idx = auto.findIndex(a => a.id === parseInt(id));
+            if (idx !== -1) auto[idx] = { ...auto[idx], ...veicolo };
+        } else {
+            const newId = auto.length > 0 ? Math.max(...auto.map(a => a.id)) + 1 : 1;
+            auto.push({ ...veicolo, id: newId });
+            
+            // 🔥 INVIA NOTIFICA SU DISCORD SOLO PER LE NUOVE AUTO
+            await inviaNotificaDiscord(veicolo);
         }
+        
+        await salvaDati();
+        autoFiltrate = [...auto];
+        renderLista(autoFiltrate);
+        aggiornaConteggio();
+        chiudiModale();
+        mostraToast('✅ Veicolo salvato!', `${marca} ${modello} è stato aggiunto al listino.`);
+    } catch (error) {
+        alert('Errore: ' + error.message);
     }
+}
 
     // ============================================================
     // 19. TOAST

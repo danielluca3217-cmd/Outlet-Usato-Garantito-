@@ -1258,7 +1258,7 @@
     // ============================================================
     // 1. CONFIGURAZIONE JSONBIN
     // ============================================================
-    const JSONBIN_BIN_ID = ''6a8836b0f5f4af5e2930f4bb';
+    const JSONBIN_BIN_ID = '6a8836b0f5f4af5e2930f4bb';
     const JSONBIN_API_KEY = '$2a$10$wZYd3ki9TiZ/VDC337viNOiC1znyu5NWat6lENgmgdSaUfQ.2.jPO';
 
     // ============================================================
@@ -1334,22 +1334,30 @@
         }
     }
 
-   function caricaDaLocalStorage() {
-    const data = localStorage.getItem('autoOutlet_backup');
-    if (data) {
-        try {
-            const parsed = JSON.parse(data);
-            if (parsed.auto && parsed.auto.length > 0) {
-                return parsed;
-            }
-        } catch(e) {}
+    function caricaDaLocalStorage() {
+        const data = localStorage.getItem('autoOutlet_backup');
+        if (data) {
+            try {
+                const parsed = JSON.parse(data);
+                if (parsed.auto && parsed.auto.length > 0) {
+                    return parsed;
+                }
+            } catch(e) {}
+        }
+        return {
+            auto: [
+                { id: 1, marca: 'Audi', modello: 'A3 Sportback', anno: 2020, prezzo: 22900, km: 42000, alimentazione: 'Diesel', cambio: 'Automatico' },
+                { id: 2, marca: 'BMW', modello: 'Serie 1 118d', anno: 2021, prezzo: 26500, km: 28000, alimentazione: 'Diesel', cambio: 'Manuale' },
+                { id: 3, marca: 'Fiat', modello: 'Panda 1.2', anno: 2022, prezzo: 12900, km: 15000, alimentazione: 'Benzina', cambio: 'Manuale' },
+                { id: 4, marca: 'Ford', modello: 'Focus ST-Line', anno: 2019, prezzo: 19900, km: 56000, alimentazione: 'Benzina', cambio: 'Automatico' },
+                { id: 5, marca: 'Mercedes', modello: 'Classe A 200d', anno: 2020, prezzo: 29900, km: 34000, alimentazione: 'Diesel', cambio: 'Automatico' },
+                { id: 6, marca: 'Volkswagen', modello: 'Golf 2.0 TDI', anno: 2021, prezzo: 24900, km: 31000, alimentazione: 'Diesel', cambio: 'Manuale' },
+                { id: 7, marca: 'Audi', modello: 'Q3 35 TDI', anno: 2022, prezzo: 35900, km: 18000, alimentazione: 'Diesel', cambio: 'Automatico' },
+                { id: 8, marca: 'BMW', modello: 'X1 xDrive18d', anno: 2020, prezzo: 31900, km: 39000, alimentazione: 'Diesel', cambio: 'Automatico' }
+            ],
+            prenotazioni: []
+        };
     }
-    // ✅ PARTI CON ZERO AUTO
-    return {
-        auto: [],
-        prenotazioni: []
-    };
-}
 
     // ============================================================
     // 5. SALVATAGGIO DATI SU JSONBIN

@@ -1273,7 +1273,7 @@
             <input type="hidden" id="editId" value="" />
             
             <div class="form-group">
-                <label><i class="fas fa-tag"></i> Marca</label>
+                <label><i class="fas fa-tag"></i> Marca *</label>
                 <div class="marca-search-container">
                     <input type="text" id="marcaSearch" placeholder="Cerca marca..." oninput="filtraMarche()" onfocus="document.getElementById('marcaOptions').classList.add('visible')" />
                     <i class="fas fa-search search-icon"></i>
@@ -1282,28 +1282,29 @@
                         <div class="no-results" id="noMarcaResults" style="display:none;">Nessuna marca trovata</div>
                     </div>
                 </div>
-                <select id="editMarca" required style="display:none;"></select>
+                <input type="hidden" id="editMarca" value="" />
+                <div style="font-size:12px; color:#777790; margin-top:4px;">Marca selezionata: <span id="marcaSelezionataDisplay" style="font-weight:600; color:#dc2626;">nessuna</span></div>
             </div>
             
             <div class="form-group">
-                <label><i class="fas fa-car"></i> Modello</label>
+                <label><i class="fas fa-car"></i> Modello *</label>
                 <input type="text" id="editModello" placeholder="es. A3 Sportback" required />
             </div>
             
             <div class="form-row">
                 <div class="form-group">
-                    <label><i class="fas fa-calendar"></i> Anno</label>
+                    <label><i class="fas fa-calendar"></i> Anno *</label>
                     <input type="number" id="editAnno" placeholder="2020" min="2000" max="2026" required />
                 </div>
                 <div class="form-group">
-                    <label><i class="fas fa-euro-sign"></i> Prezzo (€)</label>
+                    <label><i class="fas fa-euro-sign"></i> Prezzo (€) *</label>
                     <input type="number" id="editPrezzo" placeholder="22900" min="0" required />
                 </div>
             </div>
             
             <div class="form-row">
                 <div class="form-group">
-                    <label><i class="fas fa-tachometer-alt"></i> Km</label>
+                    <label><i class="fas fa-tachometer-alt"></i> Km *</label>
                     <input type="number" id="editKm" placeholder="42000" min="0" required />
                 </div>
                 <div class="form-group">
@@ -1543,7 +1544,6 @@
 
     function popolaMarcheAdmin() {
         const container = document.getElementById('marcaOptions');
-        // Pulisci container (mantieni solo il no-results)
         const noResults = document.getElementById('noMarcaResults');
         container.innerHTML = '';
         container.appendChild(noResults);
@@ -1588,6 +1588,8 @@
     function selezionaMarca(marca) {
         document.getElementById('marcaSearch').value = marca;
         document.getElementById('editMarca').value = marca;
+        document.getElementById('marcaSelezionataDisplay').textContent = marca;
+        document.getElementById('marcaSelezionataDisplay').style.color = '#16a34a';
         document.getElementById('marcaOptions').classList.remove('visible');
         document.getElementById('clearSearch').classList.remove('visible');
     }
@@ -1595,6 +1597,8 @@
     function pulisciRicerca() {
         document.getElementById('marcaSearch').value = '';
         document.getElementById('editMarca').value = '';
+        document.getElementById('marcaSelezionataDisplay').textContent = 'nessuna';
+        document.getElementById('marcaSelezionataDisplay').style.color = '#dc2626';
         document.getElementById('clearSearch').classList.remove('visible');
         document.getElementById('marcaOptions').classList.remove('visible');
         document.getElementById('marcaSearch').focus();
@@ -1973,6 +1977,8 @@
         document.getElementById('editId').value = '';
         document.getElementById('marcaSearch').value = '';
         document.getElementById('editMarca').value = '';
+        document.getElementById('marcaSelezionataDisplay').textContent = 'nessuna';
+        document.getElementById('marcaSelezionataDisplay').style.color = '#dc2626';
         document.getElementById('editModello').value = '';
         document.getElementById('editAnno').value = '';
         document.getElementById('editPrezzo').value = '';
@@ -1993,6 +1999,8 @@
         document.getElementById('editId').value = id;
         document.getElementById('marcaSearch').value = v.marca;
         document.getElementById('editMarca').value = v.marca;
+        document.getElementById('marcaSelezionataDisplay').textContent = v.marca;
+        document.getElementById('marcaSelezionataDisplay').style.color = '#16a34a';
         document.getElementById('editModello').value = v.modello;
         document.getElementById('editAnno').value = v.anno;
         document.getElementById('editPrezzo').value = v.prezzo;

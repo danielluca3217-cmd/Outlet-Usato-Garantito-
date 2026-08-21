@@ -83,9 +83,11 @@
             transition: 0.3s;
             padding: 6px 14px;
             border-radius: 30px;
+            cursor: pointer;
         }
         nav a:hover { color: #dc2626; background: rgba(220, 38, 38, 0.08); }
         nav a i { margin-right: 6px; }
+        
         .badge-header {
             background: rgba(220, 38, 38, 0.12);
             border: 1px solid rgba(220, 38, 38, 0.2);
@@ -97,6 +99,22 @@
             text-transform: uppercase;
             letter-spacing: 0.8px;
         }
+        
+        /* ===== BADGE NOTIFICHE ===== */
+        .notif-badge {
+            background: #dc2626;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 1px 8px;
+            border-radius: 20px;
+            margin-left: 2px;
+            min-width: 18px;
+            text-align: center;
+            display: inline-block;
+        }
+        .notif-badge.hidden { display: none; }
+
         .btn-login {
             background: #dc2626;
             color: #fff !important;
@@ -369,7 +387,6 @@
             border: 1px solid #e8e8ee;
             display: flex;
             flex-direction: column;
-            cursor: pointer;
             position: relative;
         }
         .card-auto:hover {
@@ -411,6 +428,25 @@
             text-transform: uppercase;
             letter-spacing: 0.8px;
             z-index: 2;
+        }
+        .card-img .tag-prenotata {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #16a34a;
+            color: #fff;
+            padding: 3px 14px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            z-index: 2;
+            animation: pulseGreen 2s infinite;
+        }
+        @keyframes pulseGreen {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
         }
         .card-body {
             padding: 16px 18px 18px;
@@ -468,6 +504,29 @@
             font-family: 'Inter', sans-serif;
         }
         .card-body .prezzo .btn-dettaglio:hover { background: #dc2626; color: #fff; }
+        
+        /* ===== PULSANTE PRENOTA ===== */
+        .btn-prenota {
+            background: #16a34a;
+            color: #fff;
+            border: none;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Inter', sans-serif;
+            margin-top: 8px;
+            width: 100%;
+        }
+        .btn-prenota:hover { background: #15803d; transform: scale(1.02); }
+        .btn-prenota.prenotata {
+            background: #6b7280;
+            cursor: not-allowed;
+        }
+        .btn-prenota.prenotata:hover { background: #6b7280; transform: none; }
+
         .card-admin-actions {
             display: flex;
             gap: 6px;
@@ -587,6 +646,26 @@
             width: 20px;
             font-size: 13px;
         }
+        .dettaglio-info .btn-prenota-dettaglio {
+            background: #16a34a;
+            color: #fff;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Inter', sans-serif;
+            margin-top: 16px;
+            width: 100%;
+        }
+        .dettaglio-info .btn-prenota-dettaglio:hover { background: #15803d; transform: scale(1.02); }
+        .dettaglio-info .btn-prenota-dettaglio.prenotata {
+            background: #6b7280;
+            cursor: not-allowed;
+        }
+        .dettaglio-info .btn-prenota-dettaglio.prenotata:hover { background: #6b7280; transform: none; }
 
         /* ===== MODALI ===== */
         .modal-overlay {
@@ -635,7 +714,7 @@
             margin-bottom: 4px;
             letter-spacing: 0.3px;
         }
-        .modal .form-group input, .modal .form-group select {
+        .modal .form-group input, .modal .form-group select, .modal .form-group textarea {
             width: 100%;
             padding: 10px 14px;
             border: 1px solid #d0d0d8;
@@ -646,7 +725,8 @@
             color: #0a0a0a;
             background: #f8f8fa;
         }
-        .modal .form-group input:focus, .modal .form-group select:focus {
+        .modal .form-group textarea { resize: vertical; min-height: 60px; }
+        .modal .form-group input:focus, .modal .form-group select:focus, .modal .form-group textarea:focus {
             border-color: #dc2626;
             outline: none;
             box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.06);
@@ -702,6 +782,21 @@
         .modal .btn-salva:hover { background: #b91c1c; transform: scale(1.03); }
         .modal .btn-annulla { background: #e8e8ee; color: #666680; }
         .modal .btn-annulla:hover { background: #d0d0d8; }
+        .modal .btn-prenota-modal {
+            background: #16a34a;
+            color: #fff;
+            width: 100%;
+            padding: 12px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Inter', sans-serif;
+            border: none;
+            margin-top: 8px;
+        }
+        .modal .btn-prenota-modal:hover { background: #15803d; transform: scale(1.02); }
         .modal small { color: #777790; font-size: 11px; }
 
         /* ===== MODALE LOGIN ===== */
@@ -746,6 +841,107 @@
             font-size: 13px;
             margin-top: 12px;
             display: none;
+        }
+
+        /* ===== SEZIONE PRENOTAZIONI ADMIN ===== */
+        .sezione-prenotazioni {
+            padding: 40px 0 64px;
+            background: #f8f8fa;
+            display: none;
+        }
+        .sezione-prenotazioni.visibile { display: block; }
+        .sezione-prenotazioni h2 {
+            font-size: 26px;
+            font-weight: 800;
+            color: #0a0a0a;
+            margin-bottom: 8px;
+        }
+        .sezione-prenotazioni h2 i { color: #dc2626; margin-right: 10px; }
+        .sezione-prenotazioni .sottotitolo {
+            color: #777790;
+            margin-bottom: 24px;
+        }
+        .grid-prenotazioni {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .card-prenotazione {
+            background: #fff;
+            border-radius: 16px;
+            padding: 20px 24px;
+            border: 1px solid #e8e8ee;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            transition: 0.3s;
+        }
+        .card-prenotazione:hover { border-color: #dc2626; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06); }
+        .card-prenotazione .intestazione {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        .card-prenotazione .nome {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0a0a0a;
+        }
+        .card-prenotazione .stato {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 14px;
+            border-radius: 40px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .stato.in-attesa { background: #fef3c7; color: #b45309; }
+        .stato.confermata { background: #d1fae5; color: #065f46; }
+        .stato.annullata { background: #fee2e2; color: #991b1b; }
+        .card-prenotazione .dettagli-prenotazione {
+            font-size: 13px;
+            color: #555568;
+            margin: 6px 0;
+        }
+        .card-prenotazione .dettagli-prenotazione i {
+            width: 20px;
+            color: #dc2626;
+            margin-right: 6px;
+        }
+        .card-prenotazione .azioni-prenotazione {
+            display: flex;
+            gap: 8px;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid #e8e8ee;
+        }
+        .card-prenotazione .azioni-prenotazione button {
+            flex: 1;
+            padding: 6px 12px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Inter', sans-serif;
+            border: none;
+        }
+        .btn-conferma { background: #16a34a; color: #fff; }
+        .btn-conferma:hover { background: #15803d; }
+        .btn-annulla-prenotazione { background: #dc2626; color: #fff; }
+        .btn-annulla-prenotazione:hover { background: #b91c1c; }
+        .btn-elimina-prenotazione { background: #6b7280; color: #fff; }
+        .btn-elimina-prenotazione:hover { background: #4b5563; }
+        .nessuna-prenotazione {
+            text-align: center;
+            padding: 60px 0;
+            color: #777790;
+        }
+        .nessuna-prenotazione i {
+            font-size: 48px;
+            color: #dc2626;
+            display: block;
+            margin-bottom: 16px;
+            opacity: 0.4;
         }
 
         /* ===== FOOTER ===== */
@@ -805,6 +1001,35 @@
             100% { transform: rotate(360deg); }
         }
 
+        /* ===== TOAST NOTIFICA ===== */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #0a0a0a;
+            color: #fff;
+            padding: 16px 24px;
+            border-radius: 16px;
+            border-left: 4px solid #16a34a;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            z-index: 3000;
+            transform: translateX(120%);
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            max-width: 380px;
+        }
+        .toast.visibile { transform: translateX(0); }
+        .toast .toast-titolo { font-weight: 700; font-size: 14px; }
+        .toast .toast-testo { font-size: 13px; color: #b0b0c0; margin-top: 2px; }
+        .toast .toast-chiudi {
+            background: transparent;
+            color: #666680;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            float: right;
+            margin-top: -4px;
+        }
+
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
             .header-inner { flex-direction: column; align-items: flex-start; }
@@ -819,11 +1044,13 @@
             .hero-stats .stat .numero { font-size: 22px; }
             .sezione-header h2 { font-size: 20px; }
             .grid-auto { grid-template-columns: 1fr; }
+            .grid-prenotazioni { grid-template-columns: 1fr; }
             .modal { padding: 24px 20px; }
             .modal .form-row { grid-template-columns: 1fr; }
             .dettaglio-container { padding: 16px; }
             .dettaglio-foto { height: 200px; }
             .badge-header { display: none; }
+            .toast { left: 20px; right: 20px; bottom: 20px; max-width: none; }
         }
         @media (max-width: 480px) {
             .hero h2 { font-size: 26px; }
@@ -849,6 +1076,10 @@
         <div class="header-right">
             <nav>
                 <a href="#listaAuto"><i class="fas fa-car"></i> Listino</a>
+                <a href="#prenotazioniAdmin" id="linkPrenotazioni" style="display:none;">
+                    <i class="fas fa-calendar-check"></i> Prenotazioni
+                    <span class="notif-badge hidden" id="notifBadge">0</span>
+                </a>
                 <span class="badge-header"><i class="fas fa-star"></i> Qualità garantita</span>
                 <div id="userSection">
                     <button class="btn-login" onclick="apriLogin()"><i class="fas fa-lock"></i> Admin</button>
@@ -929,6 +1160,26 @@
     </div>
 </section>
 
+<!-- ===== SEZIONE PRENOTAZIONI ADMIN ===== -->
+<section class="sezione-prenotazioni" id="prenotazioniAdmin">
+    <div class="container">
+        <h2><i class="fas fa-calendar-check"></i> Prenotazioni</h2>
+        <p class="sottotitolo">Gestisci le richieste di prenotazione dei clienti</p>
+        <div id="prenotazioniContainer">
+            <div class="loading" id="loadingPrenotazioni">
+                <i class="fas fa-spinner"></i>
+                <p>Caricamento prenotazioni...</p>
+            </div>
+            <div class="grid-prenotazioni" id="gridPrenotazioni"></div>
+            <div class="nessuna-prenotazione" id="nessunaPrenotazione" style="display:none;">
+                <i class="fas fa-calendar-check"></i>
+                <p>Nessuna prenotazione ancora</p>
+                <p style="font-size:13px; margin-top:4px;">Le richieste dei clienti appariranno qui</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- ===== DETTAGLIO ===== -->
 <section id="dettaglio">
     <div class="container">
@@ -940,7 +1191,7 @@
 <div class="modal-overlay login-modal" id="modalLogin">
     <div class="modal">
         <h2><i class="fas fa-lock"></i> Accesso Admin</h2>
-        <p>Inserisci la password per gestire il listino</p>
+        <p>Inserisci la password per gestire il listino e le prenotazioni</p>
         <div class="password-input">
             <input type="password" id="passwordLogin" placeholder="Inserisci password..." onkeydown="if(event.key==='Enter') verificaPassword()" autofocus />
         </div>
@@ -949,7 +1200,59 @@
     </div>
 </div>
 
-<!-- ===== MODALE ADMIN ===== -->
+<!-- ===== MODALE PRENOTAZIONE ===== -->
+<div class="modal-overlay" id="modalPrenotazione">
+    <div class="modal">
+        <h2><i class="fas fa-calendar-plus"></i> Prenota <span id="prenotaAutoNome"></span></h2>
+        <p style="color:#666680; font-size:14px; margin-bottom:16px;">Compila il modulo per prenotare questa auto</p>
+        <form id="formPrenotazione" onsubmit="return false;">
+            <input type="hidden" id="prenotaAutoId" value="" />
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> Nome *</label>
+                    <input type="text" id="prenotaNome" placeholder="Mario" required />
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> Cognome *</label>
+                    <input type="text" id="prenotaCognome" placeholder="Rossi" required />
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label><i class="fas fa-envelope"></i> Email *</label>
+                    <input type="email" id="prenotaEmail" placeholder="mario@email.com" required />
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-phone"></i> Telefono *</label>
+                    <input type="tel" id="prenotaTelefono" placeholder="333 1234567" required />
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label><i class="fas fa-calendar-day"></i> Data preferita *</label>
+                <input type="date" id="prenotaData" required />
+            </div>
+            
+            <div class="form-group">
+                <label><i class="fas fa-comment"></i> Messaggio (opzionale)</label>
+                <textarea id="prenotaMessaggio" placeholder="Scrivi un messaggio per il concessionario..."></textarea>
+            </div>
+            
+            <button type="button" class="btn-prenota-modal" onclick="inviaPrenotazione()">
+                <i class="fas fa-paper-plane"></i> Invia prenotazione
+            </button>
+            <div style="display:flex; gap:12px; margin-top:12px;">
+                <button type="button" class="btn-annulla" onclick="chiudiModalePrenotazione()" style="flex:1; padding:10px; border-radius:40px; font-weight:600; font-size:14px; cursor:pointer; font-family:'Inter',sans-serif; border:none; background:#e8e8ee; color:#666680;">Annulla</button>
+            </div>
+            <div id="errorePrenotazione" style="color:#dc2626; font-size:13px; margin-top:12px; display:none;"></div>
+            <div id="successoPrenotazione" style="color:#16a34a; font-size:13px; margin-top:12px; display:none;"></div>
+        </form>
+    </div>
+</div>
+
+<!-- ===== MODALE ADMIN AUTO ===== -->
 <div class="modal-overlay" id="modalAdmin">
     <div class="modal">
         <h2><i class="fas fa-edit"></i> <span id="modalTitolo">Nuova auto</span></h2>
@@ -1021,6 +1324,13 @@
     </div>
 </div>
 
+<!-- ===== TOAST NOTIFICA ===== -->
+<div class="toast" id="toast">
+    <button class="toast-chiudi" onclick="chiudiToast()">&times;</button>
+    <div class="toast-titolo" id="toastTitolo">✅ Prenotazione ricevuta!</div>
+    <div class="toast-testo" id="toastTesto">La tua richiesta è stata inviata con successo.</div>
+</div>
+
 <!-- ===== FOOTER ===== -->
 <footer>
     <div class="container">
@@ -1035,7 +1345,6 @@
     // ============================================================
     // 1. CONFIGURAZIONE JSONBIN
     // ============================================================
-    // 🔑 SOSTITUISCI CON I TUOI DATI DI JSONBIN
     const JSONBIN_BIN_ID = '6a87acbff5f4af5e292f4b48'; // Prendi dalla dashboard
     const JSONBIN_API_KEY = '$2a$10$wZYd3ki9TiZ/VDC337viNOiC1znyu5NWat6lENgmgdSaUfQ.2.jPO'; // Prendi dalla dashboard
 
@@ -1046,6 +1355,7 @@
     let immagineTemp = '';
     let auto = [];
     let autoFiltrate = [];
+    let prenotazioni = [];
 
     // ============================================================
     // 3. LISTA MARCHE
@@ -1065,42 +1375,39 @@
     ];
 
     // ============================================================
-    // 4. FUNZIONI JSONBIN (database online)
+    // 4. FUNZIONI JSONBIN
     // ============================================================
-    async function caricaAuto() {
+    async function caricaDati() {
         try {
             const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`, {
-                headers: {
-                    'X-Master-Key': JSONBIN_API_KEY
-                }
+                headers: { 'X-Master-Key': JSONBIN_API_KEY }
             });
-
-            if (!response.ok) throw new Error('Errore nel caricamento dei dati');
-
+            if (!response.ok) throw new Error('Errore nel caricamento');
             const data = await response.json();
             auto = data.record.auto || [];
+            prenotazioni = data.record.prenotazioni || [];
             autoFiltrate = [...auto];
             renderLista(autoFiltrate);
             aggiornaConteggio();
-            return auto;
+            aggiornaBadge();
+            return { auto, prenotazioni };
         } catch (error) {
-            console.error('Errore caricamento auto:', error);
+            console.error('Errore caricamento:', error);
             document.getElementById('loadingIndicator').style.display = 'none';
             document.getElementById('gridAuto').innerHTML = `
                 <div style="text-align:center; padding:40px; color:#dc2626; grid-column:1/-1;">
                     <i class="fas fa-exclamation-circle" style="font-size:40px; display:block; margin-bottom:12px;"></i>
-                    <p>Errore nel caricamento delle auto. Verifica la connessione a JSONBin.</p>
-                    <p style="font-size:13px; color:#666680; margin-top:8px;">${error.message}</p>
-                    <button onclick="caricaAuto()" style="margin-top:16px; background:#dc2626; color:#fff; border:none; padding:8px 24px; border-radius:40px; cursor:pointer; font-family:'Inter',sans-serif; font-weight:600;">
+                    <p>Errore nel caricamento dei dati. Verifica JSONBin.</p>
+                    <button onclick="caricaDati()" style="margin-top:16px; background:#dc2626; color:#fff; border:none; padding:8px 24px; border-radius:40px; cursor:pointer; font-family:'Inter',sans-serif; font-weight:600;">
                         <i class="fas fa-sync"></i> Riprova
                     </button>
                 </div>
             `;
-            return [];
+            return { auto: [], prenotazioni: [] };
         }
     }
 
-    async function salvaAutoSuJsonBin(veicoli) {
+    async function salvaDati() {
         try {
             const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`, {
                 method: 'PUT',
@@ -1108,50 +1415,24 @@
                     'Content-Type': 'application/json',
                     'X-Master-Key': JSONBIN_API_KEY
                 },
-                body: JSON.stringify({ auto: veicoli })
+                body: JSON.stringify({ auto, prenotazioni })
             });
-
-            if (!response.ok) throw new Error('Errore nel salvataggio dei dati');
+            if (!response.ok) throw new Error('Errore nel salvataggio');
             return await response.json();
         } catch (error) {
-            console.error('Errore salvataggio auto:', error);
+            console.error('Errore salvataggio:', error);
             throw error;
         }
     }
 
     // ============================================================
-    // 5. FUNZIONI CRUD
-    // ============================================================
-    async function aggiungiAuto(veicolo) {
-        const newId = auto.length > 0 ? Math.max(...auto.map(a => a.id)) + 1 : 1;
-        const nuovaAuto = { ...veicolo, id: newId };
-        auto.push(nuovaAuto);
-        await salvaAutoSuJsonBin(auto);
-        return nuovaAuto;
-    }
-
-    async function modificaAuto(id, veicolo) {
-        const index = auto.findIndex(a => a.id === id);
-        if (index !== -1) {
-            auto[index] = { ...auto[index], ...veicolo };
-            await salvaAutoSuJsonBin(auto);
-            return auto[index];
-        }
-        throw new Error('Auto non trovata');
-    }
-
-    async function eliminaAutoDb(id) {
-        auto = auto.filter(a => a.id !== id);
-        await salvaAutoSuJsonBin(auto);
-        return true;
-    }
-
-    // ============================================================
-    // 6. UI
+    // 5. UI
     // ============================================================
     function aggiornaUI() {
         const section = document.getElementById('userSection');
         const adminActions = document.getElementById('adminActions');
+        const linkPrenotazioni = document.getElementById('linkPrenotazioni');
+        const sezionePrenotazioni = document.getElementById('prenotazioniAdmin');
 
         if (isAdmin) {
             section.innerHTML = `
@@ -1159,11 +1440,16 @@
                 <button class="btn-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Esci</button>
             `;
             adminActions.style.display = 'flex';
+            linkPrenotazioni.style.display = 'inline-flex';
+            sezionePrenotazioni.classList.add('visibile');
+            renderPrenotazioni();
         } else {
             section.innerHTML = `
                 <button class="btn-login" onclick="apriLogin()"><i class="fas fa-lock"></i> Admin</button>
             `;
             adminActions.style.display = 'none';
+            linkPrenotazioni.style.display = 'none';
+            sezionePrenotazioni.classList.remove('visibile');
         }
     }
 
@@ -1173,31 +1459,37 @@
         document.getElementById('statAuto').textContent = count;
     }
 
+    function aggiornaBadge() {
+        const badge = document.getElementById('notifBadge');
+        const inAttesa = prenotazioni.filter(p => p.stato === 'in-attesa').length;
+        if (inAttesa > 0) {
+            badge.textContent = inAttesa;
+            badge.classList.remove('hidden');
+        } else {
+            badge.classList.add('hidden');
+        }
+    }
+
     function popolaMarche() {
         const selectFiltro = document.getElementById('filtroMarca');
         const selectEdit = document.getElementById('editMarca');
-
         MARCHE.forEach(marca => {
-            const opt1 = document.createElement('option');
-            opt1.value = marca;
-            opt1.textContent = marca;
-            selectFiltro.appendChild(opt1);
-
-            const opt2 = document.createElement('option');
-            opt2.value = marca;
-            opt2.textContent = marca;
-            selectEdit.appendChild(opt2);
+            const o1 = document.createElement('option');
+            o1.value = marca; o1.textContent = marca;
+            selectFiltro.appendChild(o1);
+            const o2 = document.createElement('option');
+            o2.value = marca; o2.textContent = marca;
+            selectEdit.appendChild(o2);
         });
     }
 
     // ============================================================
-    // 7. RENDER LISTA
+    // 6. RENDER LISTA AUTO
     // ============================================================
     function renderLista(veicoli) {
         const grid = document.getElementById('gridAuto');
         const nessuno = document.getElementById('nessunRisultato');
         const loading = document.getElementById('loadingIndicator');
-
         loading.style.display = 'none';
 
         if (!veicoli || veicoli.length === 0) {
@@ -1207,12 +1499,15 @@
         }
         nessuno.style.display = 'none';
 
-        grid.innerHTML = veicoli.map(v => `
-            <div class="card-auto" onclick="apriDettaglio(${v.id})">
+        grid.innerHTML = veicoli.map(v => {
+            const prenotata = prenotazioni.some(p => p.autoId === v.id && p.stato === 'confermata');
+            return `
+            <div class="card-auto">
                 <div class="card-img">
                     ${v.immagine ? `<img src="${v.immagine}" alt="${v.marca} ${v.modello}" />` :
                     `<div class="no-image"><i class="fas fa-car"></i></div>`}
                     <span class="tag"><i class="fas fa-check"></i> Pronta</span>
+                    ${prenotata ? `<span class="tag-prenotata"><i class="fas fa-check-circle"></i> PRENOTATA</span>` : ''}
                 </div>
                 <div class="card-body">
                     <div class="marca-label">${v.marca}</div>
@@ -1225,25 +1520,82 @@
                     </div>
                     <div class="prezzo">
                         <span>€ ${v.prezzo.toLocaleString()}</span>
-                        <button class="btn-dettaglio" onclick="event.stopPropagation(); apriDettaglio(${v.id})"><i class="fas fa-arrow-right"></i> Vedi</button>
+                        <button class="btn-dettaglio" onclick="apriDettaglio(${v.id})"><i class="fas fa-arrow-right"></i> Vedi</button>
                     </div>
+                    ${!prenotata ? `<button class="btn-prenota" onclick="apriModalePrenotazione(${v.id}, '${v.marca} ${v.modello}')"><i class="fas fa-calendar-plus"></i> Prenota</button>` :
+                    `<button class="btn-prenota prenotata" disabled><i class="fas fa-check-circle"></i> Già prenotata</button>`}
                     ${isAdmin ? `
                         <div class="card-admin-actions">
-                            <button class="btn-modifica" onclick="event.stopPropagation(); apriModaleModifica(${v.id})"><i class="fas fa-edit"></i> Modifica</button>
-                            <button class="btn-elimina" onclick="event.stopPropagation(); eliminaAuto(${v.id})"><i class="fas fa-trash"></i> Elimina</button>
+                            <button class="btn-modifica" onclick="apriModaleModifica(${v.id})"><i class="fas fa-edit"></i> Modifica</button>
+                            <button class="btn-elimina" onclick="eliminaAuto(${v.id})"><i class="fas fa-trash"></i> Elimina</button>
                         </div>
                     ` : ''}
                 </div>
             </div>
-        `).join('');
+        `}).join('');
     }
 
     // ============================================================
-    // 8. DETTAGLIO
+    // 7. RENDER PRENOTAZIONI (ADMIN)
+    // ============================================================
+    function renderPrenotazioni() {
+        const grid = document.getElementById('gridPrenotazioni');
+        const loading = document.getElementById('loadingPrenotazioni');
+        const nessuna = document.getElementById('nessunaPrenotazione');
+
+        if (!isAdmin) return;
+
+        if (prenotazioni.length === 0) {
+            loading.style.display = 'none';
+            nessuna.style.display = 'block';
+            grid.innerHTML = '';
+            return;
+        }
+
+        loading.style.display = 'none';
+        nessuna.style.display = 'none';
+
+        const statoMap = {
+            'in-attesa': '<span class="stato in-attesa"><i class="fas fa-clock"></i> In attesa</span>',
+            'confermata': '<span class="stato confermata"><i class="fas fa-check-circle"></i> Confermata</span>',
+            'annullata': '<span class="stato annullata"><i class="fas fa-times-circle"></i> Annullata</span>'
+        };
+
+        grid.innerHTML = prenotazioni.map(p => {
+            const autoNome = auto.find(a => a.id === p.autoId);
+            return `
+            <div class="card-prenotazione">
+                <div class="intestazione">
+                    <span class="nome">${p.nome} ${p.cognome}</span>
+                    ${statoMap[p.stato] || statoMap['in-attesa']}
+                </div>
+                <div class="dettagli-prenotazione"><i class="fas fa-car"></i> ${autoNome ? autoNome.marca + ' ' + autoNome.modello : 'Auto #' + p.autoId}</div>
+                <div class="dettagli-prenotazione"><i class="fas fa-envelope"></i> ${p.email}</div>
+                <div class="dettagli-prenotazione"><i class="fas fa-phone"></i> ${p.telefono}</div>
+                <div class="dettagli-prenotazione"><i class="fas fa-calendar-day"></i> ${p.data}</div>
+                ${p.messaggio ? `<div class="dettagli-prenotazione"><i class="fas fa-comment"></i> ${p.messaggio}</div>` : ''}
+                <div class="dettagli-prenotazione" style="font-size:11px; color:#9999aa;"><i class="fas fa-clock"></i> Richiesta il ${p.dataRichiesta || 'N/A'}</div>
+                ${p.stato === 'in-attesa' ? `
+                    <div class="azioni-prenotazione">
+                        <button class="btn-conferma" onclick="confermaPrenotazione(${p.id})"><i class="fas fa-check"></i> Conferma</button>
+                        <button class="btn-annulla-prenotazione" onclick="annullaPrenotazione(${p.id})"><i class="fas fa-times"></i> Annulla</button>
+                    </div>
+                ` : `
+                    <div class="azioni-prenotazione">
+                        <button class="btn-elimina-prenotazione" onclick="eliminaPrenotazione(${p.id})"><i class="fas fa-trash"></i> Elimina</button>
+                    </div>
+                `}
+            </div>
+        `}).join('');
+    }
+
+    // ============================================================
+    // 8. DETTAGLIO AUTO
     // ============================================================
     function apriDettaglio(id) {
         const veicolo = auto.find(a => a.id === id);
         if (!veicolo) return;
+        const prenotata = prenotazioni.some(p => p.autoId === id && p.stato === 'confermata');
 
         document.getElementById('listaAuto').classList.add('hidden');
         document.getElementById('dettaglio').classList.add('attivo');
@@ -1260,16 +1612,20 @@
                     <div class="marca-dett">${veicolo.marca}</div>
                     <h2>${veicolo.modello}</h2>
                     <div class="prezzo-dett">€ ${veicolo.prezzo.toLocaleString()} <small>IVA inclusa</small></div>
+                    ${prenotata ? `<div style="background:#d1fae5; color:#065f46; padding:10px 16px; border-radius:12px; margin-bottom:16px; font-weight:600;"><i class="fas fa-check-circle"></i> Questa auto è già stata prenotata</div>` : ''}
                     <div class="caratteristiche">
                         <span><i class="fas fa-calendar"></i> Anno: ${veicolo.anno}</span>
                         <span><i class="fas fa-tachometer-alt"></i> ${veicolo.km.toLocaleString()} km</span>
                         <span><i class="fas fa-gas-pump"></i> ${veicolo.alimentazione}</span>
                         <span><i class="fas fa-cog"></i> ${veicolo.cambio}</span>
                     </div>
+                    ${!prenotata ? 
+                        `<button class="btn-prenota-dettaglio" onclick="apriModalePrenotazione(${veicolo.id}, '${veicolo.marca} ${veicolo.modello}')"><i class="fas fa-calendar-plus"></i> Prenota questa auto</button>` :
+                        `<button class="btn-prenota-dettaglio prenotata" disabled><i class="fas fa-check-circle"></i> Già prenotata</button>`
+                    }
                 </div>
             </div>
         `;
-
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -1286,18 +1642,14 @@
         const marca = document.getElementById('filtroMarca').value;
         const prezzoMax = parseInt(document.getElementById('filtroPrezzoMax').value) || Infinity;
         const annoMin = parseInt(document.getElementById('filtroAnno').value) || 0;
-
         autoFiltrate = auto.filter(v => {
             if (marca && v.marca !== marca) return false;
             if (v.prezzo > prezzoMax) return false;
             if (v.anno < annoMin) return false;
             return true;
         });
-
         renderLista(autoFiltrate);
-        if (document.getElementById('dettaglio').classList.contains('attivo')) {
-            tornaLista();
-        }
+        if (document.getElementById('dettaglio').classList.contains('attivo')) tornaLista();
     }
 
     function resetFiltri() {
@@ -1306,9 +1658,7 @@
         document.getElementById('filtroAnno').value = '';
         autoFiltrate = [...auto];
         renderLista(autoFiltrate);
-        if (document.getElementById('dettaglio').classList.contains('attivo')) {
-            tornaLista();
-        }
+        if (document.getElementById('dettaglio').classList.contains('attivo')) tornaLista();
     }
 
     // ============================================================
@@ -1323,11 +1673,12 @@
 
     function verificaPassword() {
         const password = document.getElementById('passwordLogin').value;
-        if (password === 'usatonumerouno') {
+        if (password === 'admin123') {
             isAdmin = true;
             document.getElementById('modalLogin').classList.remove('attivo');
             aggiornaUI();
             renderLista(autoFiltrate);
+            renderPrenotazioni();
         } else {
             document.getElementById('erroreLogin').style.display = 'block';
             document.getElementById('passwordLogin').value = '';
@@ -1342,19 +1693,132 @@
     }
 
     // ============================================================
-    // 11. GESTIONE IMMAGINI
+    // 11. PRENOTAZIONI
+    // ============================================================
+    function apriModalePrenotazione(autoId, autoNome) {
+        document.getElementById('prenotaAutoId').value = autoId;
+        document.getElementById('prenotaAutoNome').textContent = autoNome;
+        document.getElementById('prenotaNome').value = '';
+        document.getElementById('prenotaCognome').value = '';
+        document.getElementById('prenotaEmail').value = '';
+        document.getElementById('prenotaTelefono').value = '';
+        document.getElementById('prenotaData').value = '';
+        document.getElementById('prenotaMessaggio').value = '';
+        document.getElementById('errorePrenotazione').style.display = 'none';
+        document.getElementById('successoPrenotazione').style.display = 'none';
+        document.getElementById('modalPrenotazione').classList.add('attivo');
+    }
+
+    function chiudiModalePrenotazione() {
+        document.getElementById('modalPrenotazione').classList.remove('attivo');
+    }
+
+    async function inviaPrenotazione() {
+        const autoId = parseInt(document.getElementById('prenotaAutoId').value);
+        const nome = document.getElementById('prenotaNome').value.trim();
+        const cognome = document.getElementById('prenotaCognome').value.trim();
+        const email = document.getElementById('prenotaEmail').value.trim();
+        const telefono = document.getElementById('prenotaTelefono').value.trim();
+        const data = document.getElementById('prenotaData').value;
+        const messaggio = document.getElementById('prenotaMessaggio').value.trim();
+        const errore = document.getElementById('errorePrenotazione');
+        const successo = document.getElementById('successoPrenotazione');
+
+        errore.style.display = 'none';
+        successo.style.display = 'none';
+
+        if (!nome || !cognome || !email || !telefono || !data) {
+            errore.textContent = 'Compila tutti i campi obbligatori (*)';
+            errore.style.display = 'block';
+            return;
+        }
+
+        // Controlla se l'auto è già prenotata
+        if (prenotazioni.some(p => p.autoId === autoId && p.stato === 'confermata')) {
+            errore.textContent = 'Questa auto è già stata prenotata!';
+            errore.style.display = 'block';
+            return;
+        }
+
+        const nuovaPrenotazione = {
+            id: Date.now(),
+            autoId: autoId,
+            nome,
+            cognome,
+            email,
+            telefono,
+            data,
+            messaggio,
+            stato: 'in-attesa',
+            dataRichiesta: new Date().toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+        };
+
+        try {
+            prenotazioni.push(nuovaPrenotazione);
+            await salvaDati();
+            successo.textContent = '✅ Prenotazione inviata con successo! Riceverai una conferma al più presto.';
+            successo.style.display = 'block';
+            aggiornaBadge();
+            if (isAdmin) renderPrenotazioni();
+            
+            // Mostra toast
+            mostraToast('✅ Prenotazione ricevuta!', `${nome} ${cognome} ha prenotato l'auto.`);
+            
+            setTimeout(() => {
+                chiudiModalePrenotazione();
+            }, 3000);
+        } catch (error) {
+            errore.textContent = 'Errore durante l\'invio: ' + error.message;
+            errore.style.display = 'block';
+        }
+    }
+
+    // ============================================================
+    // 12. GESTIONE PRENOTAZIONI (ADMIN)
+    // ============================================================
+    async function confermaPrenotazione(id) {
+        const index = prenotazioni.findIndex(p => p.id === id);
+        if (index === -1) return;
+        prenotazioni[index].stato = 'confermata';
+        await salvaDati();
+        aggiornaBadge();
+        renderPrenotazioni();
+        renderLista(autoFiltrate);
+        mostraToast('✅ Prenotazione confermata', `La prenotazione è stata confermata.`);
+    }
+
+    async function annullaPrenotazione(id) {
+        const index = prenotazioni.findIndex(p => p.id === id);
+        if (index === -1) return;
+        prenotazioni[index].stato = 'annullata';
+        await salvaDati();
+        aggiornaBadge();
+        renderPrenotazioni();
+        renderLista(autoFiltrate);
+        mostraToast('❌ Prenotazione annullata', `La prenotazione è stata annullata.`);
+    }
+
+    async function eliminaPrenotazione(id) {
+        if (!confirm('Sei sicuro di voler eliminare questa prenotazione?')) return;
+        prenotazioni = prenotazioni.filter(p => p.id !== id);
+        await salvaDati();
+        aggiornaBadge();
+        renderPrenotazioni();
+        renderLista(autoFiltrate);
+        mostraToast('🗑️ Prenotazione eliminata', `La prenotazione è stata rimossa.`);
+    }
+
+    // ============================================================
+    // 13. GESTIONE IMMAGINI
     // ============================================================
     function anteprimaImmagine(event) {
         const file = event.target.files[0];
         if (!file) return;
-
         const reader = new FileReader();
         reader.onload = function(e) {
             immagineTemp = e.target.result;
-            const preview = document.getElementById('imagePreview');
-            const img = document.getElementById('previewImg');
-            img.src = e.target.result;
-            preview.classList.add('visible');
+            document.getElementById('previewImg').src = e.target.result;
+            document.getElementById('imagePreview').classList.add('visible');
         };
         reader.readAsDataURL(file);
     }
@@ -1367,7 +1831,7 @@
     }
 
     // ============================================================
-    // 12. ADMIN: MODALE
+    // 14. ADMIN AUTO
     // ============================================================
     function apriModaleNuova() {
         if (!isAdmin) return;
@@ -1386,29 +1850,24 @@
 
     function apriModaleModifica(id) {
         if (!isAdmin) return;
-        const veicolo = auto.find(a => a.id === id);
-        if (!veicolo) return;
-
+        const v = auto.find(a => a.id === id);
+        if (!v) return;
         document.getElementById('modalTitolo').textContent = 'Modifica auto';
         document.getElementById('editId').value = id;
-        document.getElementById('editMarca').value = veicolo.marca;
-        document.getElementById('editModello').value = veicolo.modello;
-        document.getElementById('editAnno').value = veicolo.anno;
-        document.getElementById('editPrezzo').value = veicolo.prezzo;
-        document.getElementById('editKm').value = veicolo.km;
-        document.getElementById('editAlimentazione').value = veicolo.alimentazione;
-        document.getElementById('editCambio').value = veicolo.cambio;
-
-        if (veicolo.immagine) {
-            immagineTemp = veicolo.immagine;
-            const preview = document.getElementById('imagePreview');
-            const img = document.getElementById('previewImg');
-            img.src = veicolo.immagine;
-            preview.classList.add('visible');
+        document.getElementById('editMarca').value = v.marca;
+        document.getElementById('editModello').value = v.modello;
+        document.getElementById('editAnno').value = v.anno;
+        document.getElementById('editPrezzo').value = v.prezzo;
+        document.getElementById('editKm').value = v.km;
+        document.getElementById('editAlimentazione').value = v.alimentazione;
+        document.getElementById('editCambio').value = v.cambio;
+        if (v.immagine) {
+            immagineTemp = v.immagine;
+            document.getElementById('previewImg').src = v.immagine;
+            document.getElementById('imagePreview').classList.add('visible');
         } else {
             resetImmaginePreview();
         }
-
         document.getElementById('modalAdmin').classList.add('attivo');
     }
 
@@ -1417,9 +1876,6 @@
         resetImmaginePreview();
     }
 
-    // ============================================================
-    // 13. SALVA ED ELIMINA AUTO
-    // ============================================================
     async function salvaAuto() {
         const id = document.getElementById('editId').value;
         const marca = document.getElementById('editMarca').value;
@@ -1440,38 +1896,57 @@
 
         try {
             if (id) {
-                await modificaAuto(parseInt(id), veicolo);
+                const idx = auto.findIndex(a => a.id === parseInt(id));
+                if (idx !== -1) auto[idx] = { ...auto[idx], ...veicolo };
             } else {
-                await aggiungiAuto(veicolo);
+                const newId = auto.length > 0 ? Math.max(...auto.map(a => a.id)) + 1 : 1;
+                auto.push({ ...veicolo, id: newId });
             }
-            await caricaAuto();
+            await salvaDati();
+            autoFiltrate = [...auto];
+            renderLista(autoFiltrate);
+            aggiornaConteggio();
             chiudiModale();
         } catch (error) {
-            alert('Errore durante il salvataggio: ' + error.message);
+            alert('Errore: ' + error.message);
         }
     }
 
     async function eliminaAuto(id) {
         if (!isAdmin) return;
         if (!confirm('Sei sicuro di voler eliminare questa auto?')) return;
-
         try {
-            await eliminaAutoDb(id);
-            await caricaAuto();
-            if (document.getElementById('dettaglio').classList.contains('attivo')) {
-                tornaLista();
-            }
+            auto = auto.filter(a => a.id !== id);
+            await salvaDati();
+            autoFiltrate = [...auto];
+            renderLista(autoFiltrate);
+            aggiornaConteggio();
+            if (document.getElementById('dettaglio').classList.contains('attivo')) tornaLista();
         } catch (error) {
-            alert('Errore durante l\'eliminazione: ' + error.message);
+            alert('Errore: ' + error.message);
         }
     }
 
     // ============================================================
-    // 14. INIT
+    // 15. TOAST NOTIFICA
+    // ============================================================
+    function mostraToast(titolo, testo) {
+        document.getElementById('toastTitolo').textContent = titolo;
+        document.getElementById('toastTesto').textContent = testo;
+        document.getElementById('toast').classList.add('visibile');
+        setTimeout(chiudiToast, 5000);
+    }
+
+    function chiudiToast() {
+        document.getElementById('toast').classList.remove('visibile');
+    }
+
+    // ============================================================
+    // 16. INIT
     // ============================================================
     async function init() {
         popolaMarche();
-        await caricaAuto();
+        await caricaDati();
         aggiornaUI();
     }
 
@@ -1479,6 +1954,7 @@
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             chiudiModale();
+            chiudiModalePrenotazione();
             document.getElementById('modalLogin').classList.remove('attivo');
         }
     });
@@ -1493,7 +1969,10 @@
         if (e.target === document.getElementById('modalAdmin')) chiudiModale();
     });
 
-    // Avvia l'applicazione
+    document.getElementById('modalPrenotazione').addEventListener('click', (e) => {
+        if (e.target === document.getElementById('modalPrenotazione')) chiudiModalePrenotazione();
+    });
+
     init();
 </script>
 

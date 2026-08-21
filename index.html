@@ -980,6 +980,82 @@
             margin-top: -4px;
         }
 
+        /* ===== BARRA DI RICERCA MARCHE ===== */
+        .marca-search-container {
+            position: relative;
+            width: 100%;
+        }
+        .marca-search-container input {
+            width: 100%;
+            padding: 10px 14px 10px 36px;
+            border: 1px solid #d0d0d8;
+            border-radius: 10px;
+            font-size: 14px;
+            background: #f8f8fa;
+            transition: 0.3s;
+            font-family: 'Inter', sans-serif;
+            color: #0a0a0a;
+        }
+        .marca-search-container input:focus {
+            border-color: #dc2626;
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.08);
+            background: #fff;
+        }
+        .marca-search-container .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8888a0;
+            font-size: 14px;
+        }
+        .marca-search-container .clear-search {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8888a0;
+            cursor: pointer;
+            font-size: 14px;
+            display: none;
+        }
+        .marca-search-container .clear-search.visible { display: block; }
+        .marca-search-container .clear-search:hover { color: #dc2626; }
+        .marca-options {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #d0d0d8;
+            border-radius: 10px;
+            margin-top: 4px;
+            background: #fff;
+            display: none;
+            position: absolute;
+            width: 100%;
+            z-index: 10;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .marca-options.visible { display: block; }
+        .marca-options .marca-option {
+            padding: 8px 14px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: 0.2s;
+            border-bottom: 1px solid #f0f0f5;
+        }
+        .marca-options .marca-option:hover {
+            background: #f8f8fa;
+            color: #dc2626;
+        }
+        .marca-options .marca-option:last-child { border-bottom: none; }
+        .marca-options .marca-option.hidden { display: none; }
+        .marca-options .no-results {
+            padding: 12px 14px;
+            color: #8888a0;
+            font-size: 13px;
+            text-align: center;
+        }
+
         @media (max-width: 768px) {
             .header-inner { flex-direction: column; align-items: flex-start; }
             .header-right { width: 100%; justify-content: flex-start; flex-wrap: wrap; }
@@ -1020,7 +1096,7 @@
             <div class="logo-icon">O</div>
             <div class="logo-text">
                 <h1>Outlet Usato Garantito</h1>
-                <div class="sottotitolo"><i class="fas fa-check-circle"></i> Auto certificate · Selezione premium</div>
+                <div class="sottotitolo"><i class="fas fa-check-circle"></i> Auto · Moto · Commerciali</div>
             </div>
         </div>
         <div class="header-right">
@@ -1047,7 +1123,7 @@
         <div class="hero-stats">
             <div class="stat">
                 <div class="numero" id="statAuto">0</div>
-                <div class="label">Auto disponibili</div>
+                <div class="label">Veicoli disponibili</div>
             </div>
             <div class="stat">
                 <div class="numero">✓</div>
@@ -1087,22 +1163,22 @@
 <section class="sezione-auto" id="listaAuto">
     <div class="container">
         <div class="sezione-header">
-            <h2><i class="fas fa-car"></i> Il nostro parco auto</h2>
+            <h2><i class="fas fa-car"></i> Il nostro parco veicoli</h2>
             <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
                 <span class="count" id="conteggioAuto">Caricamento...</span>
                 <div class="admin-actions" id="adminActions" style="display:none;">
-                    <button class="btn-admin" onclick="apriModaleNuova()"><i class="fas fa-plus"></i> Nuova auto</button>
+                    <button class="btn-admin" onclick="apriModaleNuova()"><i class="fas fa-plus"></i> Nuovo veicolo</button>
                 </div>
             </div>
         </div>
         <div id="loadingIndicator" class="loading">
             <i class="fas fa-spinner"></i>
-            <p>Caricamento auto in corso...</p>
+            <p>Caricamento veicoli in corso...</p>
         </div>
         <div class="grid-auto" id="gridAuto"></div>
         <div class="nessun-risultato" id="nessunRisultato">
             <i class="fas fa-search-minus"></i>
-            <p>Nessuna auto corrisponde ai filtri selezionati.</p>
+            <p>Nessun veicolo corrisponde ai filtri selezionati.</p>
         </div>
     </div>
 </section>
@@ -1147,7 +1223,7 @@
 <div class="modal-overlay" id="modalPrenotazione">
     <div class="modal">
         <h2><i class="fas fa-calendar-plus"></i> Prenota <span id="prenotaAutoNome"></span></h2>
-        <p style="color:#666680; font-size:14px; margin-bottom:16px;">Compila il modulo per prenotare questa auto</p>
+        <p style="color:#666680; font-size:14px; margin-bottom:16px;">Compila il modulo per prenotare questo veicolo</p>
         <form id="formPrenotazione" onsubmit="return false;">
             <input type="hidden" id="prenotaAutoId" value="" />
             <div class="form-row">
@@ -1192,17 +1268,28 @@
 
 <div class="modal-overlay" id="modalAdmin">
     <div class="modal">
-        <h2><i class="fas fa-edit"></i> <span id="modalTitolo">Nuova auto</span></h2>
+        <h2><i class="fas fa-edit"></i> <span id="modalTitolo">Nuovo veicolo</span></h2>
         <form id="formAuto" onsubmit="return false;">
             <input type="hidden" id="editId" value="" />
+            
             <div class="form-group">
                 <label><i class="fas fa-tag"></i> Marca</label>
-                <select id="editMarca" required></select>
+                <div class="marca-search-container">
+                    <input type="text" id="marcaSearch" placeholder="Cerca marca..." oninput="filtraMarche()" onfocus="document.getElementById('marcaOptions').classList.add('visible')" />
+                    <i class="fas fa-search search-icon"></i>
+                    <i class="fas fa-times clear-search" id="clearSearch" onclick="pulisciRicerca()"></i>
+                    <div class="marca-options" id="marcaOptions">
+                        <div class="no-results" id="noMarcaResults" style="display:none;">Nessuna marca trovata</div>
+                    </div>
+                </div>
+                <select id="editMarca" required style="display:none;"></select>
             </div>
+            
             <div class="form-group">
                 <label><i class="fas fa-car"></i> Modello</label>
                 <input type="text" id="editModello" placeholder="es. A3 Sportback" required />
             </div>
+            
             <div class="form-row">
                 <div class="form-group">
                     <label><i class="fas fa-calendar"></i> Anno</label>
@@ -1213,6 +1300,7 @@
                     <input type="number" id="editPrezzo" placeholder="22900" min="0" required />
                 </div>
             </div>
+            
             <div class="form-row">
                 <div class="form-group">
                     <label><i class="fas fa-tachometer-alt"></i> Km</label>
@@ -1230,6 +1318,7 @@
                     </select>
                 </div>
             </div>
+            
             <div class="form-group">
                 <label><i class="fas fa-cog"></i> Cambio</label>
                 <select id="editCambio">
@@ -1238,6 +1327,7 @@
                     <option value="Sequenziale">Sequenziale</option>
                 </select>
             </div>
+            
             <div class="modal-actions">
                 <button type="button" class="btn-annulla" onclick="chiudiModale()">Annulla</button>
                 <button type="button" class="btn-salva" onclick="salvaAuto()"><i class="fas fa-save"></i> Salva</button>
@@ -1277,9 +1367,10 @@
     let prenotazioni = [];
 
     // ============================================================
-    // 3. LISTA MARCHE
+    // 3. LISTA MARCHE (AUTO + MOTO)
     // ============================================================
     const MARCHE = [
+        // AUTO
         'Abarth', 'Acura', 'Aixam', 'Alfa Romeo', 'Alpine', 'Aston Martin', 'Audi', 'Austin',
         'Bentley', 'BMW', 'Bugatti', 'Buick', 'Cadillac', 'Chevrolet', 'Chrysler', 'Citroen',
         'Corvette', 'Cupra', 'Dacia', 'Daewoo', 'Daihatsu', 'Dodge', 'DS Automobiles', 'Ferrari',
@@ -1290,8 +1381,13 @@
         'Oldsmobile', 'Opel', 'Pagani', 'Peugeot', 'Plymouth', 'Pontiac', 'Porsche', 'Proton',
         'Renault', 'Rolls-Royce', 'Rover', 'Saab', 'Seat', 'Skoda', 'Smart', 'SsangYong',
         'Subaru', 'Suzuki', 'Talbot', 'Tesla', 'Toyota', 'Trabant', 'Triumph', 'Vauxhall',
-        'Volkswagen', 'Volvo', 'Wiesmann', 'Yugo', 'Zastava'
-    ];
+        'Volkswagen', 'Volvo', 'Wiesmann', 'Yugo', 'Zastava',
+        // MOTO
+        'Aprilia', 'Benelli', 'Beta', 'Bimota', 'BMW Motorrad', 'Cagiva', 'Ducati', 'Fantic',
+        'Gilera', 'Harley-Davidson', 'Honda Moto', 'Husqvarna', 'Indian', 'Kawasaki', 'KTM',
+        'Moto Guzzi', 'MV Agusta', 'Piaggio', 'Suzuki Moto', 'Triumph Moto', 'Vespa', 'Yamaha',
+        'Zero Motorcycles'
+    ].sort();
 
     // ============================================================
     // 4. CARICAMENTO DATI DA JSONBIN + FALLBACK
@@ -1420,7 +1516,7 @@
     }
 
     function aggiornaConteggio() {
-        document.getElementById('conteggioAuto').textContent = `${auto.length} vetture disponibili`;
+        document.getElementById('conteggioAuto').textContent = `${auto.length} veicoli disponibili`;
         document.getElementById('statAuto').textContent = auto.length;
     }
 
@@ -1435,18 +1531,82 @@
         }
     }
 
-    function popolaMarche() {
-        const selectFiltro = document.getElementById('filtroMarca');
-        const selectEdit = document.getElementById('editMarca');
+    function popolaMarcheFiltro() {
+        const select = document.getElementById('filtroMarca');
         MARCHE.forEach(marca => {
-            const o1 = document.createElement('option');
-            o1.value = marca; o1.textContent = marca;
-            selectFiltro.appendChild(o1);
-            const o2 = document.createElement('option');
-            o2.value = marca; o2.textContent = marca;
-            selectEdit.appendChild(o2);
+            const opt = document.createElement('option');
+            opt.value = marca;
+            opt.textContent = marca;
+            select.appendChild(opt);
         });
     }
+
+    function popolaMarcheAdmin() {
+        const container = document.getElementById('marcaOptions');
+        // Pulisci container (mantieni solo il no-results)
+        const noResults = document.getElementById('noMarcaResults');
+        container.innerHTML = '';
+        container.appendChild(noResults);
+        
+        MARCHE.forEach(marca => {
+            const div = document.createElement('div');
+            div.className = 'marca-option';
+            div.textContent = marca;
+            div.dataset.marca = marca;
+            div.onclick = function() {
+                selezionaMarca(marca);
+            };
+            container.appendChild(div);
+        });
+    }
+
+    function filtraMarche() {
+        const search = document.getElementById('marcaSearch').value.toLowerCase().trim();
+        const options = document.querySelectorAll('.marca-option');
+        const clearBtn = document.getElementById('clearSearch');
+        const noResults = document.getElementById('noMarcaResults');
+        let found = false;
+
+        if (search.length > 0) {
+            clearBtn.classList.add('visible');
+        } else {
+            clearBtn.classList.remove('visible');
+        }
+
+        options.forEach(opt => {
+            if (opt.dataset.marca) {
+                const match = opt.dataset.marca.toLowerCase().includes(search);
+                opt.style.display = match ? 'block' : 'none';
+                if (match) found = true;
+            }
+        });
+
+        noResults.style.display = found ? 'none' : 'block';
+        document.getElementById('marcaOptions').classList.add('visible');
+    }
+
+    function selezionaMarca(marca) {
+        document.getElementById('marcaSearch').value = marca;
+        document.getElementById('editMarca').value = marca;
+        document.getElementById('marcaOptions').classList.remove('visible');
+        document.getElementById('clearSearch').classList.remove('visible');
+    }
+
+    function pulisciRicerca() {
+        document.getElementById('marcaSearch').value = '';
+        document.getElementById('editMarca').value = '';
+        document.getElementById('clearSearch').classList.remove('visible');
+        document.getElementById('marcaOptions').classList.remove('visible');
+        document.getElementById('marcaSearch').focus();
+    }
+
+    // Chiudi la lista quando si clicca fuori
+    document.addEventListener('click', function(e) {
+        const container = document.querySelector('.marca-search-container');
+        if (container && !container.contains(e.target)) {
+            document.getElementById('marcaOptions').classList.remove('visible');
+        }
+    });
 
     // ============================================================
     // 7. RENDER LISTA AUTO
@@ -1535,7 +1695,7 @@
                     <span class="nome">${p.nome} ${p.cognome}</span>
                     ${statoMap[p.stato] || statoMap['in-attesa']}
                 </div>
-                <div class="dettagli-prenotazione"><i class="fas fa-car"></i> ${autoNome ? autoNome.marca + ' ' + autoNome.modello : 'Auto #' + p.autoId}</div>
+                <div class="dettagli-prenotazione"><i class="fas fa-car"></i> ${autoNome ? autoNome.marca + ' ' + autoNome.modello : 'Veicolo #' + p.autoId}</div>
                 <div class="dettagli-prenotazione"><i class="fas fa-envelope"></i> ${p.email}</div>
                 <div class="dettagli-prenotazione"><i class="fas fa-phone"></i> ${p.telefono}</div>
                 <div class="dettagli-prenotazione"><i class="fas fa-calendar-day"></i> ${p.data}</div>
@@ -1577,7 +1737,7 @@
                     <div class="marca-dett">${veicolo.marca}</div>
                     <h2>${veicolo.modello}</h2>
                     <div class="prezzo-dett">€ ${veicolo.prezzo.toLocaleString()} <small>IVA inclusa</small></div>
-                    ${prenotata ? `<div style="background:#d1fae5; color:#065f46; padding:10px 16px; border-radius:12px; margin-bottom:16px; font-weight:600;"><i class="fas fa-check-circle"></i> Questa auto è già stata prenotata</div>` : ''}
+                    ${prenotata ? `<div style="background:#d1fae5; color:#065f46; padding:10px 16px; border-radius:12px; margin-bottom:16px; font-weight:600;"><i class="fas fa-check-circle"></i> Questo veicolo è già stato prenotato</div>` : ''}
                     <div class="caratteristiche">
                         <span><i class="fas fa-calendar"></i> Anno: ${veicolo.anno}</span>
                         <span><i class="fas fa-tachometer-alt"></i> ${veicolo.km.toLocaleString()} km</span>
@@ -1585,8 +1745,8 @@
                         <span><i class="fas fa-cog"></i> ${veicolo.cambio}</span>
                     </div>
                     ${!prenotata ? 
-                        `<button class="btn-prenota-dettaglio" onclick="apriModalePrenotazione(${veicolo.id}, '${veicolo.marca} ${veicolo.modello}')"><i class="fas fa-calendar-plus"></i> Prenota questa auto</button>` :
-                        `<button class="btn-prenota-dettaglio prenotata" disabled><i class="fas fa-check-circle"></i> Già prenotata</button>`
+                        `<button class="btn-prenota-dettaglio" onclick="apriModalePrenotazione(${veicolo.id}, '${veicolo.marca} ${veicolo.modello}')"><i class="fas fa-calendar-plus"></i> Prenota questo veicolo</button>` :
+                        `<button class="btn-prenota-dettaglio prenotata" disabled><i class="fas fa-check-circle"></i> Già prenotato</button>`
                     }
                 </div>
             </div>
@@ -1698,7 +1858,7 @@
         }
 
         if (prenotazioni.some(p => p.autoId === autoId && p.stato === 'confermata')) {
-            errore.textContent = 'Questa auto è già stata prenotata!';
+            errore.textContent = 'Questo veicolo è già stato prenotato!';
             errore.style.display = 'block';
             return;
         }
@@ -1723,7 +1883,7 @@
             successo.style.display = 'block';
             aggiornaBadge();
             if (isAdmin) renderPrenotazioni();
-            mostraToast('✅ Prenotazione ricevuta!', `${nome} ${cognome} ha prenotato l'auto.`);
+            mostraToast('✅ Prenotazione ricevuta!', `${nome} ${cognome} ha prenotato il veicolo.`);
             setTimeout(() => chiudiModalePrenotazione(), 3000);
         } catch (error) {
             errore.textContent = 'Errore: ' + error.message;
@@ -1773,7 +1933,7 @@
         if (!isAdmin) return;
         
         if (prenotazioni.some(p => p.autoId === autoId && p.stato === 'confermata')) {
-            mostraToast('❌ Errore', 'Questa auto è già stata prenotata!');
+            mostraToast('❌ Errore', 'Questo veicolo è già stato prenotato!');
             return;
         }
         
@@ -1798,7 +1958,7 @@
             aggiornaBadge();
             renderPrenotazioni();
             renderLista(autoFiltrate);
-            mostraToast('✅ Auto prenotata!', `${autoNome} è stata prenotata per il cliente.`);
+            mostraToast('✅ Veicolo prenotato!', `${autoNome} è stato prenotato per il cliente.`);
         } catch (error) {
             alert('Errore: ' + error.message);
         }
@@ -1809,24 +1969,29 @@
     // ============================================================
     function apriModaleNuova() {
         if (!isAdmin) return;
-        document.getElementById('modalTitolo').textContent = 'Nuova auto';
+        document.getElementById('modalTitolo').textContent = 'Nuovo veicolo';
         document.getElementById('editId').value = '';
-        document.getElementById('editMarca').value = 'Audi';
+        document.getElementById('marcaSearch').value = '';
+        document.getElementById('editMarca').value = '';
         document.getElementById('editModello').value = '';
         document.getElementById('editAnno').value = '';
         document.getElementById('editPrezzo').value = '';
         document.getElementById('editKm').value = '';
         document.getElementById('editAlimentazione').value = 'Benzina';
         document.getElementById('editCambio').value = 'Manuale';
+        document.getElementById('clearSearch').classList.remove('visible');
+        document.getElementById('marcaOptions').classList.remove('visible');
         document.getElementById('modalAdmin').classList.add('attivo');
+        setTimeout(() => document.getElementById('marcaSearch').focus(), 200);
     }
 
     function apriModaleModifica(id) {
         if (!isAdmin) return;
         const v = auto.find(a => a.id === id);
         if (!v) return;
-        document.getElementById('modalTitolo').textContent = 'Modifica auto';
+        document.getElementById('modalTitolo').textContent = 'Modifica veicolo';
         document.getElementById('editId').value = id;
+        document.getElementById('marcaSearch').value = v.marca;
         document.getElementById('editMarca').value = v.marca;
         document.getElementById('editModello').value = v.modello;
         document.getElementById('editAnno').value = v.anno;
@@ -1834,6 +1999,8 @@
         document.getElementById('editKm').value = v.km;
         document.getElementById('editAlimentazione').value = v.alimentazione;
         document.getElementById('editCambio').value = v.cambio;
+        document.getElementById('clearSearch').classList.remove('visible');
+        document.getElementById('marcaOptions').classList.remove('visible');
         document.getElementById('modalAdmin').classList.add('attivo');
     }
 
@@ -1851,7 +2018,7 @@
         const alimentazione = document.getElementById('editAlimentazione').value;
         const cambio = document.getElementById('editCambio').value;
 
-        if (!modello || !anno || !prezzo || !km) {
+        if (!marca || !modello || !anno || !prezzo || !km) {
             alert('Compila tutti i campi correttamente.');
             return;
         }
@@ -1871,7 +2038,7 @@
             renderLista(autoFiltrate);
             aggiornaConteggio();
             chiudiModale();
-            mostraToast('✅ Auto salvata!', `${marca} ${modello} è stata aggiunta al listino.`);
+            mostraToast('✅ Veicolo salvato!', `${marca} ${modello} è stato aggiunto al listino.`);
         } catch (error) {
             alert('Errore: ' + error.message);
         }
@@ -1879,7 +2046,7 @@
 
     async function eliminaAuto(id) {
         if (!isAdmin) return;
-        if (!confirm('Sei sicuro di voler eliminare questa auto?')) return;
+        if (!confirm('Sei sicuro di voler eliminare questo veicolo?')) return;
         try {
             auto = auto.filter(a => a.id !== id);
             await salvaDati();
@@ -1887,7 +2054,7 @@
             renderLista(autoFiltrate);
             aggiornaConteggio();
             if (document.getElementById('dettaglio').classList.contains('attivo')) tornaLista();
-            mostraToast('🗑️ Auto eliminata', 'L\'auto è stata rimossa dal listino.');
+            mostraToast('🗑️ Veicolo eliminato', 'Il veicolo è stato rimosso dal listino.');
         } catch (error) {
             alert('Errore: ' + error.message);
         }
@@ -1911,7 +2078,8 @@
     // 17. INIT
     // ============================================================
     async function init() {
-        popolaMarche();
+        popolaMarcheFiltro();
+        popolaMarcheAdmin();
         const data = await caricaDati();
         auto = data.auto || [];
         prenotazioni = data.prenotazioni || [];
@@ -1928,6 +2096,7 @@
             chiudiModale();
             chiudiModalePrenotazione();
             document.getElementById('modalLogin').classList.remove('attivo');
+            document.getElementById('marcaOptions').classList.remove('visible');
         }
     });
 

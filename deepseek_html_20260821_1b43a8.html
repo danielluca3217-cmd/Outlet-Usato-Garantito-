@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Outlet Usato Garantito</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background: #f5f5f5; color: #0a0a0a; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #dc2626; border-radius: 10px; }
+
+        /* ===== HEADER ===== */
+        header {
+            background: #0a0a0a;
+            padding: 12px 0;
+            border-bottom: 3px solid #dc2626;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 30px rgba(220, 38, 38, 0.15);
+        }
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: #dc2626;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: #fff;
+            font-weight: 900;
+            font-family: 'Arial Black', sans-serif;
+            flex-shrink: 0;
+        }
+        .logo-text h1 {
+            font-size: 20px;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+        .logo-text .sottotitolo {
+            font-size: 10px;
+            color: #888899;
+            font-weight: 300;
+            letter-spacing: 1.5px;
+        }
+        .logo-text .sottotitolo i { color: #dc2626; margin-right: 4px; }
+        nav {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        nav a {
+            color: #b0b0c0;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: 0.3s;
+            padding: 6px 14px;
+            border-radius: 30px;
+        }
+        nav a:hover { color: #dc2626; background: rgba(220, 38, 38, 0.08); }
+        nav a i { margin-right: 6px; }
+        .badge-header {
+            background: rgba(220, 38, 38, 0.12);
+            border: 1px solid rgba(220, 38, 38, 0.2);
+            color: #dc2626;
+            padding: 4px 16px;
+            border-radius: 40px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+        .btn-login {
+            background: #dc2626;
+            color: #fff !important;
+            border: none;
+            padding: 8px 22px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-login:hover {
+            background: #b91c1c;
+            transform: scale(1.04);
+            box-shadow: 0 4px 20px rgba(220, 38, 38, 0.4);
+        }
+        .btn-logout {
+            background: transparent;
+            color: #b0b0c0;
+            border: 1px solid #3a3a4a;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-logout:hover { background: #dc2626; color: #fff; border-color: #dc2626; }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #fff;
+            font-size: 13px;
+        }
+        .user-info .admin-badge {
+            color: #dc2626;
+            font-weight: 700;
+            font-size: 10px;
+            background: rgba(220, 38, 38, 0.12);
+            padding: 2px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(220, 38, 38, 0.2);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            background: linear-gradient(160deg, #0a0a0a 0%, #1a0a0a 40%, #0a0a0a 100%);
+            padding: 80px 0 70px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(220, 38, 38, 0.1);
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            left: -20%;
+            width: 60%;
+            height: 150%;
+            background: radial-gradient(ellipse, rgba(220, 38, 38, 0.06) 0%, transparent 70%);
+            animation: pulseGlow 10s ease-in-out infinite;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            right: -20%;
+            width: 50%;
+            height: 150%;
+            background: radial-gradient(ellipse, rgba(220, 38, 38, 0.04) 0%, transparent 70%);
+            animation: pulseGlow 12s ease-in-out infinite reverse;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.15); opacity: 1; }
+        }
+        .hero-content { position: relative; z-index: 2; }
+        .hero .badge-oro {
+            display: inline-block;
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid rgba(220, 38, 38, 0.2);
+            color: #dc2626;
+            padding: 6px 28px;
+            border-radius: 40px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        .hero h2 {
+            font-size: 52px;
+            font-weight: 900;
+            color: #fff;
+            line-height: 1.08;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+        .hero h2 span { color: #dc2626; }
+        .hero p {
+            font-size: 18px;
+            color: #8888a0;
+            max-width: 540px;
+            margin: 0 auto 32px;
+            font-weight: 300;
+        }
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            flex-wrap: wrap;
+        }
+        .hero-stats .stat { text-align: center; }
+        .hero-stats .stat .numero {
+            font-size: 28px;
+            font-weight: 800;
+            color: #dc2626;
+            letter-spacing: -0.5px;
+        }
+        .hero-stats .stat .label {
+            font-size: 12px;
+            color: #666680;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        /* ===== FILTRI ===== */
+        .filtri {
+            background: #fff;
+            padding: 20px 0;
+            border-bottom: 1px solid #e0e0e8;
+            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.02);
+            position: sticky;
+            top: 72px;
+            z-index: 99;
+        }
+        .filtri-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 18px;
+            align-items: flex-end;
+            justify-content: center;
+        }
+        .filtri-form .gruppo {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            min-width: 130px;
+        }
+        .filtri-form label {
+            font-size: 10px;
+            font-weight: 700;
+            color: #777790;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+        .filtri-form select, .filtri-form input {
+            padding: 10px 14px;
+            border: 1px solid #d0d0d8;
+            border-radius: 10px;
+            font-size: 13px;
+            background: #f8f8fa;
+            transition: 0.3s;
+            font-family: 'Inter', sans-serif;
+            width: 100%;
+            color: #0a0a0a;
+        }
+        .filtri-form select:focus, .filtri-form input:focus {
+            border-color: #dc2626;
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.08);
+            background: #fff;
+        }
+        .filtri-form .btn-filtra {
+            background: #0a0a0a;
+            color: #fff;
+            border: none;
+            padding: 10px 32px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 13px;
+            font-family: 'Inter', sans-serif;
+        }
+        .filtri-form .btn-filtra:hover {
+            background: #dc2626;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(220, 38, 38, 0.3);
+        }
+        .filtri-form .btn-reset {
+            background: transparent;
+            color: #777790;
+            border: 1px solid #d0d0d8;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+        }
+        .filtri-form .btn-reset:hover { background: #f0f0f5; border-color: #b0b0b8; }
+
+        /* ===== LISTA AUTO ===== */
+        .sezione-auto { padding: 40px 0 64px; }
+        .sezione-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+        .sezione-header h2 {
+            font-size: 26px;
+            font-weight: 800;
+            color: #0a0a0a;
+            letter-spacing: -0.5px;
+        }
+        .sezione-header h2 i { color: #dc2626; margin-right: 10px; }
+        .sezione-header .count {
+            color: #777790;
+            font-size: 13px;
+            font-weight: 500;
+            background: #fff;
+            padding: 6px 18px;
+            border-radius: 30px;
+            border: 1px solid #e0e0e8;
+        }
+        .admin-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+        .btn-admin {
+            background: #dc2626;
+            color: #fff;
+            border: none;
+            padding: 8px 22px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Inter', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-admin:hover {
+            background: #b91c1c;
+            transform: scale(1.04);
+            box-shadow: 0 4px 20px rgba(220, 38, 38, 0.3);
+        }
+
+        /* ===== GRID AUTO ===== */
+        .grid-auto {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 28px;
+        }
+        .card-auto {
+            background: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
+            transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border: 1px solid #e8e8ee;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            position: relative;
+        }
+        .card-auto:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(220, 38, 38, 0.08);
+            border-color: #dc2626;
+        }
+        .card-img {
+            height: 200px;
+            background: linear-gradient(135deg, #e8e8ee, #d0d0d8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .card-img img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .card-auto:hover .card-img img { transform: scale(1.03); }
+        .card-img .no-image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            font-size: 48px;
+            color: #777790;
+            background: linear-gradient(135deg, #e8e8ee, #d0d0d8);
+        }
+        .card-img .tag {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: #dc2626;
+            color: #fff;
+            padding: 3px 14px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            z-index: 2;
+        }
+        .card-body {
+            padding: 16px 18px 18px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .card-body .marca-label {
+            font-size: 12px;
+            color: #777790;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+        .card-body h3 {
+            font-size: 17px;
+            font-weight: 700;
+            color: #0a0a0a;
+            margin-bottom: 2px;
+        }
+        .card-body .dettagli {
+            color: #666680;
+            font-size: 12px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px 14px;
+            margin: 4px 0 12px;
+        }
+        .card-body .dettagli i {
+            margin-right: 4px;
+            color: #dc2626;
+            width: 14px;
+            font-size: 11px;
+        }
+        .card-body .prezzo {
+            font-size: 22px;
+            font-weight: 800;
+            color: #0a0a0a;
+            margin-top: auto;
+            padding-top: 12px;
+            border-top: 1px solid #e8e8ee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .card-body .prezzo .btn-dettaglio {
+            background: #0a0a0a;
+            color: #fff;
+            border: none;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+        .card-body .prezzo .btn-dettaglio:hover { background: #dc2626; color: #fff; }
+        .card-admin-actions {
+            display: flex;
+            gap: 6px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #e8e8ee;
+        }
+        .card-admin-actions button {
+            flex: 1;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Inter', sans-serif;
+            border: none;
+        }
+        .card-admin-actions .btn-modifica { background: #dc2626; color: #fff; }
+        .card-admin-actions .btn-modifica:hover { background: #b91c1c; }
+        .card-admin-actions .btn-elimina { background: #0a0a0a; color: #fff; }
+        .card-admin-actions .btn-elimina:hover { background: #2a2a2a; }
+
+        /* ===== DETTAGLIO ===== */
+        #dettaglio { display: none; padding: 30px 0 50px; }
+        #dettaglio.attivo { display: block; }
+        #listaAuto.hidden { display: none; }
+        .dettaglio-container {
+            background: #fff;
+            border-radius: 24px;
+            padding: 36px 40px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.04);
+            border: 1px solid #e8e8ee;
+        }
+        .dettaglio-container .back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            color: #666680;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 13px;
+            text-decoration: none;
+        }
+        .dettaglio-container .back:hover { color: #dc2626; }
+        .dettaglio-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 44px;
+        }
+        @media (max-width: 768px) {
+            .dettaglio-grid { grid-template-columns: 1fr; gap: 24px; }
+            .dettaglio-container { padding: 20px; }
+        }
+        .dettaglio-foto {
+            background: linear-gradient(135deg, #e8e8ee, #d0d0d8);
+            border-radius: 18px;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .dettaglio-foto img { width: 100%; height: 100%; object-fit: cover; }
+        .dettaglio-foto .no-image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            font-size: 72px;
+            color: #777790;
+            background: linear-gradient(135deg, #e8e8ee, #d0d0d8);
+        }
+        .dettaglio-info h2 {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 2px;
+        }
+        .dettaglio-info .marca-dett {
+            color: #777790;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        .dettaglio-info .prezzo-dett {
+            font-size: 32px;
+            font-weight: 800;
+            color: #0a0a0a;
+            margin: 10px 0 16px;
+        }
+        .dettaglio-info .prezzo-dett small {
+            font-size: 14px;
+            font-weight: 400;
+            color: #777790;
+            margin-left: 8px;
+        }
+        .dettaglio-info .caratteristiche {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px 24px;
+            margin: 12px 0 20px;
+            background: #f8f8fa;
+            padding: 16px 24px;
+            border-radius: 16px;
+            border: 1px solid #e8e8ee;
+        }
+        .dettaglio-info .caratteristiche span {
+            font-size: 13px;
+            font-weight: 500;
+            color: #2a2a3a;
+        }
+        .dettaglio-info .caratteristiche i {
+            color: #dc2626;
+            width: 20px;
+            font-size: 13px;
+        }
+
+        /* ===== MODALI ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(6px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-overlay.attivo { display: flex; }
+        .modal {
+            background: #fff;
+            border-radius: 24px;
+            padding: 36px 40px;
+            max-width: 560px;
+            width: 100%;
+            max-height: 92vh;
+            overflow-y: auto;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .modal h2 {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: #0a0a0a;
+        }
+        .modal h2 i { color: #dc2626; margin-right: 10px; }
+        .modal .form-group { margin-bottom: 14px; }
+        .modal .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 12px;
+            color: #444460;
+            margin-bottom: 4px;
+            letter-spacing: 0.3px;
+        }
+        .modal .form-group input, .modal .form-group select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #d0d0d8;
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            transition: 0.3s;
+            color: #0a0a0a;
+            background: #f8f8fa;
+        }
+        .modal .form-group input:focus, .modal .form-group select:focus {
+            border-color: #dc2626;
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.06);
+            background: #fff;
+        }
+        .modal .form-group input[type="file"] {
+            padding: 8px;
+            border: 2px dashed #d0d0d8;
+            border-radius: 10px;
+            cursor: pointer;
+            background: transparent;
+        }
+        .modal .form-group input[type="file"]:hover { border-color: #dc2626; }
+        .modal .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+        .modal .image-preview {
+            margin-top: 8px;
+            width: 100%;
+            max-height: 150px;
+            border-radius: 10px;
+            overflow: hidden;
+            display: none;
+            background: #f8f8fa;
+            border: 1px solid #e8e8ee;
+        }
+        .modal .image-preview.visible { display: block; }
+        .modal .image-preview img {
+            width: 100%;
+            height: 100%;
+            max-height: 150px;
+            object-fit: contain;
+        }
+        .modal .modal-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            justify-content: flex-end;
+        }
+        .modal .modal-actions button {
+            padding: 10px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Inter', sans-serif;
+            border: none;
+        }
+        .modal .btn-salva { background: #dc2626; color: #fff; }
+        .modal .btn-salva:hover { background: #b91c1c; transform: scale(1.03); }
+        .modal .btn-annulla { background: #e8e8ee; color: #666680; }
+        .modal .btn-annulla:hover { background: #d0d0d8; }
+        .modal small { color: #777790; font-size: 11px; }
+
+        /* ===== MODALE LOGIN ===== */
+        .login-modal .modal { max-width: 400px; text-align: center; }
+        .login-modal .modal p {
+            color: #666680;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+        .login-modal .password-input { margin: 16px 0 20px; }
+        .login-modal .password-input input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #d0d0d8;
+            border-radius: 12px;
+            font-size: 16px;
+            text-align: center;
+            font-family: 'Inter', sans-serif;
+            background: #f8f8fa;
+        }
+        .login-modal .password-input input:focus {
+            border-color: #dc2626;
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.06);
+        }
+        .login-modal .btn-login-modal {
+            background: #dc2626;
+            color: #fff;
+            border: none;
+            padding: 12px 40px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Inter', sans-serif;
+            width: 100%;
+        }
+        .login-modal .btn-login-modal:hover { background: #b91c1c; transform: scale(1.02); }
+        .login-modal .errore {
+            color: #dc2626;
+            font-size: 13px;
+            margin-top: 12px;
+            display: none;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #0a0a0a;
+            padding: 32px 0;
+            text-align: center;
+            border-top: 2px solid #dc2626;
+        }
+        footer .logo-footer {
+            font-size: 18px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        footer .logo-footer i { color: #dc2626; margin-right: 8px; }
+        footer .footer-divider {
+            width: 40px;
+            height: 2px;
+            background: #dc2626;
+            margin: 10px auto;
+            border-radius: 4px;
+        }
+        footer p { color: #555568; font-size: 12px; font-weight: 300; }
+
+        /* ===== NESSUN RISULTATO ===== */
+        .nessun-risultato {
+            display: none;
+            text-align: center;
+            padding: 60px 0;
+            color: #777790;
+        }
+        .nessun-risultato i {
+            font-size: 40px;
+            color: #dc2626;
+            display: block;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+        .nessun-risultato p { font-size: 16px; }
+
+        /* ===== LOADING ===== */
+        .loading {
+            text-align: center;
+            padding: 60px 0;
+            color: #777790;
+        }
+        .loading i {
+            font-size: 40px;
+            color: #dc2626;
+            display: block;
+            margin-bottom: 16px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .header-inner { flex-direction: column; align-items: flex-start; }
+            .header-right { width: 100%; justify-content: flex-start; flex-wrap: wrap; }
+            .logo-text h1 { font-size: 18px; }
+            nav { gap: 8px; flex-wrap: wrap; }
+            nav a { font-size: 12px; padding: 4px 10px; }
+            .filtri { top: 130px; }
+            .filtri-form .gruppo { min-width: 100%; }
+            .hero h2 { font-size: 30px; }
+            .hero-stats { gap: 24px; }
+            .hero-stats .stat .numero { font-size: 22px; }
+            .sezione-header h2 { font-size: 20px; }
+            .grid-auto { grid-template-columns: 1fr; }
+            .modal { padding: 24px 20px; }
+            .modal .form-row { grid-template-columns: 1fr; }
+            .dettaglio-container { padding: 16px; }
+            .dettaglio-foto { height: 200px; }
+            .badge-header { display: none; }
+        }
+        @media (max-width: 480px) {
+            .hero h2 { font-size: 26px; }
+            .hero p { font-size: 15px; }
+            .sezione-header { flex-direction: column; align-items: flex-start; }
+            .sezione-header .count { font-size: 12px; padding: 4px 14px; }
+            .btn-admin { font-size: 12px; padding: 6px 16px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+    <div class="container header-inner">
+        <div class="header-left">
+            <div class="logo-icon">O</div>
+            <div class="logo-text">
+                <h1>Outlet Usato Garantito</h1>
+                <div class="sottotitolo"><i class="fas fa-check-circle"></i> Auto certificate · Selezione premium</div>
+            </div>
+        </div>
+        <div class="header-right">
+            <nav>
+                <a href="#listaAuto"><i class="fas fa-car"></i> Listino</a>
+                <span class="badge-header"><i class="fas fa-star"></i> Qualità garantita</span>
+                <div id="userSection">
+                    <button class="btn-login" onclick="apriLogin()"><i class="fas fa-lock"></i> Admin</button>
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+    <div class="container hero-content">
+        <div class="badge-oro"><i class="fas fa-crown"></i> Eccellenza italiana</div>
+        <h2>Lusso e affidabilità <br /><span>a portata di mano</span></h2>
+        <p>Ogni vettura è selezionata, controllata e certificata. Scopri il piacere di guidare un'auto di qualità senza sorprese.</p>
+        <div class="hero-stats">
+            <div class="stat">
+                <div class="numero" id="statAuto">0</div>
+                <div class="label">Auto disponibili</div>
+            </div>
+            <div class="stat">
+                <div class="numero">✓</div>
+                <div class="label">Controllo tecnico</div>
+            </div>
+            <div class="stat">
+                <div class="numero">100%</div>
+                <div class="label">Trasparenza</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FILTRI ===== -->
+<section class="filtri">
+    <div class="container">
+        <form class="filtri-form" id="formFiltri" onsubmit="return false;">
+            <div class="gruppo">
+                <label for="filtroMarca"><i class="fas fa-tag"></i> Marca</label>
+                <select id="filtroMarca">
+                    <option value="">Tutte</option>
+                </select>
+            </div>
+            <div class="gruppo">
+                <label for="filtroPrezzoMax"><i class="fas fa-euro-sign"></i> Prezzo max</label>
+                <input type="number" id="filtroPrezzoMax" placeholder="es. 25000" min="0" />
+            </div>
+            <div class="gruppo">
+                <label for="filtroAnno"><i class="fas fa-calendar"></i> Anno minimo</label>
+                <input type="number" id="filtroAnno" placeholder="es. 2018" min="2000" max="2026" />
+            </div>
+            <button type="button" class="btn-filtra" onclick="applicaFiltri()"><i class="fas fa-sliders-h"></i> Filtra</button>
+            <button type="button" class="btn-reset" onclick="resetFiltri()"><i class="fas fa-undo-alt"></i> Reset</button>
+        </form>
+    </div>
+</section>
+
+<!-- ===== LISTA AUTO ===== -->
+<section class="sezione-auto" id="listaAuto">
+    <div class="container">
+        <div class="sezione-header">
+            <h2><i class="fas fa-car"></i> Il nostro parco auto</h2>
+            <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+                <span class="count" id="conteggioAuto">Caricamento...</span>
+                <div class="admin-actions" id="adminActions" style="display:none;">
+                    <button class="btn-admin" onclick="apriModaleNuova()"><i class="fas fa-plus"></i> Nuova auto</button>
+                </div>
+            </div>
+        </div>
+        <div id="loadingIndicator" class="loading">
+            <i class="fas fa-spinner"></i>
+            <p>Caricamento auto in corso...</p>
+        </div>
+        <div class="grid-auto" id="gridAuto"></div>
+        <div class="nessun-risultato" id="nessunRisultato">
+            <i class="fas fa-search-minus"></i>
+            <p>Nessuna auto corrisponde ai filtri selezionati.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ===== DETTAGLIO ===== -->
+<section id="dettaglio">
+    <div class="container">
+        <div class="dettaglio-container" id="dettaglioContainer"></div>
+    </div>
+</section>
+
+<!-- ===== MODALE LOGIN ===== -->
+<div class="modal-overlay login-modal" id="modalLogin">
+    <div class="modal">
+        <h2><i class="fas fa-lock"></i> Accesso Admin</h2>
+        <p>Inserisci la password per gestire il listino</p>
+        <div class="password-input">
+            <input type="password" id="passwordLogin" placeholder="Inserisci password..." onkeydown="if(event.key==='Enter') verificaPassword()" autofocus />
+        </div>
+        <button class="btn-login-modal" onclick="verificaPassword()"><i class="fas fa-sign-in-alt"></i> Accedi</button>
+        <div class="errore" id="erroreLogin">Password errata. Riprova.</div>
+    </div>
+</div>
+
+<!-- ===== MODALE ADMIN ===== -->
+<div class="modal-overlay" id="modalAdmin">
+    <div class="modal">
+        <h2><i class="fas fa-edit"></i> <span id="modalTitolo">Nuova auto</span></h2>
+        <form id="formAuto" onsubmit="return false;">
+            <input type="hidden" id="editId" value="" />
+
+            <div class="form-group">
+                <label><i class="fas fa-tag"></i> Marca</label>
+                <select id="editMarca" required></select>
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-car"></i> Modello</label>
+                <input type="text" id="editModello" placeholder="es. A3 Sportback" required />
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label><i class="fas fa-calendar"></i> Anno</label>
+                    <input type="number" id="editAnno" placeholder="2020" min="2000" max="2026" required />
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-euro-sign"></i> Prezzo (€)</label>
+                    <input type="number" id="editPrezzo" placeholder="22900" min="0" required />
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label><i class="fas fa-tachometer-alt"></i> Km</label>
+                    <input type="number" id="editKm" placeholder="42000" min="0" required />
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-gas-pump"></i> Alimentazione</label>
+                    <select id="editAlimentazione">
+                        <option value="Benzina">Benzina</option>
+                        <option value="Diesel">Diesel</option>
+                        <option value="GPL">GPL</option>
+                        <option value="Metano">Metano</option>
+                        <option value="Elettrico">Elettrico</option>
+                        <option value="Ibrido">Ibrido</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-cog"></i> Cambio</label>
+                <select id="editCambio">
+                    <option value="Manuale">Manuale</option>
+                    <option value="Automatico">Automatico</option>
+                    <option value="Sequenziale">Sequenziale</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-image"></i> Immagine</label>
+                <input type="file" id="editImmagine" accept="image/*" onchange="anteprimaImmagine(event)" />
+                <div class="image-preview" id="imagePreview">
+                    <img id="previewImg" src="" alt="Anteprima" />
+                </div>
+                <small>Carica un'immagine per l'auto (JPG, PNG, GIF)</small>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-annulla" onclick="chiudiModale()">Annulla</button>
+                <button type="button" class="btn-salva" onclick="salvaAuto()"><i class="fas fa-save"></i> Salva</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+    <div class="container">
+        <div class="logo-footer"><i class="fas fa-gem"></i> Outlet Usato Garantito</div>
+        <div class="footer-divider"></div>
+        <p>&copy; 2026 Outlet Usato Garantito — Via Civico 119</p>
+        <p style="margin-top:4px; font-size:11px; color:#444458;">P.IVA 01234567890</p>
+    </div>
+</footer>
+
+<script>
+    // ============================================================
+    // 1. CONFIGURAZIONE JSONBIN
+    // ============================================================
+    // 🔑 SOSTITUISCI CON I TUOI DATI DI JSONBIN
+    const JSONBIN_BIN_ID = '6a87acbff5f4af5e292f4b48'; // Prendi dalla dashboard
+    const JSONBIN_API_KEY = '$2a$10$wZYd3ki9TiZ/VDC337viNOiC1znyu5NWat6lENgmgdSaUfQ.2.jPO'; // Prendi dalla dashboard
+
+    // ============================================================
+    // 2. STATO
+    // ============================================================
+    let isAdmin = false;
+    let immagineTemp = '';
+    let auto = [];
+    let autoFiltrate = [];
+
+    // ============================================================
+    // 3. LISTA MARCHE
+    // ============================================================
+    const MARCHE = [
+        'Abarth', 'Acura', 'Aixam', 'Alfa Romeo', 'Alpine', 'Aston Martin', 'Audi', 'Austin',
+        'Bentley', 'BMW', 'Bugatti', 'Buick', 'Cadillac', 'Chevrolet', 'Chrysler', 'Citroen',
+        'Corvette', 'Cupra', 'Dacia', 'Daewoo', 'Daihatsu', 'Dodge', 'DS Automobiles', 'Ferrari',
+        'Fiat', 'Ford', 'Genesis', 'GMC', 'Honda', 'Hummer', 'Hyundai', 'Infiniti', 'Isuzu',
+        'Iveco', 'Jaguar', 'Jeep', 'Kia', 'Koenigsegg', 'Lada', 'Lamborghini', 'Lancia',
+        'Land Rover', 'Lexus', 'Ligier', 'Lotus', 'Lucida', 'Mahindra', 'Maserati', 'Maybach',
+        'Mazda', 'McLaren', 'Mercedes', 'Mercury', 'Mini', 'Mitsubishi', 'Morgan', 'Nissan',
+        'Oldsmobile', 'Opel', 'Pagani', 'Peugeot', 'Plymouth', 'Pontiac', 'Porsche', 'Proton',
+        'Renault', 'Rolls-Royce', 'Rover', 'Saab', 'Seat', 'Skoda', 'Smart', 'SsangYong',
+        'Subaru', 'Suzuki', 'Talbot', 'Tesla', 'Toyota', 'Trabant', 'Triumph', 'Vauxhall',
+        'Volkswagen', 'Volvo', 'Wiesmann', 'Yugo', 'Zastava'
+    ];
+
+    // ============================================================
+    // 4. FUNZIONI JSONBIN (database online)
+    // ============================================================
+    async function caricaAuto() {
+        try {
+            const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`, {
+                headers: {
+                    'X-Master-Key': JSONBIN_API_KEY
+                }
+            });
+
+            if (!response.ok) throw new Error('Errore nel caricamento dei dati');
+
+            const data = await response.json();
+            auto = data.record.auto || [];
+            autoFiltrate = [...auto];
+            renderLista(autoFiltrate);
+            aggiornaConteggio();
+            return auto;
+        } catch (error) {
+            console.error('Errore caricamento auto:', error);
+            document.getElementById('loadingIndicator').style.display = 'none';
+            document.getElementById('gridAuto').innerHTML = `
+                <div style="text-align:center; padding:40px; color:#dc2626; grid-column:1/-1;">
+                    <i class="fas fa-exclamation-circle" style="font-size:40px; display:block; margin-bottom:12px;"></i>
+                    <p>Errore nel caricamento delle auto. Verifica la connessione a JSONBin.</p>
+                    <p style="font-size:13px; color:#666680; margin-top:8px;">${error.message}</p>
+                    <button onclick="caricaAuto()" style="margin-top:16px; background:#dc2626; color:#fff; border:none; padding:8px 24px; border-radius:40px; cursor:pointer; font-family:'Inter',sans-serif; font-weight:600;">
+                        <i class="fas fa-sync"></i> Riprova
+                    </button>
+                </div>
+            `;
+            return [];
+        }
+    }
+
+    async function salvaAutoSuJsonBin(veicoli) {
+        try {
+            const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Master-Key': JSONBIN_API_KEY
+                },
+                body: JSON.stringify({ auto: veicoli })
+            });
+
+            if (!response.ok) throw new Error('Errore nel salvataggio dei dati');
+            return await response.json();
+        } catch (error) {
+            console.error('Errore salvataggio auto:', error);
+            throw error;
+        }
+    }
+
+    // ============================================================
+    // 5. FUNZIONI CRUD
+    // ============================================================
+    async function aggiungiAuto(veicolo) {
+        const newId = auto.length > 0 ? Math.max(...auto.map(a => a.id)) + 1 : 1;
+        const nuovaAuto = { ...veicolo, id: newId };
+        auto.push(nuovaAuto);
+        await salvaAutoSuJsonBin(auto);
+        return nuovaAuto;
+    }
+
+    async function modificaAuto(id, veicolo) {
+        const index = auto.findIndex(a => a.id === id);
+        if (index !== -1) {
+            auto[index] = { ...auto[index], ...veicolo };
+            await salvaAutoSuJsonBin(auto);
+            return auto[index];
+        }
+        throw new Error('Auto non trovata');
+    }
+
+    async function eliminaAutoDb(id) {
+        auto = auto.filter(a => a.id !== id);
+        await salvaAutoSuJsonBin(auto);
+        return true;
+    }
+
+    // ============================================================
+    // 6. UI
+    // ============================================================
+    function aggiornaUI() {
+        const section = document.getElementById('userSection');
+        const adminActions = document.getElementById('adminActions');
+
+        if (isAdmin) {
+            section.innerHTML = `
+                <span class="admin-badge"><i class="fas fa-crown"></i> ADMIN</span>
+                <button class="btn-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Esci</button>
+            `;
+            adminActions.style.display = 'flex';
+        } else {
+            section.innerHTML = `
+                <button class="btn-login" onclick="apriLogin()"><i class="fas fa-lock"></i> Admin</button>
+            `;
+            adminActions.style.display = 'none';
+        }
+    }
+
+    function aggiornaConteggio() {
+        const count = auto.length;
+        document.getElementById('conteggioAuto').textContent = `${count} vetture disponibili`;
+        document.getElementById('statAuto').textContent = count;
+    }
+
+    function popolaMarche() {
+        const selectFiltro = document.getElementById('filtroMarca');
+        const selectEdit = document.getElementById('editMarca');
+
+        MARCHE.forEach(marca => {
+            const opt1 = document.createElement('option');
+            opt1.value = marca;
+            opt1.textContent = marca;
+            selectFiltro.appendChild(opt1);
+
+            const opt2 = document.createElement('option');
+            opt2.value = marca;
+            opt2.textContent = marca;
+            selectEdit.appendChild(opt2);
+        });
+    }
+
+    // ============================================================
+    // 7. RENDER LISTA
+    // ============================================================
+    function renderLista(veicoli) {
+        const grid = document.getElementById('gridAuto');
+        const nessuno = document.getElementById('nessunRisultato');
+        const loading = document.getElementById('loadingIndicator');
+
+        loading.style.display = 'none';
+
+        if (!veicoli || veicoli.length === 0) {
+            grid.innerHTML = '';
+            nessuno.style.display = 'block';
+            return;
+        }
+        nessuno.style.display = 'none';
+
+        grid.innerHTML = veicoli.map(v => `
+            <div class="card-auto" onclick="apriDettaglio(${v.id})">
+                <div class="card-img">
+                    ${v.immagine ? `<img src="${v.immagine}" alt="${v.marca} ${v.modello}" />` :
+                    `<div class="no-image"><i class="fas fa-car"></i></div>`}
+                    <span class="tag"><i class="fas fa-check"></i> Pronta</span>
+                </div>
+                <div class="card-body">
+                    <div class="marca-label">${v.marca}</div>
+                    <h3>${v.modello}</h3>
+                    <div class="dettagli">
+                        <span><i class="fas fa-calendar"></i> ${v.anno}</span>
+                        <span><i class="fas fa-tachometer-alt"></i> ${v.km.toLocaleString()} km</span>
+                        <span><i class="fas fa-gas-pump"></i> ${v.alimentazione}</span>
+                        <span><i class="fas fa-cog"></i> ${v.cambio}</span>
+                    </div>
+                    <div class="prezzo">
+                        <span>€ ${v.prezzo.toLocaleString()}</span>
+                        <button class="btn-dettaglio" onclick="event.stopPropagation(); apriDettaglio(${v.id})"><i class="fas fa-arrow-right"></i> Vedi</button>
+                    </div>
+                    ${isAdmin ? `
+                        <div class="card-admin-actions">
+                            <button class="btn-modifica" onclick="event.stopPropagation(); apriModaleModifica(${v.id})"><i class="fas fa-edit"></i> Modifica</button>
+                            <button class="btn-elimina" onclick="event.stopPropagation(); eliminaAuto(${v.id})"><i class="fas fa-trash"></i> Elimina</button>
+                        </div>
+                    ` : ''}
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // ============================================================
+    // 8. DETTAGLIO
+    // ============================================================
+    function apriDettaglio(id) {
+        const veicolo = auto.find(a => a.id === id);
+        if (!veicolo) return;
+
+        document.getElementById('listaAuto').classList.add('hidden');
+        document.getElementById('dettaglio').classList.add('attivo');
+
+        const container = document.getElementById('dettaglioContainer');
+        container.innerHTML = `
+            <a class="back" onclick="tornaLista()"><i class="fas fa-arrow-left"></i> Torna al listino</a>
+            <div class="dettaglio-grid">
+                <div class="dettaglio-foto">
+                    ${veicolo.immagine ? `<img src="${veicolo.immagine}" alt="${veicolo.marca} ${veicolo.modello}" />` :
+                    `<div class="no-image"><i class="fas fa-car"></i></div>`}
+                </div>
+                <div class="dettaglio-info">
+                    <div class="marca-dett">${veicolo.marca}</div>
+                    <h2>${veicolo.modello}</h2>
+                    <div class="prezzo-dett">€ ${veicolo.prezzo.toLocaleString()} <small>IVA inclusa</small></div>
+                    <div class="caratteristiche">
+                        <span><i class="fas fa-calendar"></i> Anno: ${veicolo.anno}</span>
+                        <span><i class="fas fa-tachometer-alt"></i> ${veicolo.km.toLocaleString()} km</span>
+                        <span><i class="fas fa-gas-pump"></i> ${veicolo.alimentazione}</span>
+                        <span><i class="fas fa-cog"></i> ${veicolo.cambio}</span>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function tornaLista() {
+        document.getElementById('listaAuto').classList.remove('hidden');
+        document.getElementById('dettaglio').classList.remove('attivo');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ============================================================
+    // 9. FILTRI
+    // ============================================================
+    function applicaFiltri() {
+        const marca = document.getElementById('filtroMarca').value;
+        const prezzoMax = parseInt(document.getElementById('filtroPrezzoMax').value) || Infinity;
+        const annoMin = parseInt(document.getElementById('filtroAnno').value) || 0;
+
+        autoFiltrate = auto.filter(v => {
+            if (marca && v.marca !== marca) return false;
+            if (v.prezzo > prezzoMax) return false;
+            if (v.anno < annoMin) return false;
+            return true;
+        });
+
+        renderLista(autoFiltrate);
+        if (document.getElementById('dettaglio').classList.contains('attivo')) {
+            tornaLista();
+        }
+    }
+
+    function resetFiltri() {
+        document.getElementById('filtroMarca').value = '';
+        document.getElementById('filtroPrezzoMax').value = '';
+        document.getElementById('filtroAnno').value = '';
+        autoFiltrate = [...auto];
+        renderLista(autoFiltrate);
+        if (document.getElementById('dettaglio').classList.contains('attivo')) {
+            tornaLista();
+        }
+    }
+
+    // ============================================================
+    // 10. LOGIN
+    // ============================================================
+    function apriLogin() {
+        document.getElementById('modalLogin').classList.add('attivo');
+        document.getElementById('passwordLogin').value = '';
+        document.getElementById('erroreLogin').style.display = 'none';
+        setTimeout(() => document.getElementById('passwordLogin').focus(), 200);
+    }
+
+    function verificaPassword() {
+        const password = document.getElementById('passwordLogin').value;
+        if (password === 'admin123') {
+            isAdmin = true;
+            document.getElementById('modalLogin').classList.remove('attivo');
+            aggiornaUI();
+            renderLista(autoFiltrate);
+        } else {
+            document.getElementById('erroreLogin').style.display = 'block';
+            document.getElementById('passwordLogin').value = '';
+            document.getElementById('passwordLogin').focus();
+        }
+    }
+
+    function logout() {
+        isAdmin = false;
+        aggiornaUI();
+        renderLista(autoFiltrate);
+    }
+
+    // ============================================================
+    // 11. GESTIONE IMMAGINI
+    // ============================================================
+    function anteprimaImmagine(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            immagineTemp = e.target.result;
+            const preview = document.getElementById('imagePreview');
+            const img = document.getElementById('previewImg');
+            img.src = e.target.result;
+            preview.classList.add('visible');
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function resetImmaginePreview() {
+        immagineTemp = '';
+        document.getElementById('editImmagine').value = '';
+        document.getElementById('imagePreview').classList.remove('visible');
+        document.getElementById('previewImg').src = '';
+    }
+
+    // ============================================================
+    // 12. ADMIN: MODALE
+    // ============================================================
+    function apriModaleNuova() {
+        if (!isAdmin) return;
+        document.getElementById('modalTitolo').textContent = 'Nuova auto';
+        document.getElementById('editId').value = '';
+        document.getElementById('editMarca').value = 'Audi';
+        document.getElementById('editModello').value = '';
+        document.getElementById('editAnno').value = '';
+        document.getElementById('editPrezzo').value = '';
+        document.getElementById('editKm').value = '';
+        document.getElementById('editAlimentazione').value = 'Benzina';
+        document.getElementById('editCambio').value = 'Manuale';
+        resetImmaginePreview();
+        document.getElementById('modalAdmin').classList.add('attivo');
+    }
+
+    function apriModaleModifica(id) {
+        if (!isAdmin) return;
+        const veicolo = auto.find(a => a.id === id);
+        if (!veicolo) return;
+
+        document.getElementById('modalTitolo').textContent = 'Modifica auto';
+        document.getElementById('editId').value = id;
+        document.getElementById('editMarca').value = veicolo.marca;
+        document.getElementById('editModello').value = veicolo.modello;
+        document.getElementById('editAnno').value = veicolo.anno;
+        document.getElementById('editPrezzo').value = veicolo.prezzo;
+        document.getElementById('editKm').value = veicolo.km;
+        document.getElementById('editAlimentazione').value = veicolo.alimentazione;
+        document.getElementById('editCambio').value = veicolo.cambio;
+
+        if (veicolo.immagine) {
+            immagineTemp = veicolo.immagine;
+            const preview = document.getElementById('imagePreview');
+            const img = document.getElementById('previewImg');
+            img.src = veicolo.immagine;
+            preview.classList.add('visible');
+        } else {
+            resetImmaginePreview();
+        }
+
+        document.getElementById('modalAdmin').classList.add('attivo');
+    }
+
+    function chiudiModale() {
+        document.getElementById('modalAdmin').classList.remove('attivo');
+        resetImmaginePreview();
+    }
+
+    // ============================================================
+    // 13. SALVA ED ELIMINA AUTO
+    // ============================================================
+    async function salvaAuto() {
+        const id = document.getElementById('editId').value;
+        const marca = document.getElementById('editMarca').value;
+        const modello = document.getElementById('editModello').value.trim();
+        const anno = parseInt(document.getElementById('editAnno').value);
+        const prezzo = parseInt(document.getElementById('editPrezzo').value);
+        const km = parseInt(document.getElementById('editKm').value);
+        const alimentazione = document.getElementById('editAlimentazione').value;
+        const cambio = document.getElementById('editCambio').value;
+        const immagine = immagineTemp;
+
+        if (!modello || !anno || !prezzo || !km) {
+            alert('Compila tutti i campi correttamente.');
+            return;
+        }
+
+        const veicolo = { marca, modello, anno, prezzo, km, alimentazione, cambio, immagine };
+
+        try {
+            if (id) {
+                await modificaAuto(parseInt(id), veicolo);
+            } else {
+                await aggiungiAuto(veicolo);
+            }
+            await caricaAuto();
+            chiudiModale();
+        } catch (error) {
+            alert('Errore durante il salvataggio: ' + error.message);
+        }
+    }
+
+    async function eliminaAuto(id) {
+        if (!isAdmin) return;
+        if (!confirm('Sei sicuro di voler eliminare questa auto?')) return;
+
+        try {
+            await eliminaAutoDb(id);
+            await caricaAuto();
+            if (document.getElementById('dettaglio').classList.contains('attivo')) {
+                tornaLista();
+            }
+        } catch (error) {
+            alert('Errore durante l\'eliminazione: ' + error.message);
+        }
+    }
+
+    // ============================================================
+    // 14. INIT
+    // ============================================================
+    async function init() {
+        popolaMarche();
+        await caricaAuto();
+        aggiornaUI();
+    }
+
+    // Eventi modali
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            chiudiModale();
+            document.getElementById('modalLogin').classList.remove('attivo');
+        }
+    });
+
+    document.getElementById('modalLogin').addEventListener('click', (e) => {
+        if (e.target === document.getElementById('modalLogin')) {
+            document.getElementById('modalLogin').classList.remove('attivo');
+        }
+    });
+
+    document.getElementById('modalAdmin').addEventListener('click', (e) => {
+        if (e.target === document.getElementById('modalAdmin')) chiudiModale();
+    });
+
+    // Avvia l'applicazione
+    init();
+</script>
+
+</body>
+</html>

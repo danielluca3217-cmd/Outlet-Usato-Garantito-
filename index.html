@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
+        /* ===== RESET & BASE ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body { font-family: 'Inter', sans-serif; background: #f5f5f5; color: #0a0a0a; line-height: 1.6; }
@@ -100,7 +101,6 @@
             letter-spacing: 0.8px;
         }
         
-        /* ===== BADGE NOTIFICHE ===== */
         .notif-badge {
             background: #dc2626;
             color: #fff;
@@ -505,7 +505,6 @@
         }
         .card-body .prezzo .btn-dettaglio:hover { background: #dc2626; color: #fff; }
         
-        /* ===== PULSANTE PRENOTA ===== */
         .btn-prenota {
             background: #16a34a;
             color: #fff;
@@ -665,7 +664,6 @@
             background: #6b7280;
             cursor: not-allowed;
         }
-        .dettaglio-info .btn-prenota-dettaglio.prenotata:hover { background: #6b7280; transform: none; }
 
         /* ===== MODALI ===== */
         .modal-overlay {
@@ -843,7 +841,7 @@
             display: none;
         }
 
-        /* ===== SEZIONE PRENOTAZIONI ADMIN ===== */
+        /* ===== SEZIONE PRENOTAZIONI ===== */
         .sezione-prenotazioni {
             padding: 40px 0 64px;
             background: #f8f8fa;
@@ -874,7 +872,7 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
             transition: 0.3s;
         }
-        .card-prenotazione:hover { border-color: #dc2626; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06); }
+        .card-prenotazione:hover { border-color: #dc2626; }
         .card-prenotazione .intestazione {
             display: flex;
             justify-content: space-between;
@@ -981,7 +979,6 @@
             margin-bottom: 16px;
             opacity: 0.5;
         }
-        .nessun-risultato p { font-size: 16px; }
 
         /* ===== LOADING ===== */
         .loading {
@@ -1001,7 +998,7 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* ===== TOAST NOTIFICA ===== */
+        /* ===== TOAST ===== */
         .toast {
             position: fixed;
             bottom: 30px;
@@ -1160,7 +1157,7 @@
     </div>
 </section>
 
-<!-- ===== SEZIONE PRENOTAZIONI ADMIN ===== -->
+<!-- ===== PRENOTAZIONI ADMIN ===== -->
 <section class="sezione-prenotazioni" id="prenotazioniAdmin">
     <div class="container">
         <h2><i class="fas fa-calendar-check"></i> Prenotazioni</h2>
@@ -1207,7 +1204,6 @@
         <p style="color:#666680; font-size:14px; margin-bottom:16px;">Compila il modulo per prenotare questa auto</p>
         <form id="formPrenotazione" onsubmit="return false;">
             <input type="hidden" id="prenotaAutoId" value="" />
-            
             <div class="form-row">
                 <div class="form-group">
                     <label><i class="fas fa-user"></i> Nome *</label>
@@ -1218,28 +1214,24 @@
                     <input type="text" id="prenotaCognome" placeholder="Rossi" required />
                 </div>
             </div>
-            
             <div class="form-row">
                 <div class="form-group">
                     <label><i class="fas fa-envelope"></i> Email *</label>
-                    <input type="email" id="prenotaEmail" placeholder="@nomediscord" required />
+                    <input type="email" id="prenotaEmail" placeholder="mario@email.com" required />
                 </div>
                 <div class="form-group">
                     <label><i class="fas fa-phone"></i> Telefono *</label>
                     <input type="tel" id="prenotaTelefono" placeholder="333 1234567" required />
                 </div>
             </div>
-            
             <div class="form-group">
-                <label><i class="fas fa-calendar-day"></i> Data del ritiro *</label>
+                <label><i class="fas fa-calendar-day"></i> Data preferita *</label>
                 <input type="date" id="prenotaData" required />
             </div>
-            
             <div class="form-group">
                 <label><i class="fas fa-comment"></i> Messaggio (opzionale)</label>
                 <textarea id="prenotaMessaggio" placeholder="Scrivi un messaggio per il concessionario..."></textarea>
             </div>
-            
             <button type="button" class="btn-prenota-modal" onclick="inviaPrenotazione()">
                 <i class="fas fa-paper-plane"></i> Invia prenotazione
             </button>
@@ -1258,17 +1250,14 @@
         <h2><i class="fas fa-edit"></i> <span id="modalTitolo">Nuova auto</span></h2>
         <form id="formAuto" onsubmit="return false;">
             <input type="hidden" id="editId" value="" />
-
             <div class="form-group">
                 <label><i class="fas fa-tag"></i> Marca</label>
                 <select id="editMarca" required></select>
             </div>
-
             <div class="form-group">
                 <label><i class="fas fa-car"></i> Modello</label>
                 <input type="text" id="editModello" placeholder="es. A3 Sportback" required />
             </div>
-
             <div class="form-row">
                 <div class="form-group">
                     <label><i class="fas fa-calendar"></i> Anno</label>
@@ -1279,7 +1268,6 @@
                     <input type="number" id="editPrezzo" placeholder="22900" min="0" required />
                 </div>
             </div>
-
             <div class="form-row">
                 <div class="form-group">
                     <label><i class="fas fa-tachometer-alt"></i> Km</label>
@@ -1297,7 +1285,6 @@
                     </select>
                 </div>
             </div>
-
             <div class="form-group">
                 <label><i class="fas fa-cog"></i> Cambio</label>
                 <select id="editCambio">
@@ -1306,16 +1293,17 @@
                     <option value="Sequenziale">Sequenziale</option>
                 </select>
             </div>
-
             <div class="form-group">
                 <label><i class="fas fa-image"></i> Immagine</label>
                 <input type="file" id="editImmagine" accept="image/*" onchange="anteprimaImmagine(event)" />
                 <div class="image-preview" id="imagePreview">
                     <img id="previewImg" src="" alt="Anteprima" />
                 </div>
-                <small>Carica un'immagine per l'auto (JPG, PNG, GIF)</small>
+                <small>Carica un'immagine per l'auto (JPG, PNG, GIF) - verrà salvata su imgbb</small>
+                <div id="uploadStatus" style="font-size:12px; color:#16a34a; margin-top:4px; display:none;">
+                    <i class="fas fa-spinner fa-spin"></i> Caricamento immagine in corso...
+                </div>
             </div>
-
             <div class="modal-actions">
                 <button type="button" class="btn-annulla" onclick="chiudiModale()">Annulla</button>
                 <button type="button" class="btn-salva" onclick="salvaAuto()"><i class="fas fa-save"></i> Salva</button>
@@ -1324,7 +1312,7 @@
     </div>
 </div>
 
-<!-- ===== TOAST NOTIFICA ===== -->
+<!-- ===== TOAST ===== -->
 <div class="toast" id="toast">
     <button class="toast-chiudi" onclick="chiudiToast()">&times;</button>
     <div class="toast-titolo" id="toastTitolo">✅ Prenotazione ricevuta!</div>
@@ -1343,16 +1331,17 @@
 
 <script>
     // ============================================================
-    // 1. CONFIGURAZIONE JSONBIN
+    // 1. CONFIGURAZIONE
     // ============================================================
-    const JSONBIN_BIN_ID = '6a8836b0f5f4af5e2930f4bb'; // Prendi dalla dashboard
-    const JSONBIN_API_KEY = '$2a$10$wZYd3ki9TiZ/VDC337viNOiC1znyu5NWat6lENgmgdSaUfQ.2.jPO'; // Prendi dalla dashboard
+    const JSONBIN_BIN_ID = '6a8836b0f5f4af5e2930f4bb';
+    const JSONBIN_API_KEY = '$2a$10$wZYd3ki9TiZ/VDC337viNOiC1znyu5NWat6lENgmgdSaUfQ.2.jPO';
+    const IMGBB_API_KEY = '1396b662e219af6414312c397f3e4db1';
 
     // ============================================================
     // 2. STATO
     // ============================================================
     let isAdmin = false;
-    let immagineTemp = '';
+    let immagineUrlTemp = '';
     let auto = [];
     let autoFiltrate = [];
     let prenotazioni = [];
@@ -1375,39 +1364,90 @@
     ];
 
     // ============================================================
-    // 4. FUNZIONI JSONBIN
+    // 4. CARICAMENTO DATI DA JSONBIN
     // ============================================================
     async function caricaDati() {
         try {
-            const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`, {
+            const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}/latest`, {
                 headers: { 'X-Master-Key': JSONBIN_API_KEY }
             });
-            if (!response.ok) throw new Error('Errore nel caricamento');
+            
+            if (!response.ok) {
+                // Se il bin non esiste, creane uno nuovo
+                if (response.status === 404) {
+                    return await creaNuovoBin();
+                }
+                throw new Error('Errore caricamento');
+            }
+            
             const data = await response.json();
-            auto = data.record.auto || [];
-            prenotazioni = data.record.prenotazioni || [];
-            autoFiltrate = [...auto];
-            renderLista(autoFiltrate);
-            aggiornaConteggio();
-            aggiornaBadge();
-            return { auto, prenotazioni };
+            const record = data.record || { auto: [], prenotazioni: [] };
+            
+            // Backup in localStorage
+            localStorage.setItem('autoOutlet_backup', JSON.stringify(record));
+            
+            return record;
         } catch (error) {
-            console.error('Errore caricamento:', error);
-            document.getElementById('loadingIndicator').style.display = 'none';
-            document.getElementById('gridAuto').innerHTML = `
-                <div style="text-align:center; padding:40px; color:#dc2626; grid-column:1/-1;">
-                    <i class="fas fa-exclamation-circle" style="font-size:40px; display:block; margin-bottom:12px;"></i>
-                    <p>Errore nel caricamento dei dati. Verifica JSONBin.</p>
-                    <button onclick="caricaDati()" style="margin-top:16px; background:#dc2626; color:#fff; border:none; padding:8px 24px; border-radius:40px; cursor:pointer; font-family:'Inter',sans-serif; font-weight:600;">
-                        <i class="fas fa-sync"></i> Riprova
-                    </button>
-                </div>
-            `;
+            console.warn('JSONBin non disponibile, uso localStorage:', error);
+            return caricaDaLocalStorage();
+        }
+    }
+
+    async function creaNuovoBin() {
+        try {
+            const response = await fetch('https://api.jsonbin.io/v3/b', {
+                method: 'POST',
+                headers: {
+                    'X-Master-Key': JSONBIN_API_KEY,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ auto: [], prenotazioni: [] })
+            });
+            if (!response.ok) throw new Error('Errore creazione bin');
+            const data = await response.json();
+            localStorage.setItem('jsonbin_id', data.id);
+            return { auto: [], prenotazioni: [] };
+        } catch (error) {
+            console.error('Errore creazione bin:', error);
             return { auto: [], prenotazioni: [] };
         }
     }
 
+    function caricaDaLocalStorage() {
+        const data = localStorage.getItem('autoOutlet_backup');
+        if (data) {
+            try {
+                const parsed = JSON.parse(data);
+                if (parsed.auto && parsed.auto.length > 0) {
+                    return parsed;
+                }
+            } catch(e) {}
+        }
+        return {
+            auto: [
+                { id: 1, marca: 'Audi', modello: 'A3 Sportback', anno: 2020, prezzo: 22900, km: 42000, alimentazione: 'Diesel', cambio: 'Automatico', immagine: '' },
+                { id: 2, marca: 'BMW', modello: 'Serie 1 118d', anno: 2021, prezzo: 26500, km: 28000, alimentazione: 'Diesel', cambio: 'Manuale', immagine: '' },
+                { id: 3, marca: 'Fiat', modello: 'Panda 1.2', anno: 2022, prezzo: 12900, km: 15000, alimentazione: 'Benzina', cambio: 'Manuale', immagine: '' },
+                { id: 4, marca: 'Ford', modello: 'Focus ST-Line', anno: 2019, prezzo: 19900, km: 56000, alimentazione: 'Benzina', cambio: 'Automatico', immagine: '' },
+                { id: 5, marca: 'Mercedes', modello: 'Classe A 200d', anno: 2020, prezzo: 29900, km: 34000, alimentazione: 'Diesel', cambio: 'Automatico', immagine: '' },
+                { id: 6, marca: 'Volkswagen', modello: 'Golf 2.0 TDI', anno: 2021, prezzo: 24900, km: 31000, alimentazione: 'Diesel', cambio: 'Manuale', immagine: '' },
+                { id: 7, marca: 'Audi', modello: 'Q3 35 TDI', anno: 2022, prezzo: 35900, km: 18000, alimentazione: 'Diesel', cambio: 'Automatico', immagine: '' },
+                { id: 8, marca: 'BMW', modello: 'X1 xDrive18d', anno: 2020, prezzo: 31900, km: 39000, alimentazione: 'Diesel', cambio: 'Automatico', immagine: '' }
+            ],
+            prenotazioni: []
+        };
+    }
+
+    // ============================================================
+    // 5. SALVATAGGIO DATI SU JSONBIN
+    // ============================================================
     async function salvaDati() {
+        const data = { auto, prenotazioni };
+        
+        // Salva in localStorage come backup
+        localStorage.setItem('autoOutlet_backup', JSON.stringify(data));
+        
+        // Salva su JSONBin
         try {
             const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`, {
                 method: 'PUT',
@@ -1415,18 +1455,51 @@
                     'Content-Type': 'application/json',
                     'X-Master-Key': JSONBIN_API_KEY
                 },
-                body: JSON.stringify({ auto, prenotazioni })
+                body: JSON.stringify(data)
             });
-            if (!response.ok) throw new Error('Errore nel salvataggio');
+            if (!response.ok) throw new Error('Errore salvataggio');
             return await response.json();
         } catch (error) {
-            console.error('Errore salvataggio:', error);
+            console.warn('Salvataggio su JSONBin fallito:', error);
             throw error;
         }
     }
 
     // ============================================================
-    // 5. UI
+    // 6. CARICAMENTO IMMAGINE SU IMGBB
+    // ============================================================
+    async function caricaImmagineSuImgbb(file) {
+        const formData = new FormData();
+        formData.append('image', file);
+        formData.append('key', IMGBB_API_KEY);
+
+        const statusDiv = document.getElementById('uploadStatus');
+        statusDiv.style.display = 'block';
+        statusDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Caricamento immagine in corso...';
+
+        try {
+            const response = await fetch('https://api.imgbb.com/1/upload', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!response.ok) throw new Error('Errore caricamento immagine');
+
+            const data = await response.json();
+            if (!data.success) throw new Error(data.error?.message || 'Errore sconosciuto');
+
+            statusDiv.style.display = 'none';
+            return data.data.url;
+        } catch (error) {
+            statusDiv.style.display = 'none';
+            console.error('Errore caricamento immagine:', error);
+            alert('Errore nel caricamento dell\'immagine: ' + error.message);
+            return null;
+        }
+    }
+
+    // ============================================================
+    // 7. UI
     // ============================================================
     function aggiornaUI() {
         const section = document.getElementById('userSection');
@@ -1454,9 +1527,8 @@
     }
 
     function aggiornaConteggio() {
-        const count = auto.length;
-        document.getElementById('conteggioAuto').textContent = `${count} vetture disponibili`;
-        document.getElementById('statAuto').textContent = count;
+        document.getElementById('conteggioAuto').textContent = `${auto.length} vetture disponibili`;
+        document.getElementById('statAuto').textContent = auto.length;
     }
 
     function aggiornaBadge() {
@@ -1484,7 +1556,7 @@
     }
 
     // ============================================================
-    // 6. RENDER LISTA AUTO
+    // 8. RENDER LISTA AUTO
     // ============================================================
     function renderLista(veicoli) {
         const grid = document.getElementById('gridAuto');
@@ -1536,7 +1608,7 @@
     }
 
     // ============================================================
-    // 7. RENDER PRENOTAZIONI (ADMIN)
+    // 9. RENDER PRENOTAZIONI
     // ============================================================
     function renderPrenotazioni() {
         const grid = document.getElementById('gridPrenotazioni');
@@ -1590,7 +1662,7 @@
     }
 
     // ============================================================
-    // 8. DETTAGLIO AUTO
+    // 10. DETTAGLIO AUTO
     // ============================================================
     function apriDettaglio(id) {
         const veicolo = auto.find(a => a.id === id);
@@ -1636,7 +1708,7 @@
     }
 
     // ============================================================
-    // 9. FILTRI
+    // 11. FILTRI
     // ============================================================
     function applicaFiltri() {
         const marca = document.getElementById('filtroMarca').value;
@@ -1662,7 +1734,7 @@
     }
 
     // ============================================================
-    // 10. LOGIN
+    // 12. LOGIN
     // ============================================================
     function apriLogin() {
         document.getElementById('modalLogin').classList.add('attivo');
@@ -1678,7 +1750,6 @@
             document.getElementById('modalLogin').classList.remove('attivo');
             aggiornaUI();
             renderLista(autoFiltrate);
-            renderPrenotazioni();
         } else {
             document.getElementById('erroreLogin').style.display = 'block';
             document.getElementById('passwordLogin').value = '';
@@ -1693,7 +1764,7 @@
     }
 
     // ============================================================
-    // 11. PRENOTAZIONI
+    // 13. PRENOTAZIONI
     // ============================================================
     function apriModalePrenotazione(autoId, autoNome) {
         document.getElementById('prenotaAutoId').value = autoId;
@@ -1733,7 +1804,6 @@
             return;
         }
 
-        // Controlla se l'auto è già prenotata
         if (prenotazioni.some(p => p.autoId === autoId && p.stato === 'confermata')) {
             errore.textContent = 'Questa auto è già stata prenotata!';
             errore.style.display = 'block';
@@ -1742,7 +1812,7 @@
 
         const nuovaPrenotazione = {
             id: Date.now(),
-            autoId: autoId,
+            autoId,
             nome,
             cognome,
             email,
@@ -1760,21 +1830,16 @@
             successo.style.display = 'block';
             aggiornaBadge();
             if (isAdmin) renderPrenotazioni();
-            
-            // Mostra toast
             mostraToast('✅ Prenotazione ricevuta!', `${nome} ${cognome} ha prenotato l'auto.`);
-            
-            setTimeout(() => {
-                chiudiModalePrenotazione();
-            }, 3000);
+            setTimeout(() => chiudiModalePrenotazione(), 3000);
         } catch (error) {
-            errore.textContent = 'Errore durante l\'invio: ' + error.message;
+            errore.textContent = 'Errore: ' + error.message;
             errore.style.display = 'block';
         }
     }
 
     // ============================================================
-    // 12. GESTIONE PRENOTAZIONI (ADMIN)
+    // 14. GESTIONE PRENOTAZIONI (ADMIN)
     // ============================================================
     async function confermaPrenotazione(id) {
         const index = prenotazioni.findIndex(p => p.id === id);
@@ -1784,7 +1849,7 @@
         aggiornaBadge();
         renderPrenotazioni();
         renderLista(autoFiltrate);
-        mostraToast('✅ Prenotazione confermata', `La prenotazione è stata confermata.`);
+        mostraToast('✅ Prenotazione confermata', 'La prenotazione è stata confermata.');
     }
 
     async function annullaPrenotazione(id) {
@@ -1795,7 +1860,7 @@
         aggiornaBadge();
         renderPrenotazioni();
         renderLista(autoFiltrate);
-        mostraToast('❌ Prenotazione annullata', `La prenotazione è stata annullata.`);
+        mostraToast('❌ Prenotazione annullata', 'La prenotazione è stata annullata.');
     }
 
     async function eliminaPrenotazione(id) {
@@ -1805,18 +1870,17 @@
         aggiornaBadge();
         renderPrenotazioni();
         renderLista(autoFiltrate);
-        mostraToast('🗑️ Prenotazione eliminata', `La prenotazione è stata rimossa.`);
+        mostraToast('🗑️ Prenotazione eliminata', 'La prenotazione è stata rimossa.');
     }
 
     // ============================================================
-    // 13. GESTIONE IMMAGINI
+    // 15. GESTIONE IMMAGINI
     // ============================================================
     function anteprimaImmagine(event) {
         const file = event.target.files[0];
         if (!file) return;
         const reader = new FileReader();
         reader.onload = function(e) {
-            immagineTemp = e.target.result;
             document.getElementById('previewImg').src = e.target.result;
             document.getElementById('imagePreview').classList.add('visible');
         };
@@ -1824,14 +1888,15 @@
     }
 
     function resetImmaginePreview() {
-        immagineTemp = '';
+        immagineUrlTemp = '';
         document.getElementById('editImmagine').value = '';
         document.getElementById('imagePreview').classList.remove('visible');
         document.getElementById('previewImg').src = '';
+        document.getElementById('uploadStatus').style.display = 'none';
     }
 
     // ============================================================
-    // 14. ADMIN AUTO
+    // 16. ADMIN AUTO
     // ============================================================
     function apriModaleNuova() {
         if (!isAdmin) return;
@@ -1862,7 +1927,7 @@
         document.getElementById('editAlimentazione').value = v.alimentazione;
         document.getElementById('editCambio').value = v.cambio;
         if (v.immagine) {
-            immagineTemp = v.immagine;
+            immagineUrlTemp = v.immagine;
             document.getElementById('previewImg').src = v.immagine;
             document.getElementById('imagePreview').classList.add('visible');
         } else {
@@ -1885,11 +1950,21 @@
         const km = parseInt(document.getElementById('editKm').value);
         const alimentazione = document.getElementById('editAlimentazione').value;
         const cambio = document.getElementById('editCambio').value;
-        const immagine = immagineTemp;
 
         if (!modello || !anno || !prezzo || !km) {
             alert('Compila tutti i campi correttamente.');
             return;
+        }
+
+        let immagine = immagineUrlTemp;
+        const fileInput = document.getElementById('editImmagine');
+        if (fileInput.files.length > 0) {
+            const uploadedUrl = await caricaImmagineSuImgbb(fileInput.files[0]);
+            if (uploadedUrl) {
+                immagine = uploadedUrl;
+            } else {
+                return;
+            }
         }
 
         const veicolo = { marca, modello, anno, prezzo, km, alimentazione, cambio, immagine };
@@ -1907,6 +1982,7 @@
             renderLista(autoFiltrate);
             aggiornaConteggio();
             chiudiModale();
+            mostraToast('✅ Auto salvata!', `${marca} ${modello} è stata aggiunta al listino.`);
         } catch (error) {
             alert('Errore: ' + error.message);
         }
@@ -1922,13 +1998,14 @@
             renderLista(autoFiltrate);
             aggiornaConteggio();
             if (document.getElementById('dettaglio').classList.contains('attivo')) tornaLista();
+            mostraToast('🗑️ Auto eliminata', 'L\'auto è stata rimossa dal listino.');
         } catch (error) {
             alert('Errore: ' + error.message);
         }
     }
 
     // ============================================================
-    // 15. TOAST NOTIFICA
+    // 17. TOAST
     // ============================================================
     function mostraToast(titolo, testo) {
         document.getElementById('toastTitolo').textContent = titolo;
@@ -1942,11 +2019,17 @@
     }
 
     // ============================================================
-    // 16. INIT
+    // 18. INIT
     // ============================================================
     async function init() {
         popolaMarche();
-        await caricaDati();
+        const data = await caricaDati();
+        auto = data.auto || [];
+        prenotazioni = data.prenotazioni || [];
+        autoFiltrate = [...auto];
+        renderLista(autoFiltrate);
+        aggiornaConteggio();
+        aggiornaBadge();
         aggiornaUI();
     }
 

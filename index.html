@@ -389,18 +389,31 @@
             border-color: #dc2626;
         }
         .card-img {
-            height: 140px;
-            background: linear-gradient(135deg, #1a1a2e, #2a2a44);
+            height: 160px;
+            background: #ffffff;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
             overflow: hidden;
+            padding: 16px;
+            border-bottom: 1px solid #e8e8ee;
+        }
+        .card-img .logo-marca {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            max-width: 120px;
+            max-height: 100px;
+            transition: transform 0.3s;
+        }
+        .card-auto:hover .card-img .logo-marca {
+            transform: scale(1.05);
         }
         .card-img .icona-auto {
-            font-size: 64px;
+            font-size: 56px;
             color: #dc2626;
-            opacity: 0.8;
+            opacity: 0.3;
         }
         .card-img .tag {
             position: absolute;
@@ -430,6 +443,9 @@
             letter-spacing: 0.8px;
             z-index: 2;
             animation: pulseGreen 2s infinite;
+        }
+        .card-img .logo-error {
+            display: none;
         }
         @keyframes pulseGreen {
             0%, 100% { opacity: 1; }
@@ -574,18 +590,26 @@
             .dettaglio-container { padding: 20px; }
         }
         .dettaglio-foto {
-            background: linear-gradient(135deg, #1a1a2e, #2a2a44);
+            background: #ffffff;
             border-radius: 18px;
             height: 250px;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            padding: 24px;
+            border: 1px solid #e8e8ee;
+        }
+        .dettaglio-foto .logo-marca-dettaglio {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            max-width: 200px;
         }
         .dettaglio-foto .icona-auto-dettaglio {
-            font-size: 100px;
+            font-size: 80px;
             color: #dc2626;
-            opacity: 0.8;
+            opacity: 0.3;
         }
         .dettaglio-info h2 {
             font-size: 28px;
@@ -980,7 +1004,6 @@
             margin-top: -4px;
         }
 
-        /* ===== BARRA DI RICERCA MARCHE ===== */
         .marca-search-container {
             position: relative;
             width: 100%;
@@ -1085,6 +1108,8 @@
             .sezione-header { flex-direction: column; align-items: flex-start; }
             .sezione-header .count { font-size: 12px; padding: 4px 14px; }
             .btn-admin { font-size: 12px; padding: 6px 16px; }
+            .card-img { height: 120px; }
+            .card-img .logo-marca { max-width: 80px; max-height: 70px; }
         }
     </style>
 </head>
@@ -1239,7 +1264,7 @@
             <div class="form-row">
                 <div class="form-group">
                     <label><i class="fas fa-envelope"></i> Email *</label>
-                    <input type="email" id="prenotaEmail" placeholder="@nomediscord" required />
+                    <input type="email" id="prenotaEmail" placeholder="mario@email.com" required />
                 </div>
                 <div class="form-group">
                     <label><i class="fas fa-phone"></i> Telefono *</label>
@@ -1247,7 +1272,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label><i class="fas fa-calendar-day"></i> Data del ritiro *</label>
+                <label><i class="fas fa-calendar-day"></i> Data preferita *</label>
                 <input type="date" id="prenotaData" required />
             </div>
             <div class="form-group">
@@ -1348,7 +1373,7 @@
         <div class="logo-footer"><i class="fas fa-gem"></i> Outlet Usato Garantito</div>
         <div class="footer-divider"></div>
         <p>&copy; 2026 Outlet Usato Garantito — Via Civico 119</p>
-        <p style="margin-top:4px; font-size:11px; color:#444458;">Sito a Scopo Ludico</p>
+        <p style="margin-top:4px; font-size:11px; color:#444458;">P.IVA 01234567890</p>
     </div>
 </footer>
 
@@ -1391,7 +1416,38 @@
     ].sort();
 
     // ============================================================
-    // 4. CARICAMENTO DATI DA JSONBIN + FALLBACK
+    // 4. FUNZIONE PER OTTENERE IL LOGO DELLA MARCA
+    // ============================================================
+    function getLogoUrl(marca) {
+        // Normalizza il nome della marca per l'URL
+        const nome = marca
+            .toLowerCase()
+            .replace(/\s/g, '-')
+            .replace(/motorcycles/g, 'motorcycle');
+        
+        // Mappatura per marche speciali
+        const mappe = {
+            'alfa-romeo': 'alfa-romeo',
+            'aston-martin': 'aston-martin',
+            'ds-automobiles': 'ds',
+            'land-rover': 'land-rover',
+            'rolls-royce': 'rolls-royce',
+            'bmw-motorrad': 'bmw',
+            'harley-davidson': 'harley-davidson',
+            'honda-moto': 'honda',
+            'suzuki-moto': 'suzuki',
+            'triumph-moto': 'triumph',
+            'zero-motorcycles': 'zero-motorcycles'
+        };
+        
+        const nomeMappato = mappe[nome] || nome;
+        
+        // URL dei loghi dal dataset car-logos
+        return `https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/${nomeMappato}.png`;
+    }
+
+    // ============================================================
+    // 5. CARICAMENTO DATI DA JSONBIN + FALLBACK
     // ============================================================
     async function caricaDati() {
         try {
@@ -1464,7 +1520,7 @@
     }
 
     // ============================================================
-    // 5. SALVATAGGIO DATI SU JSONBIN
+    // 6. SALVATAGGIO DATI SU JSONBIN
     // ============================================================
     async function salvaDati() {
         const data = { auto, prenotazioni };
@@ -1489,7 +1545,7 @@
     }
 
     // ============================================================
-    // 6. UI
+    // 7. UI
     // ============================================================
     function aggiornaUI() {
         const section = document.getElementById('userSection');
@@ -1604,7 +1660,6 @@
         document.getElementById('marcaSearch').focus();
     }
 
-    // Chiudi la lista quando si clicca fuori
     document.addEventListener('click', function(e) {
         const container = document.querySelector('.marca-search-container');
         if (container && !container.contains(e.target)) {
@@ -1613,7 +1668,7 @@
     });
 
     // ============================================================
-    // 7. RENDER LISTA AUTO
+    // 8. RENDER LISTA AUTO (CON LOGHI)
     // ============================================================
     function renderLista(veicoli) {
         const grid = document.getElementById('gridAuto');
@@ -1630,10 +1685,16 @@
 
         grid.innerHTML = veicoli.map(v => {
             const prenotata = prenotazioni.some(p => p.autoId === v.id && p.stato === 'confermata');
+            const logoUrl = getLogoUrl(v.marca);
+            
             return `
             <div class="card-auto">
                 <div class="card-img">
-                    <div class="icona-auto"><i class="fas fa-car"></i></div>
+                    <img src="${logoUrl}" 
+                         alt="${v.marca}" 
+                         class="logo-marca"
+                         onerror="this.style.display='none'; this.parentElement.querySelector('.icona-auto').style.display='flex';" />
+                    <div class="icona-auto" style="display:none;"><i class="fas fa-car"></i></div>
                     <span class="tag"><i class="fas fa-check"></i> Pronta</span>
                     ${prenotata ? `<span class="tag-prenotata"><i class="fas fa-check-circle"></i> PRENOTATA</span>` : ''}
                 </div>
@@ -1666,7 +1727,7 @@
     }
 
     // ============================================================
-    // 8. RENDER PRENOTAZIONI
+    // 9. RENDER PRENOTAZIONI
     // ============================================================
     function renderPrenotazioni() {
         const grid = document.getElementById('gridPrenotazioni');
@@ -1720,12 +1781,13 @@
     }
 
     // ============================================================
-    // 9. DETTAGLIO AUTO
+    // 10. DETTAGLIO AUTO (CON LOGO)
     // ============================================================
     function apriDettaglio(id) {
         const veicolo = auto.find(a => a.id === id);
         if (!veicolo) return;
         const prenotata = prenotazioni.some(p => p.autoId === id && p.stato === 'confermata');
+        const logoUrl = getLogoUrl(veicolo.marca);
 
         document.getElementById('listaAuto').classList.add('hidden');
         document.getElementById('dettaglio').classList.add('attivo');
@@ -1735,7 +1797,11 @@
             <a class="back" onclick="tornaLista()"><i class="fas fa-arrow-left"></i> Torna al listino</a>
             <div class="dettaglio-grid">
                 <div class="dettaglio-foto">
-                    <div class="icona-auto-dettaglio"><i class="fas fa-car"></i></div>
+                    <img src="${logoUrl}" 
+                         alt="${veicolo.marca}" 
+                         class="logo-marca-dettaglio"
+                         onerror="this.style.display='none'; this.parentElement.querySelector('.icona-auto-dettaglio').style.display='flex';" />
+                    <div class="icona-auto-dettaglio" style="display:none;"><i class="fas fa-car"></i></div>
                 </div>
                 <div class="dettaglio-info">
                     <div class="marca-dett">${veicolo.marca}</div>
@@ -1765,7 +1831,7 @@
     }
 
     // ============================================================
-    // 10. FILTRI
+    // 11. FILTRI
     // ============================================================
     function applicaFiltri() {
         const marca = document.getElementById('filtroMarca').value;
@@ -1791,7 +1857,7 @@
     }
 
     // ============================================================
-    // 11. LOGIN
+    // 12. LOGIN
     // ============================================================
     function apriLogin() {
         document.getElementById('modalLogin').classList.add('attivo');
@@ -1821,7 +1887,7 @@
     }
 
     // ============================================================
-    // 12. PRENOTAZIONI
+    // 13. PRENOTAZIONI
     // ============================================================
     function apriModalePrenotazione(autoId, autoNome) {
         document.getElementById('prenotaAutoId').value = autoId;
@@ -1896,7 +1962,7 @@
     }
 
     // ============================================================
-    // 13. GESTIONE PRENOTAZIONI (ADMIN)
+    // 14. GESTIONE PRENOTAZIONI (ADMIN)
     // ============================================================
     async function confermaPrenotazione(id) {
         const index = prenotazioni.findIndex(p => p.id === id);
@@ -1931,7 +1997,7 @@
     }
 
     // ============================================================
-    // 14. PRENOTAZIONE ADMIN (senza modulo)
+    // 15. PRENOTAZIONE ADMIN (senza modulo)
     // ============================================================
     async function prenotaAdmin(autoId, autoNome) {
         if (!isAdmin) return;
@@ -1969,7 +2035,7 @@
     }
 
     // ============================================================
-    // 15. ADMIN AUTO
+    // 16. ADMIN AUTO
     // ============================================================
     function apriModaleNuova() {
         if (!isAdmin) return;
@@ -2069,7 +2135,7 @@
     }
 
     // ============================================================
-    // 16. TOAST
+    // 17. TOAST
     // ============================================================
     function mostraToast(titolo, testo) {
         document.getElementById('toastTitolo').textContent = titolo;
@@ -2083,7 +2149,7 @@
     }
 
     // ============================================================
-    // 17. INIT
+    // 18. INIT
     // ============================================================
     async function init() {
         popolaMarcheFiltro();

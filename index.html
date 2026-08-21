@@ -519,6 +519,7 @@
             margin-top: 10px;
             padding-top: 10px;
             border-top: 1px solid #e8e8ee;
+            flex-wrap: wrap;
         }
         .card-admin-actions button {
             flex: 1;
@@ -530,11 +531,15 @@
             transition: 0.3s;
             font-family: 'Inter', sans-serif;
             border: none;
+            min-width: 60px;
         }
         .card-admin-actions .btn-modifica { background: #dc2626; color: #fff; }
         .card-admin-actions .btn-modifica:hover { background: #b91c1c; }
         .card-admin-actions .btn-elimina { background: #0a0a0a; color: #fff; }
         .card-admin-actions .btn-elimina:hover { background: #2a2a2a; }
+        .card-admin-actions .btn-prenota-admin { background: #16a34a; color: #fff; }
+        .card-admin-actions .btn-prenota-admin:hover { background: #15803d; }
+        .card-admin-actions .btn-prenota-admin:disabled { background: #6b7280; cursor: not-allowed; }
 
         #dettaglio { display: none; padding: 30px 0 50px; }
         #dettaglio.attivo { display: block; }
@@ -995,6 +1000,8 @@
             .dettaglio-foto { height: 200px; }
             .badge-header { display: none; }
             .toast { left: 20px; right: 20px; bottom: 20px; max-width: none; }
+            .card-admin-actions { flex-direction: column; }
+            .card-admin-actions button { min-width: 100%; }
         }
         @media (max-width: 480px) {
             .hero h2 { font-size: 26px; }
@@ -1483,8 +1490,10 @@
                     `<button class="btn-prenota prenotata" disabled><i class="fas fa-check-circle"></i> Già prenotata</button>`}
                     ${isAdmin ? `
                         <div class="card-admin-actions">
-                            <button class="btn-modifica" onclick="apriModaleModifica(${v.id})"><i class="fas fa-edit"></i> Modifica</button>
-                            <button class="btn-elimina" onclick="eliminaAuto(${v.id})"><i class="fas fa-trash"></i> Elimina</button>
+                            <button class="btn-modifica" onclick="event.stopPropagation(); apriModaleModifica(${v.id})"><i class="fas fa-edit"></i> Modifica</button>
+                            <button class="btn-elimina" onclick="event.stopPropagation(); eliminaAuto(${v.id})"><i class="fas fa-trash"></i> Elimina</button>
+                            ${!prenotata ? `<button class="btn-prenota-admin" onclick="event.stopPropagation(); prenotaAdmin(${v.id}, '${v.marca} ${v.modello}')"><i class="fas fa-calendar-plus"></i> Prenota per cliente</button>` : 
+                            `<button class="btn-prenota-admin" disabled><i class="fas fa-check-circle"></i> Già prenotata</button>`}
                         </div>
                     ` : ''}
                 </div>
@@ -1758,7 +1767,45 @@
     }
 
     // ============================================================
-    // 14. ADMIN AUTO
+    // 14. PRENOTAZIONE ADMIN (senza modulo)
+    // ============================================================
+    async function prenotaAdmin(autoId, autoNome) {
+        if (!isAdmin) return;
+        
+        if (prenotazioni.some(p => p.autoId === autoId && p.stato === 'confermata')) {
+            mostraToast('❌ Errore', 'Questa auto è già stata prenotata!');
+            return;
+        }
+        
+        const dataOggi = new Date().toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        
+        const nuovaPrenotazione = {
+            id: Date.now(),
+            autoId: autoId,
+            nome: 'Prenotazione',
+            cognome: 'Admin',
+            email: 'admin@outlet.it',
+            telefono: '0000000000',
+            data: dataOggi,
+            messaggio: 'Prenotazione effettuata dall\'amministratore',
+            stato: 'confermata',
+            dataRichiesta: new Date().toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+        };
+
+        try {
+            prenotazioni.push(nuovaPrenotazione);
+            await salvaDati();
+            aggiornaBadge();
+            renderPrenotazioni();
+            renderLista(autoFiltrate);
+            mostraToast('✅ Auto prenotata!', `${autoNome} è stata prenotata per il cliente.`);
+        } catch (error) {
+            alert('Errore: ' + error.message);
+        }
+    }
+
+    // ============================================================
+    // 15. ADMIN AUTO
     // ============================================================
     function apriModaleNuova() {
         if (!isAdmin) return;
@@ -1847,7 +1894,7 @@
     }
 
     // ============================================================
-    // 15. TOAST
+    // 16. TOAST
     // ============================================================
     function mostraToast(titolo, testo) {
         document.getElementById('toastTitolo').textContent = titolo;
@@ -1861,7 +1908,7 @@
     }
 
     // ============================================================
-    // 16. INIT
+    // 17. INIT
     // ============================================================
     async function init() {
         popolaMarche();

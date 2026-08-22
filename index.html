@@ -70,7 +70,7 @@
             66% { transform: translate(-30px, 40px) scale(0.9); }
         }
 
-        /* ===== EFFETTO RIFLESSO SU ELEMENTI ===== */
+        /* ===== EFFETTO RIFLESSO ===== */
         .shine {
             position: relative;
             overflow: hidden;
@@ -95,224 +95,31 @@
             100% { left: 120%; opacity: 0; }
         }
 
-        /* ===== EFFETTO RIFLESSO SU HERO ===== */
-        .hero {
-            background: linear-gradient(160deg, #0a0a0a 0%, #1a0a12 40%, #0a0a0a 100%);
-            padding: 90px 0 80px;
-            text-align: center;
+        .card-shine {
             position: relative;
             overflow: hidden;
-            border-bottom: 1px solid rgba(220, 38, 38, 0.05);
+            isolation: isolate;
         }
-        /* Sfondo riflettente con animazione di luce */
-        .hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: 
-                radial-gradient(ellipse at 20% 50%, rgba(220, 38, 38, 0.08) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 50%, rgba(220, 38, 38, 0.05) 0%, transparent 60%);
-            animation: heroBgPulse 8s ease-in-out infinite;
-            z-index: 0;
-        }
-        @keyframes heroBgPulse {
-            0%, 100% { opacity: 0.6; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.05); }
-        }
-        /* Riflesso luminoso che attraversa l'hero */
-        .hero::after {
+        .card-shine::after {
             content: '';
             position: absolute;
             top: -50%;
-            left: -30%;
+            left: -60%;
             width: 30%;
             height: 200%;
-            background: linear-gradient(90deg, 
-                transparent 0%, 
-                rgba(255,255,255,0.02) 20%,
-                rgba(255,255,255,0.05) 40%,
-                rgba(255,255,255,0.08) 50%,
-                rgba(255,255,255,0.05) 60%,
-                rgba(255,255,255,0.02) 80%,
-                transparent 100%
-            );
-            transform: rotate(15deg);
-            animation: heroReflection 10s ease-in-out infinite;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), rgba(255,255,255,0.05), transparent);
+            transform: rotate(35deg);
+            animation: cardShine 8s ease-in-out infinite;
             pointer-events: none;
-            z-index: 1;
+            z-index: 0;
         }
-        @keyframes heroReflection {
-            0% { left: -30%; opacity: 0; }
+        @keyframes cardShine {
+            0% { left: -60%; opacity: 0; }
             20% { opacity: 1; }
             60% { opacity: 1; }
-            100% { left: 100%; opacity: 0; }
+            100% { left: 120%; opacity: 0; }
         }
 
-        /* RIFLESSO SUL TESTO DELL'HERO */
-        .hero h2 {
-            font-size: 54px;
-            font-weight: 900;
-            color: #fff;
-            line-height: 1.08;
-            margin-bottom: 16px;
-            letter-spacing: -1px;
-            position: relative;
-            z-index: 2;
-        }
-        .hero h2 span { 
-            background: radial-gradient(circle at 30% 30%, #ff6b6b, #dc2626);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            position: relative;
-            display: inline-block;
-        }
-        /* Effetto riflesso lucente sul testo span */
-        .hero h2 span::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, 
-                transparent 0%, 
-                rgba(255,255,255,0.1) 30%,
-                rgba(255,255,255,0.2) 50%,
-                rgba(255,255,255,0.1) 70%,
-                transparent 100%
-            );
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: textShine 4s ease-in-out infinite;
-            pointer-events: none;
-        }
-        @keyframes textShine {
-            0% { transform: translateX(-100%) scaleX(0.5); opacity: 0; }
-            30% { opacity: 1; }
-            70% { opacity: 1; }
-            100% { transform: translateX(100%) scaleX(0.5); opacity: 0; }
-        }
-
-        /* Riflesso pulsante sul testo completo */
-        .hero h2::after {
-            content: '';
-            position: absolute;
-            top: -20%;
-            left: -10%;
-            width: 20%;
-            height: 140%;
-            background: linear-gradient(90deg, 
-                transparent 0%,
-                rgba(255,255,255,0.03) 40%,
-                rgba(255,255,255,0.08) 50%,
-                rgba(255,255,255,0.03) 60%,
-                transparent 100%
-            );
-            transform: rotate(-10deg);
-            animation: h2Reflection 7s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 3;
-        }
-        @keyframes h2Reflection {
-            0% { left: -20%; opacity: 0; }
-            25% { opacity: 1; }
-            75% { opacity: 1; }
-            100% { left: 90%; opacity: 0; }
-        }
-
-        .hero-content { position: relative; z-index: 2; }
-        .hero .badge-oro {
-            display: inline-block;
-            background: rgba(220, 38, 38, 0.08);
-            border: 1px solid rgba(220, 38, 38, 0.12);
-            color: #dc2626;
-            padding: 6px 28px;
-            border-radius: 40px;
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            position: relative;
-            overflow: hidden;
-            z-index: 2;
-        }
-        .badge-oro::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(220,38,38,0.03), transparent 70%);
-            animation: shimmer 6s ease-in-out infinite;
-        }
-        @keyframes shimmer {
-            0%, 100% { transform: translateX(-30%) translateY(-30%); }
-            50% { transform: translateX(30%) translateY(30%); }
-        }
-        .hero p {
-            font-size: 18px;
-            color: #8888aa;
-            max-width: 540px;
-            margin: 0 auto 32px;
-            font-weight: 300;
-            position: relative;
-            z-index: 2;
-        }
-        .hero-stats {
-            display: flex;
-            justify-content: center;
-            gap: 32px;
-            flex-wrap: wrap;
-            position: relative;
-            z-index: 2;
-        }
-        .hero-stats .stat { 
-            text-align: center; 
-            padding: 16px 28px;
-            background: rgba(255,255,255,0.02);
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.03);
-            backdrop-filter: blur(10px);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-            min-width: 100px;
-        }
-        .hero-stats .stat::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.02), transparent);
-            animation: statShine 8s ease-in-out infinite;
-        }
-        @keyframes statShine {
-            0% { transform: rotate(0deg) translateX(-100%); }
-            100% { transform: rotate(360deg) translateX(100%); }
-        }
-        .hero-stats .stat:hover {
-            background: rgba(255,255,255,0.04);
-            transform: translateY(-4px);
-            border-color: rgba(220, 38, 38, 0.08);
-        }
-        .hero-stats .stat .numero {
-            font-size: 28px;
-            font-weight: 800;
-            background: radial-gradient(circle at 30% 30%, #ff6b6b, #dc2626);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -0.5px;
-        }
-        .hero-stats .stat .label {
-            font-size: 12px;
-            color: #666688;
-            font-weight: 400;
-            letter-spacing: 0.5px;
-        }
-
-        /* ===== IL RESTO DELLO STILE È UGUALE AL TUO ===== */
         /* ===== HEADER ===== */
         header {
             background: rgba(10, 10, 10, 0.85);
@@ -467,6 +274,10 @@
             background: radial-gradient(circle, rgba(220,38,38,0.03), transparent 70%);
             animation: shimmer 4s ease-in-out infinite;
         }
+        @keyframes shimmer {
+            0%, 100% { transform: translateX(-30%) translateY(-30%); }
+            50% { transform: translateX(30%) translateY(30%); }
+        }
         
         .notif-badge {
             background: radial-gradient(circle at 30% 30%, #ff6b6b, #dc2626);
@@ -554,6 +365,211 @@
         @keyframes pulse-glow {
             0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.05); }
             50% { box-shadow: 0 0 25px 8px rgba(220, 38, 38, 0.06); }
+        }
+
+        /* ===== HERO CON RIFLESSI ===== */
+        .hero {
+            background: linear-gradient(160deg, #0a0a0a 0%, #1a0a12 40%, #0a0a0a 100%);
+            padding: 90px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(220, 38, 38, 0.05);
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(220, 38, 38, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(220, 38, 38, 0.05) 0%, transparent 60%);
+            animation: heroBgPulse 8s ease-in-out infinite;
+            z-index: 0;
+        }
+        @keyframes heroBgPulse {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -30%;
+            width: 30%;
+            height: 200%;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255,255,255,0.02) 20%,
+                rgba(255,255,255,0.05) 40%,
+                rgba(255,255,255,0.08) 50%,
+                rgba(255,255,255,0.05) 60%,
+                rgba(255,255,255,0.02) 80%,
+                transparent 100%
+            );
+            transform: rotate(15deg);
+            animation: heroReflection 10s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+        @keyframes heroReflection {
+            0% { left: -30%; opacity: 0; }
+            20% { opacity: 1; }
+            60% { opacity: 1; }
+            100% { left: 100%; opacity: 0; }
+        }
+        .hero h2 {
+            font-size: 54px;
+            font-weight: 900;
+            color: #fff;
+            line-height: 1.08;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+            position: relative;
+            z-index: 2;
+        }
+        .hero h2 span { 
+            background: radial-gradient(circle at 30% 30%, #ff6b6b, #dc2626);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            display: inline-block;
+        }
+        .hero h2 span::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255,255,255,0.1) 30%,
+                rgba(255,255,255,0.2) 50%,
+                rgba(255,255,255,0.1) 70%,
+                transparent 100%
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textShine 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+        @keyframes textShine {
+            0% { transform: translateX(-100%) scaleX(0.5); opacity: 0; }
+            30% { opacity: 1; }
+            70% { opacity: 1; }
+            100% { transform: translateX(100%) scaleX(0.5); opacity: 0; }
+        }
+        .hero h2::after {
+            content: '';
+            position: absolute;
+            top: -20%;
+            left: -10%;
+            width: 20%;
+            height: 140%;
+            background: linear-gradient(90deg, 
+                transparent 0%,
+                rgba(255,255,255,0.03) 40%,
+                rgba(255,255,255,0.08) 50%,
+                rgba(255,255,255,0.03) 60%,
+                transparent 100%
+            );
+            transform: rotate(-10deg);
+            animation: h2Reflection 7s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 3;
+        }
+        @keyframes h2Reflection {
+            0% { left: -20%; opacity: 0; }
+            25% { opacity: 1; }
+            75% { opacity: 1; }
+            100% { left: 90%; opacity: 0; }
+        }
+        .hero-content { position: relative; z-index: 2; }
+        .hero .badge-oro {
+            display: inline-block;
+            background: rgba(220, 38, 38, 0.08);
+            border: 1px solid rgba(220, 38, 38, 0.12);
+            color: #dc2626;
+            padding: 6px 28px;
+            border-radius: 40px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            z-index: 2;
+        }
+        .badge-oro::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(220,38,38,0.03), transparent 70%);
+            animation: shimmer 6s ease-in-out infinite;
+        }
+        .hero p {
+            font-size: 18px;
+            color: #8888aa;
+            max-width: 540px;
+            margin: 0 auto 32px;
+            font-weight: 300;
+            position: relative;
+            z-index: 2;
+        }
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
+        }
+        .hero-stats .stat { 
+            text-align: center; 
+            padding: 16px 28px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.03);
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            min-width: 100px;
+        }
+        .hero-stats .stat::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.02), transparent);
+            animation: statShine 8s ease-in-out infinite;
+        }
+        @keyframes statShine {
+            0% { transform: rotate(0deg) translateX(-100%); }
+            100% { transform: rotate(360deg) translateX(100%); }
+        }
+        .hero-stats .stat:hover {
+            background: rgba(255,255,255,0.04);
+            transform: translateY(-4px);
+            border-color: rgba(220, 38, 38, 0.08);
+        }
+        .hero-stats .stat .numero {
+            font-size: 28px;
+            font-weight: 800;
+            background: radial-gradient(circle at 30% 30%, #ff6b6b, #dc2626);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+        .hero-stats .stat .label {
+            font-size: 12px;
+            color: #666688;
+            font-weight: 400;
+            letter-spacing: 0.5px;
         }
 
         /* ===== FILTRI ===== */
@@ -828,9 +844,6 @@
         @keyframes pulseGreen {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.7; }
-        }
-        .card-img .logo-error {
-            display: none;
         }
         .card-body {
             padding: 18px 22px 22px;
@@ -1668,7 +1681,34 @@
             text-align: center;
         }
 
-        /* ===== RESPONSIVE ===== */
+        /* ===== STILE PER COMANDI DISCORD ===== */
+        .discord-status {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 8px 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: #8888aa;
+            border: 1px solid rgba(255,255,255,0.03);
+        }
+        .discord-status i {
+            color: #5865F2;
+        }
+        .discord-status .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #4CAF50;
+            display: inline-block;
+            animation: pulse-dot 2s infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
         @media (max-width: 768px) {
             .header-inner { flex-direction: column; align-items: flex-start; }
             .header-right { width: 100%; justify-content: flex-start; flex-wrap: wrap; }
@@ -1731,6 +1771,10 @@
                     <span class="notif-badge hidden" id="notifBadge">0</span>
                 </a>
                 <span class="badge-header"><i class="fas fa-star"></i> Qualità garantita</span>
+                <div class="discord-status">
+                    <span class="dot"></span>
+                    <i class="fab fa-discord"></i> Bot attivo
+                </div>
                 <div id="userSection">
                     <button class="btn-login" onclick="apriLogin()"><i class="fas fa-lock"></i> Admin</button>
                 </div>
@@ -1739,7 +1783,7 @@
     </div>
 </header>
 
-<!-- ===== HERO CON RIFLESSI ===== -->
+<!-- ===== HERO ===== -->
 <section class="hero">
     <div class="container hero-content">
         <div class="badge-oro"><i class="fas fa-crown"></i> Eccellenza italiana</div>
@@ -1870,7 +1914,7 @@
             <div class="form-row">
                 <div class="form-group">
                     <label><i class="fas fa-envelope"></i> Email *</label>
-                    <input type="email" id="prenotaEmail" placeholder="@nomediscord" required />
+                    <input type="email" id="prenotaEmail" placeholder="mario@email.com" required />
                 </div>
                 <div class="form-group">
                     <label><i class="fas fa-phone"></i> Telefono *</label>
@@ -1878,7 +1922,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label><i class="fas fa-calendar-day"></i> Data del ritiro *</label>
+                <label><i class="fas fa-calendar-day"></i> Data preferita *</label>
                 <input type="date" id="prenotaData" required />
             </div>
             <div class="form-group">
@@ -1982,7 +2026,7 @@
         <div class="logo-footer"><i class="fas fa-gem"></i> Outlet Usato Garantito</div>
         <div class="footer-divider"></div>
         <p>&copy; 2026 Outlet Usato Garantito — Via Civico 119</p>
-        <p style="margin-top:4px; font-size:11px; color:#444458;">Sito per Scopo Ludico</p>
+        <p style="margin-top:4px; font-size:11px; color:#444458;">P.IVA 01234567890</p>
     </div>
 </footer>
 
@@ -1996,7 +2040,8 @@
     // ============================================================
     // 2. CONFIGURAZIONE DISCORD WEBHOOK
     // ============================================================
-    const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1540357059789197383/x15kU0mlAhRKS6ibdWCTFYO7ElVy82xR2FnqguvcRTqsVMkEfHcxljLzNkzqFueNJ81T';
+    const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1540357059789197383/x15kU0mlAhRKS6ibdWCTFYO7ElVy82xR2FnqguvcRTqsVMkEfHcxljLzNkzqFueNJ81T'; // <-- METTI IL TUO WEBHOOK
+    const DISCORD_COMANDI_URL = 'https://discord.com/api/webhooks/1540357059789197383/x15kU0mlAhRKS6ibdWCTFYO7ElVy82xR2FnqguvcRTqsVMkEfHcxljLzNkzqFueNJ81T'; // <-- METTI LO STESSO WEBHOOK
 
     // ============================================================
     // 3. STATO
@@ -2050,7 +2095,7 @@
     }
 
     // ============================================================
-    // 6. NOTIFICA DISCORD
+    // 6. NOTIFICA DISCORD PER PRENOTAZIONI
     // ============================================================
     async function inviaNotificaDiscord(prenotazione, autoNome) {
         if (!DISCORD_WEBHOOK_URL || DISCORD_WEBHOOK_URL === 'IL_TUO_WEBHOOK_URL') {
@@ -2090,7 +2135,108 @@
     }
 
     // ============================================================
-    // 7. CARICAMENTO DATI DA JSONBIN + FALLBACK
+    // 7. ELABORA COMANDI DA DISCORD
+    // ============================================================
+    async function elaboraComandoDiscord(comando, username) {
+        const parts = comando.trim().split(' ');
+        const cmd = parts[0].toLowerCase();
+        
+        if (cmd === '/aggiungi-auto') {
+            if (parts.length < 8) {
+                return {
+                    success: false,
+                    messaggio: '❌ Formato: `/aggiungi-auto marca modello anno prezzo km alimentazione cambio`\nEsempio: `/aggiungi-auto Audi A3 2020 22900 42000 Diesel Automatico`'
+                };
+            }
+            
+            try {
+                const marca = parts[1];
+                const modello = parts[2];
+                const anno = parseInt(parts[3]);
+                const prezzo = parseInt(parts[4]);
+                const km = parseInt(parts[5]);
+                const alimentazione = parts[6];
+                const cambio = parts.slice(7).join(' ');
+                
+                if (isNaN(anno) || isNaN(prezzo) || isNaN(km)) {
+                    return { success: false, messaggio: '❌ Anno, prezzo e km devono essere numeri!' };
+                }
+                
+                const newId = auto.length > 0 ? Math.max(...auto.map(a => a.id)) + 1 : 1;
+                const nuovaAuto = { id: newId, marca, modello, anno, prezzo, km, alimentazione, cambio };
+                
+                auto.push(nuovaAuto);
+                await salvaDati();
+                autoFiltrate = [...auto];
+                renderLista(autoFiltrate);
+                aggiornaConteggio();
+                
+                return {
+                    success: true,
+                    messaggio: `✅ **Auto aggiunta con successo!**\n🚗 **${marca} ${modello}**\n📅 Anno: ${anno}\n💰 Prezzo: € ${prezzo.toLocaleString()}\n📏 Km: ${km.toLocaleString()}\n⛽ Alimentazione: ${alimentazione}\n⚙️ Cambio: ${cambio}\n\n📱 Aggiunta da: ${username || 'Discord'}`
+                };
+            } catch (error) {
+                return { success: false, messaggio: `❌ Errore: ${error.message}` };
+            }
+        }
+        
+        else if (cmd === '/lista-auto') {
+            if (auto.length === 0) {
+                return { success: false, messaggio: '📋 **Nessuna auto disponibile.**' };
+            }
+            let testo = '📋 **Lista auto disponibili:**\n\n';
+            auto.slice(0, 10).forEach((a, i) => {
+                testo += `${i+1}. **${a.marca} ${a.modello}** - € ${a.prezzo.toLocaleString()} - ${a.anno} - ${a.km}km\n`;
+            });
+            if (auto.length > 10) {
+                testo += `\n... e altre ${auto.length - 10} auto`;
+            }
+            return { success: true, messaggio: testo };
+        }
+        
+        else if (cmd === '/help' || cmd === '/aiuto') {
+            return {
+                success: true,
+                messaggio: `📖 **Comandi disponibili:**\n\n🔹 /aggiungi-auto marca modello anno prezzo km alimentazione cambio\n   Esempio: /aggiungi-auto Audi A3 2020 22900 42000 Diesel Automatico\n\n🔹 /lista-auto - Mostra tutte le auto\n\n🔹 /help o /aiuto - Mostra questo messaggio`
+            };
+        }
+        
+        else {
+            return { success: false, messaggio: '❌ Comando non riconosciuto. Usa `/help` per vedere i comandi disponibili.' };
+        }
+    }
+
+    // ============================================================
+    // 8. INVIA MESSAGGIO SU DISCORD (per risposte comandi)
+    // ============================================================
+    async function inviaMessaggioDiscord(messaggio) {
+        if (!DISCORD_COMANDI_URL || DISCORD_COMANDI_URL === 'IL_TUO_WEBHOOK_URL') {
+            console.log('⚠️ Webhook Discord comandi non configurato');
+            return;
+        }
+        try {
+            await fetch(DISCORD_COMANDI_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ content: messaggio })
+            });
+        } catch (error) {
+            console.error('❌ Errore invio messaggio Discord:', error);
+        }
+    }
+
+    // ============================================================
+    // 9. ENDPOINT PER RICEVERE COMANDI DA DISCORD
+    // ============================================================
+    async function riceviComandoDiscord(dati) {
+        const { comando, username } = dati;
+        const risultato = await elaboraComandoDiscord(comando, username || 'Utente Discord');
+        await inviaMessaggioDiscord(risultato.messaggio);
+        return risultato;
+    }
+
+    // ============================================================
+    // 10. CARICAMENTO DATI DA JSONBIN + FALLBACK
     // ============================================================
     async function caricaDati() {
         try {
@@ -2163,7 +2309,7 @@
     }
 
     // ============================================================
-    // 8. SALVATAGGIO DATI SU JSONBIN
+    // 11. SALVATAGGIO DATI SU JSONBIN
     // ============================================================
     async function salvaDati() {
         const data = { auto, prenotazioni };
@@ -2186,7 +2332,7 @@
     }
 
     // ============================================================
-    // 9. UI
+    // 12. UI
     // ============================================================
     function aggiornaUI() {
         const section = document.getElementById('userSection');
@@ -2308,7 +2454,7 @@
     });
 
     // ============================================================
-    // 10. RENDER LISTA AUTO
+    // 13. RENDER LISTA AUTO
     // ============================================================
     function renderLista(veicoli) {
         const grid = document.getElementById('gridAuto');
@@ -2367,7 +2513,7 @@
     }
 
     // ============================================================
-    // 11. RENDER PRENOTAZIONI
+    // 14. RENDER PRENOTAZIONI
     // ============================================================
     function renderPrenotazioni() {
         const grid = document.getElementById('gridPrenotazioni');
@@ -2421,7 +2567,7 @@
     }
 
     // ============================================================
-    // 12. DETTAGLIO AUTO
+    // 15. DETTAGLIO AUTO
     // ============================================================
     function apriDettaglio(id) {
         const veicolo = auto.find(a => a.id === id);
@@ -2471,7 +2617,7 @@
     }
 
     // ============================================================
-    // 13. FILTRI
+    // 16. FILTRI
     // ============================================================
     function applicaFiltri() {
         const marca = document.getElementById('filtroMarca').value;
@@ -2497,7 +2643,7 @@
     }
 
     // ============================================================
-    // 14. LOGIN
+    // 17. LOGIN
     // ============================================================
     function apriLogin() {
         document.getElementById('modalLogin').classList.add('attivo');
@@ -2527,7 +2673,7 @@
     }
 
     // ============================================================
-    // 15. PRENOTAZIONI
+    // 18. PRENOTAZIONI
     // ============================================================
     function apriModalePrenotazione(autoId, autoNome) {
         document.getElementById('prenotaAutoId').value = autoId;
@@ -2606,7 +2752,7 @@
     }
 
     // ============================================================
-    // 16. GESTIONE PRENOTAZIONI (ADMIN)
+    // 19. GESTIONE PRENOTAZIONI (ADMIN)
     // ============================================================
     async function confermaPrenotazione(id) {
         const index = prenotazioni.findIndex(p => p.id === id);
@@ -2641,7 +2787,7 @@
     }
 
     // ============================================================
-    // 17. PRENOTAZIONE ADMIN (senza modulo)
+    // 20. PRENOTAZIONE ADMIN (senza modulo)
     // ============================================================
     async function prenotaAdmin(autoId, autoNome) {
         if (!isAdmin) return;
@@ -2679,7 +2825,7 @@
     }
 
     // ============================================================
-    // 18. ADMIN AUTO
+    // 21. ADMIN AUTO
     // ============================================================
     function apriModaleNuova() {
         if (!isAdmin) return;
@@ -2779,7 +2925,7 @@
     }
 
     // ============================================================
-    // 19. TOAST
+    // 22. TOAST
     // ============================================================
     function mostraToast(titolo, testo) {
         document.getElementById('toastTitolo').textContent = titolo;
@@ -2793,7 +2939,18 @@
     }
 
     // ============================================================
-    // 20. INIT
+    // 23. SIMULA RICEZIONE COMANDO DA DISCORD (per test)
+    // ============================================================
+    // Questa funzione può essere chiamata da console per testare:
+    // testComandoDiscord('/aggiungi-auto Tesla Model3 2023 45900 12000 Elettrico Automatico')
+    window.testComandoDiscord = async function(comando) {
+        const risultato = await elaboraComandoDiscord(comando, 'TestUser');
+        console.log('Risultato:', risultato);
+        return risultato;
+    };
+
+    // ============================================================
+    // 24. INIT
     // ============================================================
     async function init() {
         popolaMarcheFiltro();
@@ -2808,6 +2965,7 @@
         aggiornaUI();
     }
 
+    // Eventi modali
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             chiudiModale();

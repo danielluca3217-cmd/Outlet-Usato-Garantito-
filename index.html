@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
-        /* ===== TUTTO LO STILE È UGUALE AL TUO ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body { font-family: 'Inter', sans-serif; background: #f0f2f8; color: #0a0a0a; line-height: 1.6; overflow-x: hidden; }
@@ -319,7 +318,6 @@
 </head>
 <body>
 
-<!-- ===== HEADER ===== -->
 <header>
     <div class="container header-inner">
         <div class="header-left">
@@ -352,7 +350,6 @@
     </div>
 </header>
 
-<!-- ===== HERO ===== -->
 <section class="hero">
     <div class="container hero-content">
         <div class="badge-oro"><i class="fas fa-crown"></i> Eccellenza italiana</div>
@@ -375,7 +372,6 @@
     </div>
 </section>
 
-<!-- ===== FILTRI ===== -->
 <section class="filtri">
     <div class="container">
         <form class="filtri-form" id="formFiltri" onsubmit="return false;">
@@ -397,7 +393,6 @@
     </div>
 </section>
 
-<!-- ===== LISTA AUTO ===== -->
 <section class="sezione-auto" id="listaAuto">
     <div class="container">
         <div class="sezione-header">
@@ -421,7 +416,6 @@
     </div>
 </section>
 
-<!-- ===== PRENOTAZIONI ADMIN ===== -->
 <section class="sezione-prenotazioni" id="prenotazioniAdmin">
     <div class="container">
         <h2><i class="fas fa-calendar-check"></i> Prenotazioni</h2>
@@ -441,14 +435,13 @@
     </div>
 </section>
 
-<!-- ===== DETTAGLIO ===== -->
 <section id="dettaglio">
     <div class="container">
         <div class="dettaglio-container" id="dettaglioContainer"></div>
     </div>
 </section>
 
-<!-- ===== MODALI ===== -->
+<!-- MODALI -->
 <div class="modal-overlay login-modal" id="modalLogin">
     <div class="modal">
         <h2><i class="fas fa-lock"></i> Accesso Admin</h2>
@@ -561,7 +554,7 @@
 
 <script>
     // ============================================================
-    // 1. CONFIGURAZIONE
+    // CONFIGURAZIONE
     // ============================================================
     const JSONBIN_BIN_ID = '6a8836b0f5f4af5e2930f4bb';
     const JSONBIN_API_KEY = '$2a$10$wZYd3ki9TiZ/VDC337viNOiC1znyu5NWat6lENgmgdSaUfQ.2.jPO';
@@ -574,7 +567,7 @@
     let intervalId = null;
 
     // ============================================================
-    // 2. LISTA MARCHE
+    // LISTA MARCHE (per i filtri e la ricerca)
     // ============================================================
     const MARCHE = [
         'Abarth', 'Acura', 'Aixam', 'Alfa Romeo', 'Alpine', 'Aston Martin', 'Audi', 'Austin',
@@ -595,98 +588,152 @@
     ].sort();
 
     // ============================================================
-    // 3. FUNZIONE PER OTTENERE IL LOGO (CON FALLBACK DEFINITIVO)
+    // FUNZIONE PER OTTENERE IL LOGO DELLA MARCA
     // ============================================================
     function getLogoUrl(marca) {
         const marcaLower = marca.toLowerCase().trim();
         
-        // 🔥 Mappatura MOTO (immagini specifiche che FUNZIONANO)
-        const motoImages = {
-            'ducati': 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=400&h=300&fit=crop&auto=format',
-            'ducati panigale': 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=400&h=300&fit=crop&auto=format',
-            'ktm': 'https://images.unsplash.com/photo-1605897472359-3f8c9f9d0b1c?w=400&h=300&fit=crop&auto=format',
-            'kawasaki': 'https://images.unsplash.com/photo-1623687605113-57f5b3e65503?w=400&h=300&fit=crop&auto=format',
-            'aprilia': 'https://images.unsplash.com/photo-1623687605113-57f5b3e65503?w=400&h=300&fit=crop&auto=format',
-            'yamaha': 'https://images.unsplash.com/photo-1623687605113-57f5b3e65503?w=400&h=300&fit=crop&auto=format',
-            'harley-davidson': 'https://images.unsplash.com/photo-1558981808-5a2a2d06b0b8?w=400&h=300&fit=crop&auto=format',
-            'harley davidson': 'https://images.unsplash.com/photo-1558981808-5a2a2d06b0b8?w=400&h=300&fit=crop&auto=format',
-            'indian': 'https://images.unsplash.com/photo-1558981808-5a2a2d06b0b8?w=400&h=300&fit=crop&auto=format',
-            'moto guzzi': 'https://images.unsplash.com/photo-1623687605113-57f5b3e65503?w=400&h=300&fit=crop&auto=format',
-            'motoguzzi': 'https://images.unsplash.com/photo-1623687605113-57f5b3e65503?w=400&h=300&fit=crop&auto=format',
-            'mv agusta': 'https://images.unsplash.com/photo-1623687605113-57f5b3e65503?w=400&h=300&fit=crop&auto=format',
-            'mv-agusta': 'https://images.unsplash.com/photo-1623687605113-57f5b3e65503?w=400&h=300&fit=crop&auto=format',
-            'vespa': 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=400&h=300&fit=crop&auto=format',
-            'honda moto': 'https://images.unsplash.com/photo-1623687605113-57f5b3e65503?w=400&h=300&fit=crop&auto=format',
-            'suzuki moto': 'https://images.unsplash.com/photo-1623687605113-57f5b3e65503?w=400&h=300&fit=crop&auto=format',
-            'triumph moto': 'https://images.unsplash.com/photo-1623687605113-57f5b3e65503?w=400&h=300&fit=crop&auto=format',
-            'bmw motorrad': 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=400&h=300&fit=crop&auto=format',
-            'zero motorcycles': 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=400&h=300&fit=crop&auto=format'
-        };
-
-        // 🔥 Mappatura AUTO (immagini specifiche che FUNZIONANO)
-        const autoImages = {
-            'audi': 'https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=400&h=300&fit=crop&auto=format',
-            'bmw': 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=400&h=300&fit=crop&auto=format',
-            'mercedes': 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=400&h=300&fit=crop&auto=format',
-            'mercedes-benz': 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=400&h=300&fit=crop&auto=format',
-            'fiat': 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=400&h=300&fit=crop&auto=format',
-            'ford': 'https://images.unsplash.com/photo-1562911791-c7a97b729ec5?w=400&h=300&fit=crop&auto=format',
-            'volkswagen': 'https://images.unsplash.com/photo-1562911791-c7a97b729ec5?w=400&h=300&fit=crop&auto=format',
-            'toyota': 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=400&h=300&fit=crop&auto=format',
-            'honda': 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=400&h=300&fit=crop&auto=format',
-            'nissan': 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=400&h=300&fit=crop&auto=format',
-            'porsche': 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=400&h=300&fit=crop&auto=format',
-            'ferrari': 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=400&h=300&fit=crop&auto=format',
-            'lamborghini': 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=400&h=300&fit=crop&auto=format',
-            'maserati': 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=400&h=300&fit=crop&auto=format',
-            'tesla': 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=400&h=300&fit=crop&auto=format'
-        };
-
-        // 🔥 Prima controlla se è una moto
-        for (const [key, url] of Object.entries(motoImages)) {
-            if (marcaLower.includes(key) || key.includes(marcaLower)) {
-                return url;
-            }
-        }
-
-        // 🔥 Poi controlla se è un'auto
-        for (const [key, url] of Object.entries(autoImages)) {
-            if (marcaLower.includes(key) || key.includes(marcaLower)) {
-                return url;
-            }
-        }
-
-        // 🔥 Ultimo tentativo: logo dal dataset
+        // Mappatura completa marca → nome file logo
         const logoMap = {
-            'audi': 'audi', 'bmw': 'bmw', 'mercedes': 'mercedes', 'mercedes-benz': 'mercedes',
-            'fiat': 'fiat', 'ford': 'ford', 'volkswagen': 'volkswagen', 'toyota': 'toyota',
-            'honda': 'honda', 'nissan': 'nissan', 'porsche': 'porsche', 'ferrari': 'ferrari',
-            'lamborghini': 'lamborghini', 'maserati': 'maserati', 'tesla': 'tesla',
-            'abarth': 'abarth', 'alfa romeo': 'alfa-romeo', 'alfa-romeo': 'alfa-romeo',
-            'aston martin': 'aston-martin', 'aston-martin': 'aston-martin',
-            'bentley': 'bentley', 'bugatti': 'bugatti', 'cadillac': 'cadillac',
-            'chevrolet': 'chevrolet', 'chrysler': 'chrysler', 'citroen': 'citroen',
-            'dodge': 'dodge', 'jaguar': 'jaguar', 'jeep': 'jeep', 'kia': 'kia',
-            'land rover': 'land-rover', 'land-rover': 'land-rover',
-            'lexus': 'lexus', 'lotus': 'lotus', 'mazda': 'mazda', 'mclaren': 'mclaren',
-            'mini': 'mini', 'mitsubishi': 'mitsubishi', 'opel': 'opel',
-            'peugeot': 'peugeot', 'renault': 'renault', 'rolls-royce': 'rolls-royce',
-            'seat': 'seat', 'skoda': 'skoda', 'smart': 'smart', 'subaru': 'subaru',
-            'suzuki': 'suzuki', 'volvo': 'volvo'
+            // AUTO
+            'abarth': 'abarth',
+            'acura': 'acura',
+            'alfa romeo': 'alfa-romeo',
+            'alfa-romeo': 'alfa-romeo',
+            'alpine': 'alpine',
+            'aston martin': 'aston-martin',
+            'aston-martin': 'aston-martin',
+            'audi': 'audi',
+            'bentley': 'bentley',
+            'bmw': 'bmw',
+            'bugatti': 'bugatti',
+            'buick': 'buick',
+            'cadillac': 'cadillac',
+            'chevrolet': 'chevrolet',
+            'chrysler': 'chrysler',
+            'citroen': 'citroen',
+            'corvette': 'corvette',
+            'cupra': 'cupra',
+            'dacia': 'dacia',
+            'daewoo': 'daewoo',
+            'daihatsu': 'daihatsu',
+            'dodge': 'dodge',
+            'ds': 'ds',
+            'ds automobiles': 'ds',
+            'ferrari': 'ferrari',
+            'fiat': 'fiat',
+            'ford': 'ford',
+            'genesis': 'genesis',
+            'gmc': 'gmc',
+            'honda': 'honda',
+            'hummer': 'hummer',
+            'hyundai': 'hyundai',
+            'infiniti': 'infiniti',
+            'isuzu': 'isuzu',
+            'iveco': 'iveco',
+            'jaguar': 'jaguar',
+            'jeep': 'jeep',
+            'kia': 'kia',
+            'koenigsegg': 'koenigsegg',
+            'lada': 'lada',
+            'lamborghini': 'lamborghini',
+            'lancia': 'lancia',
+            'land rover': 'land-rover',
+            'land-rover': 'land-rover',
+            'lexus': 'lexus',
+            'ligier': 'ligier',
+            'lotus': 'lotus',
+            'mahindra': 'mahindra',
+            'maserati': 'maserati',
+            'maybach': 'maybach',
+            'mazda': 'mazda',
+            'mclaren': 'mclaren',
+            'mercedes': 'mercedes',
+            'mercedes-benz': 'mercedes',
+            'mercury': 'mercury',
+            'mini': 'mini',
+            'mitsubishi': 'mitsubishi',
+            'morgan': 'morgan',
+            'nissan': 'nissan',
+            'oldsmobile': 'oldsmobile',
+            'opel': 'opel',
+            'pagani': 'pagani',
+            'peugeot': 'peugeot',
+            'plymouth': 'plymouth',
+            'pontiac': 'pontiac',
+            'porsche': 'porsche',
+            'proton': 'proton',
+            'renault': 'renault',
+            'rolls-royce': 'rolls-royce',
+            'rover': 'rover',
+            'saab': 'saab',
+            'seat': 'seat',
+            'skoda': 'skoda',
+            'smart': 'smart',
+            'ssangyong': 'ssangyong',
+            'subaru': 'subaru',
+            'suzuki': 'suzuki',
+            'talbot': 'talbot',
+            'tesla': 'tesla',
+            'toyota': 'toyota',
+            'trabant': 'trabant',
+            'triumph': 'triumph',
+            'vauxhall': 'vauxhall',
+            'volkswagen': 'volkswagen',
+            'volvo': 'volvo',
+            'wiesmann': 'wiesmann',
+            'yugo': 'yugo',
+            'zastava': 'zastava',
+            // MOTO
+            'aprilia': 'aprilia',
+            'benelli': 'benelli',
+            'beta': 'beta',
+            'bimota': 'bimota',
+            'bmw motorrad': 'bmw',
+            'cagiva': 'cagiva',
+            'ducati': 'ducati',
+            'fantic': 'fantic',
+            'gilera': 'gilera',
+            'harley-davidson': 'harley-davidson',
+            'harley davidson': 'harley-davidson',
+            'honda moto': 'honda',
+            'husqvarna': 'husqvarna',
+            'indian': 'indian',
+            'kawasaki': 'kawasaki',
+            'ktm': 'ktm',
+            'moto guzzi': 'moto-guzzi',
+            'motoguzzi': 'moto-guzzi',
+            'mv agusta': 'mv-agusta',
+            'mv-agusta': 'mv-agusta',
+            'piaggio': 'piaggio',
+            'suzuki moto': 'suzuki',
+            'triumph moto': 'triumph',
+            'vespa': 'vespa',
+            'yamaha': 'yamaha',
+            'zero motorcycles': 'zero-motorcycles',
+            'zero-motorcycles': 'zero-motorcycles'
         };
 
+        // Cerca il nome del file per la marca
+        let nomeFile = null;
         for (const [key, value] of Object.entries(logoMap)) {
             if (marcaLower === key || marcaLower.includes(key) || key.includes(marcaLower)) {
-                return `https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/${value}.png`;
+                nomeFile = value;
+                break;
             }
         }
 
-        // 🔥 IMMAGINE GENERICA DI DEFAULT (funziona sempre)
-        return 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=400&h=300&fit=crop&auto=format';
+        // Se trovato, usa il logo dal dataset
+        if (nomeFile) {
+            return `https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/${nomeFile}.png`;
+        }
+
+        // Se non trovato, usa un'icona generica (font-awesome)
+        return '';
     }
 
     // ============================================================
-    // 4. FUNZIONI DATABASE
+    // FUNZIONI DATABASE
     // ============================================================
     async function caricaDati() {
         try {
@@ -745,7 +792,7 @@
                 { id: 6, marca: 'Volkswagen', modello: 'Golf 2.0 TDI', anno: 2021, prezzo: 24900, km: 31000, alimentazione: 'Diesel', cambio: 'Manuale' },
                 { id: 7, marca: 'Audi', modello: 'Q3 35 TDI', anno: 2022, prezzo: 35900, km: 18000, alimentazione: 'Diesel', cambio: 'Automatico' },
                 { id: 8, marca: 'BMW', modello: 'X1 xDrive18d', anno: 2020, prezzo: 31900, km: 39000, alimentazione: 'Diesel', cambio: 'Automatico' },
-                { id: 9, marca: 'Ducati', modello: 'Panigale V4S', anno: 2024, prezzo: 30500, km: 203, alimentazione: 'Diesel', cambio: 'Manuale' }
+                { id: 9, marca: 'Ducati', modello: 'Panigale V4S', anno: 2024, prezzo: 30500, km: 203, alimentazione: 'Benzina', cambio: 'Manuale' }
             ],
             prenotazioni: []
         };
@@ -772,7 +819,7 @@
     }
 
     // ============================================================
-    // 5. POLLING
+    // POLLING
     // ============================================================
     async function controllaAggiornamenti() {
         const btn = document.querySelector('.btn-refresh');
@@ -817,7 +864,7 @@
     }
 
     // ============================================================
-    // 6. NOTIFICA DISCORD
+    // NOTIFICA DISCORD
     // ============================================================
     async function inviaNotificaDiscord(prenotazione, autoNome) {
         if (!DISCORD_WEBHOOK_URL || DISCORD_WEBHOOK_URL === 'IL_TUO_WEBHOOK_URL') return;
@@ -840,7 +887,7 @@
     }
 
     // ============================================================
-    // 7. UI
+    // UI
     // ============================================================
     function aggiornaUI() {
         const section = document.getElementById('userSection');
@@ -943,7 +990,7 @@
     });
 
     // ============================================================
-    // 8. RENDER LISTA AUTO
+    // RENDER LISTA AUTO
     // ============================================================
     function renderLista(veicoli) {
         const grid = document.getElementById('gridAuto');
@@ -965,7 +1012,8 @@
             return `
             <div class="card-auto card-shine">
                 <div class="card-img">
-                    <img src="${logoUrl}" alt="${v.marca}" class="logo-marca" onerror="this.style.display='none'; this.parentElement.querySelector('.icona-auto').style.display='flex';" />
+                    ${logoUrl ? `<img src="${logoUrl}" alt="${v.marca}" class="logo-marca" onerror="this.style.display='none'; this.parentElement.querySelector('.icona-auto').style.display='flex';" />` :
+                    `<div class="icona-auto" style="display:flex;"><i class="fas fa-car"></i></div>`}
                     <div class="icona-auto" style="display:none;"><i class="fas fa-car"></i></div>
                     <span class="tag"><i class="fas fa-check"></i> Pronta</span>
                     ${prenotata ? `<span class="tag-prenotata"><i class="fas fa-check-circle"></i> PRENOTATA</span>` : ''}
@@ -999,7 +1047,7 @@
     }
 
     // ============================================================
-    // 9. RENDER PRENOTAZIONI
+    // RENDER PRENOTAZIONI
     // ============================================================
     function renderPrenotazioni() {
         const grid = document.getElementById('gridPrenotazioni');
@@ -1053,7 +1101,7 @@
     }
 
     // ============================================================
-    // 10. DETTAGLIO AUTO
+    // DETTAGLIO AUTO
     // ============================================================
     function apriDettaglio(id) {
         const veicolo = auto.find(a => a.id === id);
@@ -1069,7 +1117,8 @@
             <a class="back" onclick="tornaLista()"><i class="fas fa-arrow-left"></i> Torna al listino</a>
             <div class="dettaglio-grid">
                 <div class="dettaglio-foto">
-                    <img src="${logoUrl}" alt="${veicolo.marca}" class="logo-marca-dettaglio" onerror="this.style.display='none'; this.parentElement.querySelector('.icona-auto-dettaglio').style.display='flex';" />
+                    ${logoUrl ? `<img src="${logoUrl}" alt="${veicolo.marca}" class="logo-marca-dettaglio" onerror="this.style.display='none'; this.parentElement.querySelector('.icona-auto-dettaglio').style.display='flex';" />` :
+                    `<div class="icona-auto-dettaglio" style="display:flex;"><i class="fas fa-car"></i></div>`}
                     <div class="icona-auto-dettaglio" style="display:none;"><i class="fas fa-car"></i></div>
                 </div>
                 <div class="dettaglio-info">
@@ -1100,7 +1149,7 @@
     }
 
     // ============================================================
-    // 11. FILTRI
+    // FILTRI
     // ============================================================
     function applicaFiltri() {
         const marca = document.getElementById('filtroMarca').value;
@@ -1126,7 +1175,7 @@
     }
 
     // ============================================================
-    // 12. LOGIN
+    // LOGIN
     // ============================================================
     function apriLogin() {
         document.getElementById('modalLogin').classList.add('attivo');
@@ -1156,7 +1205,7 @@
     }
 
     // ============================================================
-    // 13. PRENOTAZIONI
+    // PRENOTAZIONI
     // ============================================================
     function apriModalePrenotazione(autoId, autoNome) {
         document.getElementById('prenotaAutoId').value = autoId;
@@ -1235,7 +1284,7 @@
     }
 
     // ============================================================
-    // 14. GESTIONE PRENOTAZIONI (ADMIN)
+    // GESTIONE PRENOTAZIONI (ADMIN)
     // ============================================================
     async function confermaPrenotazione(id) {
         const index = prenotazioni.findIndex(p => p.id === id);
@@ -1270,7 +1319,7 @@
     }
 
     // ============================================================
-    // 15. PRENOTAZIONE ADMIN (senza modulo)
+    // PRENOTAZIONE ADMIN (senza modulo)
     // ============================================================
     async function prenotaAdmin(autoId, autoNome) {
         if (!isAdmin) return;
@@ -1304,7 +1353,7 @@
     }
 
     // ============================================================
-    // 16. ADMIN AUTO
+    // ADMIN AUTO
     // ============================================================
     function apriModaleNuova() {
         if (!isAdmin) return;
@@ -1404,7 +1453,7 @@
     }
 
     // ============================================================
-    // 17. TOAST
+    // TOAST
     // ============================================================
     function mostraToast(titolo, testo) {
         document.getElementById('toastTitolo').textContent = titolo;
@@ -1418,7 +1467,7 @@
     }
 
     // ============================================================
-    // 18. RICARICA MANUALE CON CTRL+R / F5
+    // RICARICA MANUALE CON CTRL+R / F5
     // ============================================================
     document.addEventListener('keydown', (e) => {
         if ((e.ctrlKey && e.key === 'r') || e.key === 'F5') {
@@ -1429,7 +1478,7 @@
     });
 
     // ============================================================
-    // 19. INIT
+    // INIT
     // ============================================================
     async function init() {
         popolaMarcheFiltro();

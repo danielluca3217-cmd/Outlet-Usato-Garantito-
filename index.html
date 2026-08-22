@@ -448,7 +448,7 @@
     </div>
 </section>
 
-<!-- MODALE LOGIN -->
+<!-- MODALI (LOGIN, PRENOTAZIONE, ADMIN) -->
 <div class="modal-overlay login-modal" id="modalLogin">
     <div class="modal">
         <h2><i class="fas fa-lock"></i> Accesso Admin</h2>
@@ -461,7 +461,6 @@
     </div>
 </div>
 
-<!-- MODALE PRENOTAZIONE -->
 <div class="modal-overlay" id="modalPrenotazione">
     <div class="modal">
         <h2><i class="fas fa-calendar-plus"></i> Prenota <span id="prenotaAutoNome"></span></h2>
@@ -488,7 +487,6 @@
     </div>
 </div>
 
-<!-- MODALE ADMIN AUTO -->
 <div class="modal-overlay" id="modalAdmin">
     <div class="modal">
         <h2><i class="fas fa-edit"></i> <span id="modalTitolo">Nuovo veicolo</span></h2>
@@ -568,7 +566,6 @@
     const JSONBIN_BIN_ID = '6a8836b0f5f4af5e2930f4bb';
     const JSONBIN_API_KEY = '$2a$10$wZYd3ki9TiZ/VDC337viNOiC1znyu5NWat6lENgmgdSaUfQ.2.jPO';
     const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1540357059789197383/x15kU0mlAhRKS6ibdWCTFYO7ElVy82xR2FnqguvcRTqsVMkEfHcxljLzNkzqFueNJ81T';
-    const DISCORD_COMANDI_URL = 'https://discord.com/api/webhooks/1540357059789197383/x15kU0mlAhRKS6ibdWCTFYO7ElVy82xR2FnqguvcRTqsVMkEfHcxljLzNkzqFueNJ81T';
 
     let isAdmin = false;
     let auto = [];
@@ -591,7 +588,6 @@
         'Renault', 'Rolls-Royce', 'Rover', 'Saab', 'Seat', 'Skoda', 'Smart', 'SsangYong',
         'Subaru', 'Suzuki', 'Talbot', 'Tesla', 'Toyota', 'Trabant', 'Triumph', 'Vauxhall',
         'Volkswagen', 'Volvo', 'Wiesmann', 'Yugo', 'Zastava',
-        // MOTO
         'Aprilia', 'Benelli', 'Beta', 'Bimota', 'BMW Motorrad', 'Cagiva', 'Ducati', 'Fantic',
         'Gilera', 'Harley-Davidson', 'Honda Moto', 'Husqvarna', 'Indian', 'Kawasaki', 'KTM',
         'Moto Guzzi', 'MV Agusta', 'Piaggio', 'Suzuki Moto', 'Triumph Moto', 'Vespa', 'Yamaha',
@@ -599,147 +595,72 @@
     ].sort();
 
     // ============================================================
-    // FUNZIONE PER OTTENERE IL LOGO (CON 60+ MARCHE SUPPORTATE)
+    // FUNZIONE PER OTTENERE IL LOGO (CON FALLBACK IMMAGINE)
     // ============================================================
     function getLogoUrl(marca) {
         const marcaLower = marca.toLowerCase().trim();
         
-        // Mappatura completa delle marche con i loro nomi file corretti
+        // Mappatura marche → nome file logo
         const logoMap = {
-            // Auto
-            'abarth': 'abarth',
-            'acura': 'acura',
-            'alfa romeo': 'alfa-romeo',
-            'alfa-romeo': 'alfa-romeo',
-            'alpine': 'alpine',
-            'aston martin': 'aston-martin',
-            'audi': 'audi',
-            'bentley': 'bentley',
-            'bmw': 'bmw',
-            'bugatti': 'bugatti',
-            'buick': 'buick',
-            'cadillac': 'cadillac',
-            'chevrolet': 'chevrolet',
-            'chrysler': 'chrysler',
-            'citroen': 'citroen',
-            'corvette': 'corvette',
-            'cupra': 'cupra',
-            'dacia': 'dacia',
-            'daewoo': 'daewoo',
-            'daihatsu': 'daihatsu',
-            'dodge': 'dodge',
-            'ds': 'ds',
-            'ds automobiles': 'ds',
-            'ferrari': 'ferrari',
-            'fiat': 'fiat',
-            'ford': 'ford',
-            'genesis': 'genesis',
-            'gmc': 'gmc',
-            'honda': 'honda',
-            'hummer': 'hummer',
-            'hyundai': 'hyundai',
-            'infiniti': 'infiniti',
-            'isuzu': 'isuzu',
-            'iveco': 'iveco',
-            'jaguar': 'jaguar',
-            'jeep': 'jeep',
-            'kia': 'kia',
-            'koenigsegg': 'koenigsegg',
-            'lada': 'lada',
-            'lamborghini': 'lamborghini',
-            'lancia': 'lancia',
-            'land rover': 'land-rover',
-            'land-rover': 'land-rover',
-            'lexus': 'lexus',
-            'ligier': 'ligier',
-            'lotus': 'lotus',
-            'mahindra': 'mahindra',
-            'maserati': 'maserati',
-            'maybach': 'maybach',
-            'mazda': 'mazda',
-            'mclaren': 'mclaren',
-            'mercedes': 'mercedes',
-            'mercedes-benz': 'mercedes',
-            'mercury': 'mercury',
-            'mini': 'mini',
-            'mitsubishi': 'mitsubishi',
-            'morgan': 'morgan',
-            'nissan': 'nissan',
-            'oldsmobile': 'oldsmobile',
-            'opel': 'opel',
-            'pagani': 'pagani',
-            'peugeot': 'peugeot',
-            'plymouth': 'plymouth',
-            'pontiac': 'pontiac',
-            'porsche': 'porsche',
-            'proton': 'proton',
-            'renault': 'renault',
-            'rolls-royce': 'rolls-royce',
-            'rover': 'rover',
-            'saab': 'saab',
-            'seat': 'seat',
-            'skoda': 'skoda',
-            'smart': 'smart',
-            'ssangyong': 'ssangyong',
-            'subaru': 'subaru',
-            'suzuki': 'suzuki',
-            'talbot': 'talbot',
-            'tesla': 'tesla',
-            'toyota': 'toyota',
-            'trabant': 'trabant',
-            'triumph': 'triumph',
-            'vauxhall': 'vauxhall',
-            'volkswagen': 'volkswagen',
-            'volvo': 'volvo',
-            'wiesmann': 'wiesmann',
-            'yugo': 'yugo',
-            'zastava': 'zastava',
-            // Moto
-            'aprilia': 'aprilia',
-            'benelli': 'benelli',
-            'beta': 'beta',
-            'bimota': 'bimota',
-            'bmw motorrad': 'bmw',
-            'cagiva': 'cagiva',
-            'ducati': 'ducati',
-            'fantic': 'fantic',
-            'gilera': 'gilera',
-            'harley-davidson': 'harley-davidson',
-            'harley davidson': 'harley-davidson',
-            'honda moto': 'honda',
-            'husqvarna': 'husqvarna',
-            'indian': 'indian',
-            'kawasaki': 'kawasaki',
-            'ktm': 'ktm',
-            'moto guzzi': 'moto-guzzi',
-            'motoguzzi': 'moto-guzzi',
-            'mv agusta': 'mv-agusta',
-            'mv-agusta': 'mv-agusta',
-            'piaggio': 'piaggio',
-            'suzuki moto': 'suzuki',
-            'triumph moto': 'triumph',
-            'vespa': 'vespa',
-            'yamaha': 'yamaha',
-            'zero motorcycles': 'zero-motorcycles',
-            'zero-motorcycles': 'zero-motorcycles'
+            'abarth': 'abarth', 'acura': 'acura', 'alfa romeo': 'alfa-romeo', 'alfa-romeo': 'alfa-romeo',
+            'alpine': 'alpine', 'aston martin': 'aston-martin', 'audi': 'audi', 'bentley': 'bentley',
+            'bmw': 'bmw', 'bugatti': 'bugatti', 'buick': 'buick', 'cadillac': 'cadillac',
+            'chevrolet': 'chevrolet', 'chrysler': 'chrysler', 'citroen': 'citroen', 'corvette': 'corvette',
+            'cupra': 'cupra', 'dacia': 'dacia', 'daewoo': 'daewoo', 'daihatsu': 'daihatsu',
+            'dodge': 'dodge', 'ds automobiles': 'ds', 'ds': 'ds', 'ferrari': 'ferrari',
+            'fiat': 'fiat', 'ford': 'ford', 'genesis': 'genesis', 'gmc': 'gmc',
+            'honda': 'honda', 'hummer': 'hummer', 'hyundai': 'hyundai', 'infiniti': 'infiniti',
+            'isuzu': 'isuzu', 'iveco': 'iveco', 'jaguar': 'jaguar', 'jeep': 'jeep',
+            'kia': 'kia', 'koenigsegg': 'koenigsegg', 'lada': 'lada', 'lamborghini': 'lamborghini',
+            'lancia': 'lancia', 'land rover': 'land-rover', 'land-rover': 'land-rover',
+            'lexus': 'lexus', 'ligier': 'ligier', 'lotus': 'lotus', 'mahindra': 'mahindra',
+            'maserati': 'maserati', 'maybach': 'maybach', 'mazda': 'mazda', 'mclaren': 'mclaren',
+            'mercedes': 'mercedes', 'mercedes-benz': 'mercedes', 'mercury': 'mercury', 'mini': 'mini',
+            'mitsubishi': 'mitsubishi', 'morgan': 'morgan', 'nissan': 'nissan', 'oldsmobile': 'oldsmobile',
+            'opel': 'opel', 'pagani': 'pagani', 'peugeot': 'peugeot', 'plymouth': 'plymouth',
+            'pontiac': 'pontiac', 'porsche': 'porsche', 'proton': 'proton', 'renault': 'renault',
+            'rolls-royce': 'rolls-royce', 'rover': 'rover', 'saab': 'saab', 'seat': 'seat',
+            'skoda': 'skoda', 'smart': 'smart', 'ssangyong': 'ssangyong', 'subaru': 'subaru',
+            'suzuki': 'suzuki', 'talbot': 'talbot', 'tesla': 'tesla', 'toyota': 'toyota',
+            'trabant': 'trabant', 'triumph': 'triumph', 'vauxhall': 'vauxhall', 'volkswagen': 'volkswagen',
+            'volvo': 'volvo', 'wiesmann': 'wiesmann', 'yugo': 'yugo', 'zastava': 'zastava',
+            'aprilia': 'aprilia', 'benelli': 'benelli', 'beta': 'beta', 'bimota': 'bimota',
+            'bmw motorrad': 'bmw', 'cagiva': 'cagiva', 'ducati': 'ducati', 'fantic': 'fantic',
+            'gilera': 'gilera', 'harley-davidson': 'harley-davidson', 'harley davidson': 'harley-davidson',
+            'honda moto': 'honda', 'husqvarna': 'husqvarna', 'indian': 'indian', 'kawasaki': 'kawasaki',
+            'ktm': 'ktm', 'moto guzzi': 'moto-guzzi', 'motoguzzi': 'moto-guzzi', 'mv agusta': 'mv-agusta',
+            'mv-agusta': 'mv-agusta', 'piaggio': 'piaggio', 'suzuki moto': 'suzuki', 'triumph moto': 'triumph',
+            'vespa': 'vespa', 'yamaha': 'yamaha', 'zero motorcycles': 'zero-motorcycles'
         };
 
-        // Cerca il nome del file per la marca
-        let nomeFile = null;
+        // Cerca il logo
         for (const [key, value] of Object.entries(logoMap)) {
             if (marcaLower === key || marcaLower.includes(key) || key.includes(marcaLower)) {
-                nomeFile = value;
-                break;
+                return `https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/${value}.png`;
             }
         }
 
-        // Se trovato, usa il logo dal dataset
-        if (nomeFile) {
-            return `https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/thumb/${nomeFile}.png`;
+        // 🔥 FALLBACK: immagine da Unsplash per marche non trovate
+        // Mappe per immagini specifiche
+        const fallbackImages = {
+            'ducati': 'https://images.unsplash.com/photo-1623687605113-57f5b3e65503?w=400&h=300&fit=crop&auto=format',
+            'ktm': 'https://images.unsplash.com/photo-1605897472359-3f8c9f9d0b1c?w=400&h=300&fit=crop&auto=format',
+            'kawasaki': 'https://images.unsplash.com/photo-1623687605113-57f5b3e65503?w=400&h=300&fit=crop&auto=format',
+            'aprilia': 'https://images.unsplash.com/photo-1623687605113-57f5b3e65503?w=400&h=300&fit=crop&auto=format',
+            'yamaha': 'https://images.unsplash.com/photo-1623687605113-57f5b3e65503?w=400&h=300&fit=crop&auto=format',
+            'harley-davidson': 'https://images.unsplash.com/photo-1558981808-5a2a2d06b0b8?w=400&h=300&fit=crop&auto=format',
+            'indian': 'https://images.unsplash.com/photo-1558981808-5a2a2d06b0b8?w=400&h=300&fit=crop&auto=format',
+            'moto guzzi': 'https://images.unsplash.com/photo-1623687605113-57f5b3e65503?w=400&h=300&fit=crop&auto=format'
+        };
+
+        for (const [key, url] of Object.entries(fallbackImages)) {
+            if (marcaLower.includes(key) || key.includes(marcaLower)) {
+                return url;
+            }
         }
 
-        // Fallback: immagine generica su Unsplash
-        return `https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=400&h=300&fit=crop&auto=format`;
+        // Immagine generica di default
+        return 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=400&h=300&fit=crop&auto=format';
     }
 
     // ============================================================
@@ -802,7 +723,7 @@
                 { id: 6, marca: 'Volkswagen', modello: 'Golf 2.0 TDI', anno: 2021, prezzo: 24900, km: 31000, alimentazione: 'Diesel', cambio: 'Manuale' },
                 { id: 7, marca: 'Audi', modello: 'Q3 35 TDI', anno: 2022, prezzo: 35900, km: 18000, alimentazione: 'Diesel', cambio: 'Automatico' },
                 { id: 8, marca: 'BMW', modello: 'X1 xDrive18d', anno: 2020, prezzo: 31900, km: 39000, alimentazione: 'Diesel', cambio: 'Automatico' },
-                { id: 9, marca: 'Ducati', modello: 'Panigale V4', anno: 2022, prezzo: 26900, km: 8000, alimentazione: 'Benzina', cambio: 'Sequenziale' }
+                { id: 9, marca: 'Ducati', modello: 'Panigale V4S', anno: 2024, prezzo: 30500, km: 203, alimentazione: 'Diesel', cambio: 'Manuale' }
             ],
             prenotazioni: []
         };
@@ -829,21 +750,17 @@
     }
 
     // ============================================================
-    // POLLING AGGIORNAMENTI
+    // POLLING
     // ============================================================
     async function controllaAggiornamenti() {
         const btn = document.querySelector('.btn-refresh');
         if (btn) btn.classList.add('spinning');
-        
         try {
             const data = await caricaDati();
             const nuoveAuto = data.auto || [];
             const nuovePrenotazioni = data.prenotazioni || [];
-            
-            const autoCambiate = JSON.stringify(nuoveAuto) !== JSON.stringify(auto);
-            const prenotazioniCambiate = JSON.stringify(nuovePrenotazioni) !== JSON.stringify(prenotazioni);
-            
-            if (autoCambiate || prenotazioniCambiate) {
+            if (JSON.stringify(nuoveAuto) !== JSON.stringify(auto) || 
+                JSON.stringify(nuovePrenotazioni) !== JSON.stringify(prenotazioni)) {
                 auto = nuoveAuto;
                 prenotazioni = nuovePrenotazioni;
                 autoFiltrate = [...auto];
@@ -853,10 +770,7 @@
                 if (isAdmin) renderPrenotazioni();
                 mostraNotificaAggiornamento();
             }
-        } catch (error) {
-            console.error('❌ Errore controllo aggiornamenti:', error);
-        }
-        
+        } catch (error) { console.error('❌ Errore controllo aggiornamenti:', error); }
         if (btn) btn.classList.remove('spinning');
     }
 
@@ -869,13 +783,9 @@
             border-left: 4px solid #dc2626; font-size: 13px; z-index: 3000;
             animation: slideUp 0.3s ease; box-shadow: 0 8px 30px rgba(0,0,0,0.1);
         `;
-        toast.innerHTML = `<i class="fas fa-sync-alt" style="color: #dc2626; margin-right: 8px;"></i> Listino aggiornato in tempo reale!`;
+        toast.innerHTML = `<i class="fas fa-sync-alt" style="color: #dc2626; margin-right: 8px;"></i> Listino aggiornato!`;
         document.body.appendChild(toast);
-        setTimeout(() => {
-            toast.style.opacity = '0';
-            toast.style.transition = 'opacity 0.5s ease';
-            setTimeout(() => toast.remove(), 500);
-        }, 3000);
+        setTimeout(() => { toast.style.opacity = '0'; toast.style.transition = 'opacity 0.5s ease'; setTimeout(() => toast.remove(), 500); }, 3000);
     }
 
     function avviaPolling() {
@@ -890,79 +800,21 @@
     async function inviaNotificaDiscord(prenotazione, autoNome) {
         if (!DISCORD_WEBHOOK_URL || DISCORD_WEBHOOK_URL === 'IL_TUO_WEBHOOK_URL') return;
         const embed = {
-            title: '📩 Nuova prenotazione ricevuta!',
+            title: '📩 Nuova prenotazione!',
             color: 0xdc2626,
             fields: [
                 { name: '👤 Cliente', value: `${prenotazione.nome} ${prenotazione.cognome}`, inline: true },
                 { name: '📧 Email', value: prenotazione.email, inline: true },
                 { name: '📞 Telefono', value: prenotazione.telefono, inline: true },
                 { name: '🚗 Veicolo', value: autoNome, inline: true },
-                { name: '📅 Data richiesta', value: prenotazione.data, inline: true },
-                { name: '📝 Messaggio', value: prenotazione.messaggio || 'Nessun messaggio', inline: false }
+                { name: '📅 Data', value: prenotazione.data, inline: true }
             ],
             timestamp: new Date().toISOString(),
-            footer: { text: 'Outlet Usato Garantito - Prenotazioni' }
+            footer: { text: 'Outlet Usato Garantito' }
         };
         try {
             await fetch(DISCORD_WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ embeds: [embed] }) });
         } catch (error) { console.error('❌ Errore notifica Discord:', error); }
-    }
-
-    // ============================================================
-    // ELABORA COMANDI DA DISCORD
-    // ============================================================
-    async function elaboraComandoDiscord(comando, username) {
-        const parts = comando.trim().split(' ');
-        const cmd = parts[0].toLowerCase();
-        
-        if (cmd === '/aggiungi-auto') {
-            if (parts.length < 8) {
-                return { success: false, messaggio: '❌ Formato: `/aggiungi-auto marca modello anno prezzo km alimentazione cambio`' };
-            }
-            try {
-                const marca = parts[1], modello = parts[2];
-                const anno = parseInt(parts[3]), prezzo = parseInt(parts[4]), km = parseInt(parts[5]);
-                const alimentazione = parts[6], cambio = parts.slice(7).join(' ');
-                if (isNaN(anno) || isNaN(prezzo) || isNaN(km)) {
-                    return { success: false, messaggio: '❌ Anno, prezzo e km devono essere numeri!' };
-                }
-                const newId = auto.length > 0 ? Math.max(...auto.map(a => a.id)) + 1 : 1;
-                const nuovaAuto = { id: newId, marca, modello, anno, prezzo, km, alimentazione, cambio };
-                auto.push(nuovaAuto);
-                await salvaDati();
-                autoFiltrate = [...auto];
-                renderLista(autoFiltrate);
-                aggiornaConteggio();
-                return {
-                    success: true,
-                    messaggio: `✅ **Auto aggiunta con successo!**\n🚗 **${marca} ${modello}**\n📅 Anno: ${anno}\n💰 Prezzo: € ${prezzo.toLocaleString()}\n📏 Km: ${km.toLocaleString()}\n⛽ Alimentazione: ${alimentazione}\n⚙️ Cambio: ${cambio}\n\n📱 Aggiunta da: ${username || 'Discord'}`
-                };
-            } catch (error) {
-                return { success: false, messaggio: `❌ Errore: ${error.message}` };
-            }
-        } else if (cmd === '/lista-auto') {
-            if (auto.length === 0) return { success: false, messaggio: '📋 **Nessuna auto disponibile.**' };
-            let testo = '📋 **Lista auto disponibili:**\n\n';
-            auto.slice(0, 10).forEach((a, i) => {
-                testo += `${i+1}. **${a.marca} ${a.modello}** - € ${a.prezzo.toLocaleString()} - ${a.anno} - ${a.km}km\n`;
-            });
-            if (auto.length > 10) testo += `\n... e altre ${auto.length - 10} auto`;
-            return { success: true, messaggio: testo };
-        } else if (cmd === '/help' || cmd === '/aiuto') {
-            return {
-                success: true,
-                messaggio: `📖 **Comandi disponibili:**\n\n🔹 /aggiungi-auto marca modello anno prezzo km alimentazione cambio\n   Esempio: /aggiungi-auto Audi A3 2020 22900 42000 Diesel Automatico\n\n🔹 /lista-auto - Mostra tutte le auto\n\n🔹 /help o /aiuto - Mostra questo messaggio`
-            };
-        } else {
-            return { success: false, messaggio: '❌ Comando non riconosciuto. Usa `/help` per vedere i comandi disponibili.' };
-        }
-    }
-
-    async function inviaMessaggioDiscord(messaggio) {
-        if (!DISCORD_COMANDI_URL || DISCORD_COMANDI_URL === 'IL_TUO_WEBHOOK_URL') return;
-        try {
-            await fetch(DISCORD_COMANDI_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ content: messaggio }) });
-        } catch (error) { console.error('❌ Errore invio messaggio Discord:', error); }
     }
 
     // ============================================================
@@ -1553,15 +1405,6 @@
             mostraToast('🔄 Aggiornamento', 'Listino aggiornato!');
         }
     });
-
-    // ============================================================
-    // SIMULA RICEZIONE COMANDO DA DISCORD (per test)
-    // ============================================================
-    window.testComandoDiscord = async function(comando) {
-        const risultato = await elaboraComandoDiscord(comando, 'TestUser');
-        console.log('Risultato:', risultato);
-        return risultato;
-    };
 
     // ============================================================
     // INIT

@@ -1,0 +1,21 @@
+{
+  "name": "outlet-usato-garantito-backend",
+  "version": "2.0.0",
+  "description": "Backend proxy per Outlet Usato Garantito - database Postgres su Railway, chiavi API al sicuro lato server",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "migra-da-jsonbin": "node migra-da-jsonbin.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "cors": "^2.8.5",
+    "node-fetch": "^2.7.0",
+    "multer": "^1.4.5-lts.1",
+    "pg": "^8.12.0",
+    "cookie-parser": "^1.4.6"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
